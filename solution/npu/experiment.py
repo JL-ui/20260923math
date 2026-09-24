@@ -10,6 +10,7 @@
 from __future__ import annotations
 
 import json
+import os
 import time
 import traceback
 from pathlib import Path
@@ -94,18 +95,115 @@ def run_one(case: str, problem: int, num_cores: int, algorithm: str,
     return records
 
 
+def _fasteval_portfolio(case, problem, num_cores, grid, g, seed):
+    """T09 快速评估器初筛：全部候选先用 evaluate_fast 打分，只对冠军调用一次
+    官方评估器核实；不等则记录到 fasteval_mismatch.csv 并返回 None（回退官方全评）。
+
+    仅用于问题 1（P1 官方评估慢，才需要这条加速路径）；P2/P3 与最终成绩一律
+    直接走官方评估器 + 缓存，不接入这里。
+    """
+    plans = []
+    for i, params in enumerate(grid):
+        try:
+            plan = evaluate.canonical_plan(
+                algorithms.cap_ls(g, num_cores, problem, seed=seed, **params))
+        except Exception:                                       # noqa: BLE001
+            plans.append(None)
+            continue
+        plans.append(plan)
+    fast_results = []
+    for plan in plans:
+        if plan is None:
+            fast_results.append(None)
+            continue
+        try:
+            fast_results.append(evaluate.evaluate_fast(problem, case, plan))
+        except Exception:                                       # noqa: BLE001
+            fast_results.append(None)
+    feasible_idx = [i for i, r in enumerate(fast_results)
+                    if r and r.get('feasible')]
+    if not feasible_idx:
+        return None
+    best_i = min(feasible_idx, key=lambda i: fast_results[i]['makespan'])
+    best_plan = plans[best_i]
+    official = evaluate.default_cache().evaluate(problem, case, best_plan)
+    fast_best = fast_results[best_i]
+    a = {k: v for k, v in official.items() if k not in ('eval_seconds', 'cached')}
+    b = {k: v for k, v in fast_best.items() if k not in ('eval_seconds', 'cached')}
+    if a != b:
+        row = {'case': case, 'problem': problem, 'num_cores': num_cores,
+              'variant': f'c{best_i}',
+              'fast_makespan': fast_best.get('makespan'),
+              'official_makespan': official.get('makespan'),
+              'fast_feasible': fast_best.get('feasible'),
+              'official_feasible': official.get('feasible')}
+        path = paths.RESULTS_DIR / 'fasteval_mismatch.csv'
+        write_csv([row], path.with_suffix('.tmp'))
+        if path.is_file():
+            old = path.read_text(encoding='utf-8').splitlines()
+            new = path.with_suffix('.tmp').read_text(encoding='utf-8').splitlines()
+            path.write_text('\n'.join(old + new[1:]) + '\n', encoding='utf-8')
+        else:
+            path.write_text(path.with_suffix('.tmp').read_text(encoding='utf-8'),
+                            encoding='utf-8')
+        path.with_suffix('.tmp').unlink(missing_ok=True)
+        return None
+    return plans, fast_results, best_i, official
+
+
 def run_portfolio(case: str, problem: int, num_cores: int,
                   level: str = 'full', seed: int = 0,
                   save_plan: bool = True, eval_problems=None) -> list:
     """主算法的多起点组合：候选逐个评估，返回全部候选记录 + 最优标记。"""
-    n = get_graph(case).n
+    g = get_graph(case)
+    n = g.n
+    use_fast = problem == 1 and os.environ.get('NPU_FASTEVAL') == '1'
     if level == 'auto' and problem == 1:
-        level = 'fast' if n > 12000 else 'full'
+        level = 'fast' if (n > 12000 and not use_fast) else 'full'
     elif level == 'auto':
         level = 'full'
     grid = algorithms.candidate_params(problem, num_cores, level)
-    if level == 'full' and n > 6000 and problem == 1:
+    if level == 'full' and n > 6000 and problem == 1 and not use_fast:
         grid = grid[:8]          # P1 大图裁剪候选集（官方 P1 评估很慢），保证求解时间可控
+    if use_fast:
+        fast_out = _fasteval_portfolio(case, problem, num_cores, grid, g, seed)
+        if fast_out is not None:
+            plans, fast_results, best_i, official = fast_out
+            out = []
+            for i, (plan, fr) in enumerate(zip(plans, fast_results)):
+                if plan is None or fr is None:
+                    continue
+                n_sub = len(set(plan['node_to_subgraph'].values()))
+                base = evaluate.singlecore_baseline(case)
+                res = official if i == best_i else fr
+                rec = {'case': case, 'problem': problem, 'eval_problem': problem,
+                      'num_cores': num_cores, 'algorithm': 'capls',
+                      'variant': f'c{i}', 'seed': seed, 'runtime_s': None,
+                      'eval_s': res.get('eval_seconds'),
+                      'feasible': bool(res.get('feasible')),
+                      'makespan': res.get('makespan'),
+                      'added_copy_bytes': res.get('added_copy_bytes'),
+                      'partition_added_copy_bytes': res.get('partition_added_copy_bytes'),
+                      'spill_added_copy_bytes': res.get('spill_added_copy_bytes'),
+                      'scheduled_copy_bytes': res.get('scheduled_copy_bytes'),
+                      'cache_hit_rate': res.get('cache_hit_rate'),
+                      'n_subgraphs': n_sub, 'baseline_makespan': base.get('makespan'),
+                      'error': res.get('error', ''), 'is_best': i == best_i,
+                      'params': json.dumps(grid[i], sort_keys=True)}
+                rec['speedup'] = (base['makespan'] / rec['makespan']
+                                  if rec['feasible'] and base.get('makespan')
+                                  and i == best_i else None)
+                out.append(rec)
+            if save_plan:
+                path = (paths.PLAN_DIR /
+                       f'{case}_p{problem}_n{num_cores}_capls_best.json')
+                path.write_text(json.dumps(plans[best_i], ensure_ascii=False),
+                               encoding='utf-8')
+                for r in out:
+                    if r['is_best']:
+                        r['plan_path'] = str(path.relative_to(paths.ROOT))
+            return out
+        # 官方值与快速值不等：回退为官方评估全部候选（不再使用 evaluate_fast）
     out = []
     for i, params in enumerate(grid):
         recs = run_one(case, problem, num_cores, 'capls', params, seed=seed,

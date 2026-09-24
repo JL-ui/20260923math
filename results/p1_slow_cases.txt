@@ -1,0 +1,37 @@
+# T09 (narrowed): P1 用例耗时超过 600s (10 分钟) 的完整列表
+# 来源: results/main.csv 问题1候选行 (runtime_s+eval_s 求和，排除 _best 行)
+# 口径: solve.py 不带 --fast 时端到端耗时的实测代理值（遍历该图规模对应的候选网格 + 首次官方评估，未命中缓存的场景）
+# case, num_cores, n_ops, n_candidates, total_seconds
+case_014, N=2, n_ops=35705, candidates=4, total_s=5476.6
+case_014, N=3, n_ops=35705, candidates=4, total_s=6328.9
+case_014, N=4, n_ops=35705, candidates=4, total_s=5821.8
+case_014, N=5, n_ops=35705, candidates=4, total_s=5757.0
+case_025, N=2, n_ops=18662, candidates=4, total_s=741.7
+case_028, N=2, n_ops=19584, candidates=4, total_s=1010.8
+case_028, N=3, n_ops=19584, candidates=4, total_s=636.7
+case_030, N=2, n_ops=10070, candidates=8, total_s=602.8
+case_041, N=2, n_ops=16594, candidates=4, total_s=1101.6
+case_041, N=3, n_ops=16594, candidates=4, total_s=929.4
+case_041, N=4, n_ops=16594, candidates=4, total_s=831.6
+case_041, N=5, n_ops=16594, candidates=4, total_s=847.2
+case_062, N=2, n_ops=19636, candidates=4, total_s=965.3
+case_062, N=3, n_ops=19636, candidates=4, total_s=641.4
+case_072, N=2, n_ops=29666, candidates=4, total_s=3874.3
+case_072, N=3, n_ops=29666, candidates=4, total_s=3739.1
+case_072, N=4, n_ops=29666, candidates=4, total_s=3797.8
+case_072, N=5, n_ops=29666, candidates=4, total_s=3925.5
+case_076, N=2, n_ops=32528, candidates=4, total_s=4930.9
+case_076, N=3, n_ops=32528, candidates=4, total_s=4816.4
+case_076, N=4, n_ops=32528, candidates=4, total_s=4706.1
+case_076, N=5, n_ops=32528, candidates=4, total_s=4487.2
+case_079, N=2, n_ops=18720, candidates=4, total_s=790.8
+case_079, N=3, n_ops=18720, candidates=4, total_s=645.0
+case_087, N=2, n_ops=27556, candidates=4, total_s=1275.5
+case_091, N=2, n_ops=31554, candidates=4, total_s=4226.0
+case_091, N=3, n_ops=31554, candidates=4, total_s=4104.3
+case_091, N=4, n_ops=31554, candidates=4, total_s=3808.2
+case_091, N=5, n_ops=31554, candidates=4, total_s=2387.8
+case_092, N=2, n_ops=17608, candidates=4, total_s=672.3
+
+# distinct cases exceeding 10 min on at least one N: 12
+# case_014, case_025, case_028, case_030, case_041, case_062, case_072, case_076, case_079, case_087, case_091, case_092

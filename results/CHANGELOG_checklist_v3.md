@@ -178,3 +178,49 @@ T06 提交后发现遗漏了 `run_experiments.py --stage main/p3` 重跑产生�
 * 验收：两次 `mismatches=0`；`checked` 分别为 `2×100×5=1000` 与 `100×5=500`，与规格一致。
 * 回归：P2 58984、P1 116868、搬运量 90/90 一致。
 * 改动文件：`solution/verify_final.py`（新）、`results/verify_final.csv`（新）。
+
+## T09 逐字节等价快速评估器 — 完成（范围经用户二次收窄）
+
+* **范围变更**（用户明确指示，替换本任务开始前"完全跳过 T09"的建议）：不再对 pilot20
+  全部候选做穷尽差分测试；改为先实测定位 P1 端到端耗时 > 600s（10 分钟）的用例
+  （`results/p1_slow_cases.txt`：12 个用例、30 个 (用例,N) 组合，耗时来自 `main.csv`
+  问题 1 候选行 `runtime_s+eval_s` 求和），只在这些大图上验证与优化；P1 中小图与全部
+  P2/P3 维持直接用官方评估器 + 缓存，不接入 `evaluate_fast`。
+* 新建 `solution/npu/fasteval/`：`code/` 下 9 个官方评估模块的原样复制（`fe_` 前缀 +
+  相对导入，唯一允许的非性能改动），另加 `__init__.py`。
+* 性能优化（class (c)：把"固定顺序线性全量扫描判断是否完成"换成单调指针，扫描顺序
+  不变、判定结果逐位相同）：
+  - `fe_multicore_cut_evaluate_problem_1.py`：Task 完成检测（原 `all(op_status[item]=='done' for item in task_items)`）；
+  - `fe_schedule_step3.py`：全局完成检测（原 `all(status=='done' for status in op_status.values())`）。
+  两处都只影响"何时判定已完成"的检测方式，不改变任何算子的发射顺序、时长或依赖判定。
+* `solution/npu/evaluate.py` 新增 `evaluate_fast(problem, case, plan)`，返回结构与
+  `evaluate_plan` 相同，内部调用 `fasteval` 副本。
+* `solution/npu/experiment.py` `run_portfolio`：`problem==1` 且 `NPU_FASTEVAL=1` 时，
+  新增 `_fasteval_portfolio`：全部候选先用 `evaluate_fast` 打分选冠军，只对冠军调用
+  一次 `default_cache().evaluate`（官方）核实；官方值与快速值不等则记录到
+  `results/fasteval_mismatch.csv` 并回退为官方评估全部候选；`NPU_FASTEVAL=1` 时同时
+  取消 T06 保留的 P1 大图候选裁剪（跑满候选网格）。
+* 验证（8 个候选，覆盖 12 个慢用例中的 6 个、n_ops∈[10070,35705]、N∈{2,3,4,5}）：
+  ```
+  case_014 N=2: official(cached)=30.0s  fast=5.29s  speedup=5.7x   equal=True
+  case_014 N=5: official(cached)=1588.0s fast=5.93s speedup=267.7x equal=True
+  case_076 N=3: official(cached)=67.2s  fast=8.18s  speedup=8.2x   equal=True
+  case_091 N=4: official(cached)=1150.3s fast=9.87s speedup=116.5x equal=True
+  case_072 N=2: official(cached)=46.4s  fast=6.78s  speedup=6.8x   equal=True
+  case_030 N=2: official(cached)=20.5s  fast=1.78s  speedup=11.5x  equal=True
+  case_041 N=3: official(cached)=273.3s fast=4.22s  speedup=64.7x  equal=True
+  case_092 N=2: official(cached)=22.4s  fast=3.11s  speedup=7.2x   equal=True
+  ALL EQUAL；geomean speedup 21.9x
+  ```
+  完整记录见 `results/fasteval_slow_case_verification.json`。
+* 端到端集成测试：`NPU_FASTEVAL=1` 下对 case_014（最大图、原 4-候选耗时 5757–6329s）
+  跑满 12 候选的 `run_portfolio`，216.8 s 完成，无 mismatch，冠军 makespan 与原结果一致
+  （3722693）——候选数增加 3 倍、总耗时仍缩短约 27 倍。
+* 未触发"否则方案"（代理模型 Top-1 直选）：class (c) 优化已达到"分钟级压到秒级"的目标，
+  未出现逐字节不一致，无需降级到代理直选。
+* 回归：P2 58984、P1 116868、搬运量 90/90 一致。
+* 改动文件：`solution/npu/fasteval/`（新，9 个模块 + `__init__.py`，2 个文件含 class (c) 优化）、
+  `solution/npu/evaluate.py`（新增 `evaluate_fast`）、`solution/npu/experiment.py`
+  （`run_portfolio` 接入 `NPU_FASTEVAL`）、`solution/check_fasteval.py`（新，通用差分测试工具，
+  本次未做穷尽运行）、`results/p1_slow_cases.txt`（新）、
+  `results/fasteval_slow_case_verification.json`（新）。

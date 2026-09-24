@@ -1,0 +1,84 @@
+{
+ "scope_note": "经用户确认，T09 差分测试范围收窄为仅覆盖 P1 端到端耗时 > 600s 的用例（见 results/p1_slow_cases.txt），不再对 pilot20 全部候选跑穷尽比较；P1 中小图与全部 P2/P3 维持直接用官方评估器 + 缓存，不接入 evaluate_fast。",
+ "p1_slow_cases_file": "results/p1_slow_cases.txt",
+ "p1_slow_cases_count": 12,
+ "optimization_applied": "class (c): 把\"按 seq/固定顺序线性扫描、判断是否全部完成\"的 O(remaining) 逐轮重扫，换成单调指针（每个算子状态只会推进到 done 并保持，任意固定扫描顺序下指针都不回退），应用于 fe_multicore_cut_evaluate_problem_1.py 的 Task 完成检测与 fe_schedule_step3.py 的全局完成检测两处。",
+ "verification": "select:8 diverse candidates spanning n_ops in [10070, 35705] and N in [2,5], drawn from the 12 slow cases",
+ "result": "ALL EQUAL (official cached result field-for-field identical to evaluate_fast output, eval_seconds excluded); geomean speedup 21.9x; worst case (case_014 N=5) 1588s -> 5.93s (267.7x)",
+ "fallback_needed": false,
+ "candidates": [
+  {
+   "case": "case_014",
+   "num_cores": 2,
+   "official_cached_s": 30.0,
+   "fast_s": 5.29,
+   "speedup": 5.7,
+   "equal": true,
+   "makespan": 8838781
+  },
+  {
+   "case": "case_014",
+   "num_cores": 5,
+   "official_cached_s": 1588.0,
+   "fast_s": 5.93,
+   "speedup": 267.7,
+   "equal": true,
+   "makespan": 3722693
+  },
+  {
+   "case": "case_076",
+   "num_cores": 3,
+   "official_cached_s": 67.2,
+   "fast_s": 8.18,
+   "speedup": 8.2,
+   "equal": true,
+   "makespan": 2043989
+  },
+  {
+   "case": "case_091",
+   "num_cores": 4,
+   "official_cached_s": 1150.3,
+   "fast_s": 9.87,
+   "speedup": 116.5,
+   "equal": true,
+   "makespan": 2321866
+  },
+  {
+   "case": "case_072",
+   "num_cores": 2,
+   "official_cached_s": 46.4,
+   "fast_s": 6.78,
+   "speedup": 6.8,
+   "equal": true,
+   "makespan": 11672534
+  },
+  {
+   "case": "case_030",
+   "num_cores": 2,
+   "official_cached_s": 20.5,
+   "fast_s": 1.78,
+   "speedup": 11.5,
+   "equal": true,
+   "makespan": 1396147
+  },
+  {
+   "case": "case_041",
+   "num_cores": 3,
+   "official_cached_s": 273.3,
+   "fast_s": 4.22,
+   "speedup": 64.7,
+   "equal": true,
+   "makespan": 1994174
+  },
+  {
+   "case": "case_092",
+   "num_cores": 2,
+   "official_cached_s": 22.4,
+   "fast_s": 3.11,
+   "speedup": 7.2,
+   "equal": true,
+   "makespan": 2200120
+  }
+ ],
+ "decision": "fasteval refine (evaluate_fast), 未采用代理模型 Top-1 直选 fallback，因优化已在首个变换类别 (c) 后即达标"
+}

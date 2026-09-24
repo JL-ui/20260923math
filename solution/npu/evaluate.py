@@ -145,6 +145,49 @@ def evaluate_plan(problem: int, case: str, plan: dict, full: bool = False) -> di
     return summary
 
 
+def evaluate_fast(problem: int, case: str, plan: dict, full: bool = False) -> dict:
+    """调用 ``npu.fasteval`` 副本（T09 逐字节等价快速评估器）。
+
+    返回结构与 ``evaluate_plan`` 相同；仅供 P1 官方评估太慢时的内部加速路径，
+    正式成绩仍必须来自官方 ``evaluate_plan``（见 ``experiment.run_portfolio`` 的
+    差分复核逻辑）。
+    """
+    cfg = paths.official_config()
+    graph = raw_graph(case)
+    t0 = time.perf_counter()
+    buf_out, buf_err = io.StringIO(), io.StringIO()
+    try:
+        with contextlib.redirect_stdout(buf_out), contextlib.redirect_stderr(buf_err):
+            if problem == 1:
+                from .fasteval.fe_multicore_cut_evaluate_problem_1 import evaluate_scene_a
+                result = evaluate_scene_a(
+                    graph, plan, bandwidth=cfg['bandwidth'], capacity=cfg['capacity'],
+                    cross_core_wait=cfg['task_cross_core_wait_cycles'],
+                    same_core_wait=cfg['task_same_core_wait_cycles'])
+            elif problem == 2:
+                from .fasteval.fe_multicore_cut_evaluate_problem_2 import evaluate_scene_b
+                result = evaluate_scene_b(
+                    graph, plan, bandwidth=cfg['bandwidth'], capacity=cfg['capacity'],
+                    cross_core_copy_delay=cfg['cross_core_copy_delay_cycles'])
+            elif problem == 3:
+                from .fasteval.fe_multicore_cut_evaluate_problem_3 import evaluate_problem_3
+                result = evaluate_problem_3(
+                    graph, plan, bandwidth=cfg['bandwidth'], capacity=cfg['capacity'],
+                    cross_core_copy_delay=cfg['cross_core_copy_delay_cycles'],
+                    cache_capacity_bytes=cfg['cache_capacity_bytes'],
+                    cache_bandwidth_bytes_per_cycle=cfg['cache_bandwidth_bytes_per_cycle'])
+            else:
+                raise ValueError('problem must be 1, 2 or 3')
+    except Exception as exc:                                  # noqa: BLE001
+        return {'feasible': False, 'makespan': None, 'problem': problem,
+                'error': '{}: {}'.format(type(exc).__name__, str(exc)[:400]),
+                'eval_seconds': round(time.perf_counter() - t0, 3)}
+    summary = _summarise(result, problem, time.perf_counter() - t0)
+    if full:
+        summary['_result'] = result
+    return summary
+
+
 # --------------------------------------------------------------------------
 # 单核基准（官方 singlecore_evaluate，用于加速比分母）
 # --------------------------------------------------------------------------
