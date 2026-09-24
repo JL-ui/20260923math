@@ -11,8 +11,3 @@ __pycache__/
 Thumbs.db
 *.swp
 *~
-
-# 本次按要求不纳入版本控制的根目录文档（删除对应行即可上传）
-/CLAUDE.md
-/SOLUTION.md
-/*.docx

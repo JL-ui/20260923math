@@ -31,7 +31,16 @@ solution/
   run_experiments.py  实验总驱动（main/baseline/ablation/n1/p3/granularity/sensitivity）
   make_report.py      汇总 → 附录表格 + 正文数字 + 全部图表
   solve.py            单用例求解：生成官方格式方案 JSON
-  run_all.sh          一键复现全部实验
+  export_plans.py     把每个 (用例,问题,核数) 的最优方案导出为官方格式
+                       results/final_plans/p<问题>/n<核数>/<case>_multicore_res.json
+  digest.py           速查全部实验结论（写论文时核对数字）
+  check_traffic_model.py  搬运量解析模型 vs 官方输出的独立检验
+  validate_model.py   Makespan 代理模型相关性与候选选择损失的独立检验
+  assemble_paper.py   拼装 paper/论文.md + 04/05 章节 → paper/论文_完整.md
+  fill_paper.py       用 results/summary.json 填充论文里的 @@KEY@@ 占位符
+  md2docx.py          Markdown → Word（paper/论文.docx）
+  run_all.sh          一键复现全部实验（7 个阶段）
+  finalize.sh          实验跑完后的收尾：图表→表格→正文数字→拼装→Word→方案导出
 ```
 
 ## 3. 最常用的三条命令
@@ -45,9 +54,9 @@ python solution/solve.py data/case_001.json --problem 2 --cores 4 \
 python code/multicore_cut_evaluate_problem_2.py data/case_001.json \
        data/case_001_multicore_res.json --config data/config.txt
 
-# (3) 一键复现论文全部实验与图表
+# (3) 一键复现论文全部实验、图表与最终方案
 bash solution/run_all.sh 16
-python solution/make_report.py
+bash solution/finalize.sh
 ```
 
 ## 4. 算法一览（与论文章节对应）
@@ -68,8 +77,11 @@ python solution/make_report.py
 * `results/cache/singlecore/*.json` —— 官方单核基准
 * `results/cache/p{1,2,3}/<case>.json` —— **方案哈希 → 评估结果**
   只要方案不变就不会重复调用评估器；候选之间产生相同方案时自动命中。
-* `results/plans/*.json` —— 每个 (用例, 问题, 核数) 的最优方案（官方格式）
-* `results/*.csv` —— 全部实验记录，字段见 `npu/experiment.py`
+* `results/plans/*.json` —— 各实验阶段产生的最优方案原始记录（内部格式）
+* `results/final_plans/p<问题>/n<核数>/<case>_multicore_res.json` —— 经
+  `export_plans.py` 导出的**官方格式最终方案**（交付物，见 `results/final_plans/manifest.csv`）
+* `results/*.csv`、`results/summary.json` —— 全部实验记录与汇总，
+  字段见 `npu/experiment.py`
 
 删除 `results/cache` 即可从零重算；所有随机性由 `--seed` 控制，默认 0。
 
