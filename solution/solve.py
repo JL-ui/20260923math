@@ -32,9 +32,9 @@ def solve(case_path, problem: int, cores: int, fast: bool = False,
         plan = algorithms.cap_ls(g, cores, problem, seed=seed)
         return evaluate.canonical_plan(plan), None, time.perf_counter() - t0
 
-    level = 'fast' if g.n > 12000 else 'full'
+    level = 'fast' if (problem == 1 and g.n > 12000) else 'full'
     grid = algorithms.candidate_params(problem, cores, level)
-    if level == 'full' and g.n > 6000:
+    if level == 'full' and g.n > 6000 and problem == 1:
         grid = grid[:8]
     best, best_res = None, None
     for i, params in enumerate(grid):

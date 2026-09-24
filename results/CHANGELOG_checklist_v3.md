@@ -71,3 +71,17 @@
   （case_016 有 17995 个算子，现行 run_portfolio 对 n>6000 只保留前 8 个候选，故比较 8 个。）
 * 回归：P2 58984、P1 116868、搬运量 90/90 一致。
 * 改动文件：`solution/npu/variants.py`（新）、`solution/check_variants.py`（新）、`solution/run_experiments.py`。
+
+## T06 P2/P3 取消大图候选裁剪并重跑 — 完成
+
+* `solution/npu/experiment.py` `run_portfolio`：`level == 'auto'` 只在 `problem == 1` 时按图规模降级为 `'fast'`，否则恒为 `'full'`；`n > 6000` 的候选裁剪只对 `problem == 1` 生效。
+* `solution/solve.py`：`solve()` 同步只对 `problem == 1` 用 `fast`/`grid[:8]`。
+* `solution/merge_main.py`（新）：取备份的 P1 行 + 新跑的 P2/P3 行，写回 `main.csv`。
+* 运行：备份 `results/baseline_snapshot/main_before_T06.csv`；`run_experiments.py --stage main --problems 2 3`（10400 行）；`--stage p3`（首次 500 任务中 1 个因并发写临时文件冲突失败——`OSError [Errno 22]`，与本任务改动无关，属瞬时 I/O 竞争；完整重跑一次，500/500 全部成功，5800 行）；`merge_main.py`。
+* 验收：
+  * P2/P3 每配置候选数最小值 = 12（完整候选集长度）。
+  * P2/P3 端到端最长时间（`runtime_s+eval_s`）= 273.3 s（case_091 P3 N=2），≤ 600 s。
+  * 800 个 P2/P3 配置：0 个变差，69 个变好（新增大图候选带来的改进）。
+  * P1 行数 4464 == 备份中的 4464（未受影响）。
+* 回归：P2 58984、P1 116868、搬运量 90/90 一致。
+* 改动文件：`solution/npu/experiment.py`、`solution/solve.py`、`solution/merge_main.py`（新）、`results/main.csv`、`results/main_p23.csv`（新）、`results/p3_compare.csv`、`results/baseline_snapshot/main_before_T06.csv`（新）。

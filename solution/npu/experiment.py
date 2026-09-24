@@ -99,11 +99,13 @@ def run_portfolio(case: str, problem: int, num_cores: int,
                   save_plan: bool = True, eval_problems=None) -> list:
     """主算法的多起点组合：候选逐个评估，返回全部候选记录 + 最优标记。"""
     n = get_graph(case).n
-    if level == 'auto':
+    if level == 'auto' and problem == 1:
         level = 'fast' if n > 12000 else 'full'
+    elif level == 'auto':
+        level = 'full'
     grid = algorithms.candidate_params(problem, num_cores, level)
-    if level == 'full' and n > 6000:
-        grid = grid[:8]          # 大图裁剪候选集，保证单用例求解时间可控
+    if level == 'full' and n > 6000 and problem == 1:
+        grid = grid[:8]          # P1 大图裁剪候选集（官方 P1 评估很慢），保证求解时间可控
     out = []
     for i, params in enumerate(grid):
         recs = run_one(case, problem, num_cores, 'capls', params, seed=seed,
