@@ -241,7 +241,7 @@ def run_portfolio(case: str, problem: int, num_cores: int,
     if problem == 1 and case in _large_p1_cases():
         # 大图 P1 代理兜底：优先于 NPU_FASTEVAL 与常规候选网格裁剪，跳过全部
         # 候选的官方评估，只用解析代价排序选 top-1 后官方核实一次。
-        full_grid = algorithms.candidate_params(problem, num_cores, 'full')
+        full_grid = algorithms.candidate_params(problem, num_cores, 'full', n_ops=n)
         return _proxy_fallback_portfolio(case, problem, num_cores, full_grid,
                                          g, seed, save_plan)
     use_fast = problem == 1 and os.environ.get('NPU_FASTEVAL') == '1'
@@ -249,7 +249,7 @@ def run_portfolio(case: str, problem: int, num_cores: int,
         level = 'fast' if (n > 12000 and not use_fast) else 'full'
     elif level == 'auto':
         level = 'full'
-    grid = algorithms.candidate_params(problem, num_cores, level)
+    grid = algorithms.candidate_params(problem, num_cores, level, n_ops=n)
     if level == 'full' and n > 6000 and problem == 1 and not use_fast:
         grid = grid[:8]          # P1 大图裁剪候选集（官方 P1 评估很慢），保证求解时间可控
     if use_fast:

@@ -1,0 +1,12 @@
+{
+ "OP_MAX_N": null,
+ "rule": "当 OP_MAX_N 为空或 g.n < OP_MAX_N 时才追加 op 候选；OP_MAX_N 为空表示不限制图规模。",
+ "pilot_source": "results/pilot_op.csv (pilot20, 问题 2/3, N=2..5)",
+ "op_candidates_total": 716,
+ "op_candidates_feasible": 716,
+ "op_eval_s_max": 28.46,
+ "op_eval_s_median": 0.938,
+ "threshold_s": 120,
+ "slow_cases_over_threshold": [],
+ "note": "pilot20 已覆盖 3 个 P1 大图用例 case_014/076/091 的问题 2/3 op 候选，无一超过 120s，故不设规模上限。"
+}

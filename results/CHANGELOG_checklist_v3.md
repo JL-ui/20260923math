@@ -273,3 +273,54 @@ T06 提交后发现遗漏了 `run_experiments.py --stage main/p3` 重跑产生�
   （仍为 12 个候选，逐一官方评估）。
 * 回归：P2 58984、P1 116868、搬运量 90/90 一致。
 * 改动文件：`solution/npu/algorithms.py`、`solution/npu/experiment.py`。
+
+## T11 单算子子图 + 容量感知表调度 — 完成（用户 A 档执行计划步骤 2）
+
+* `solution/npu/listsched.py`（已在前序会话写好，本次沿用）：`schedule(g, core_of_op,
+  levels, problem, cfg, alpha, mu, nu, noise, seed, num_cores)`——HEFT 式上行秩
+  + 片上驻留代价 `mu·Δlive/cap` + 流水互补奖励 `nu`，容量约束 `alpha×容量`，
+  可行候选用 score 最大者、无可行候选退回 `Δlive` 最小者；核内按开始时刻最早提交
+  （全局申请序）；最终按 `(levels[v], 追加位置)` 稳定重排。
+* `solution/npu/algorithms.py`：
+  - 新增 `_plan_op_mode(...)`：`core_of_op` 由块分配得到，层指派按 `level_mode`
+    （复用 T12 的 `levels.assign_levels`）；调用 `listsched.schedule` 得到每核算子
+    全序；子图 id 按 `(层次, 核编号, 核内位置)` 全局排序分配（保证每核 sid 升序
+    即为调度序，满足 `stratify` 的性质 P1）；
+  - `cap_ls` 新增 `subgraph_mode='op'` 分支及 `alpha=0.8, mu=0.0, nu=0.0, noise=0.0`
+    四个参数；
+  - `candidate_params` 新增 `n_ops=None` 参数与 `_op_max_n()`（读
+    `results/pilot_op_gate.json` 的 `OP_MAX_N`，文件不存在时视为 `None`）；
+    `problem in (2,3)` 且 `OP_MAX_N is None or n_ops is None or n_ops < OP_MAX_N`
+    时追加 4 个固定顺序的 op 候选（`alpha=0.8,mu=1.0,nu=0.5`／`alpha=1.0,mu=1.0,nu=0.5`／
+    `alpha=0.8,mu=0.0,nu=0.0`／`block_cap=0.15,alpha=0.8,mu=1.0,nu=0.5`）；P1 不追加。
+  - `solution/npu/experiment.py`、`solution/solve.py` 的 `candidate_params(...)`
+    调用处传入 `n_ops=g.n`。
+* 试点：`run_experiments.py --stage main --problems 2 3 --cases <pilot20>` →
+  `results/pilot_op.csv`（3040 行，299.5 s）。716 个 op 候选**全部可行**，
+  `eval_s` 最大 28.46 s（远低于 120 s 阈值，pilot20 已含 3 个 P1 大图用例的
+  P2/P3 op 候选）。判定：`OP_MAX_N = null`（不限制图规模），写入
+  `results/pilot_op_gate.json`。
+* 全量重跑（P2/P3）：`main`（15200 行，841 s）→ `merge_main`（P1 沿用 4464 行）→
+  `p3`（8200 行，242.9 s）→ `build_pool.py --jobs 16`（1200 行，1149 s）。
+* 验收（`solution/check_op_mode.py`，新建；输出 `results/op_mode_report.json`）：
+  - `feasible = 3200/3200 = 100%`；
+  - 各问题各 N 算术平均对比 T12：P1 不变（本步骤未重跑 P1）；
+    P2 N=2..5：1.8882→2.0563、2.6746→2.8696、3.3899→3.6086、3.9965→4.2127；
+    P3 N=2..5：1.8959→2.0581、2.6876→2.8768、3.4257→3.6523、4.0586→4.2785；
+    全部提升 5%–9%，无一退步；
+  - op 候选成为冠军的配置数：321 / 400（80.25%）；
+  - 按 ρmax 分层的 P2 算术平均加速比：ρ<0.2 为 3.5528，0.2≤ρ<0.5 为 3.0437，
+    ρ≥0.5 为 2.5014；
+  - case_001–case_005 的 P2 N=4 算术平均：3.5064（外部参照，逐用例
+    3.95/3.91/3.30/3.92/2.45）；
+  - P2 N=4 冠军的 spill 字节总和：341,936,448；
+  - `mu=1,nu=0.5` 对 `mu=0,nu=0` 的配对比较：n=800，胜 526／平 169／负 105，
+    `rel=+3.21%`，`p≈6.0e-69`——`mu/nu` 惩罚项确有显著正贡献。
+* 回归：P2 58984、P1 116868、搬运量 90/90 一致。
+* 改动文件：`solution/npu/algorithms.py`、`solution/npu/experiment.py`、
+  `solution/solve.py`、`solution/check_op_mode.py`（新）、`results/pilot_op.csv`（新）、
+  `results/pilot_op_gate.json`（新）、`results/op_mode_report.json`（新）、
+  `results/main.csv`、`results/main_p23.csv`、`results/p3_compare.csv`、
+  `results/final.csv`、`results/pool.csv`、`results/plans_final/`、`results/final_plans/`、
+  `results/summary.json`、`paper/tables/*`、`figures/*`、
+  `results/baseline_snapshot/main_before_T11.csv`（新）。

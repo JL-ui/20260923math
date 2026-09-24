@@ -18,7 +18,7 @@ from __future__ import annotations
 import random
 from collections import defaultdict
 
-from . import assign, evaluate, graphlib, partition, paths, stratify
+from . import assign, evaluate, graphlib, listsched, partition, paths, stratify
 
 
 # --------------------------------------------------------------------------
@@ -264,21 +264,51 @@ def _local_search(bs, state, num_cores, use_cache, passes=6, budget=None,
     return best
 
 
+def _plan_op_mode(g, bs, core_of_block, num_cores, problem, cfg,
+                  alpha, mu, nu, noise, seed, level_mode='asap'):
+    """单算子子图：每个算子一个子图，核内全序由 listsched.schedule 给出。
+
+    子图 id 按 (层次, 核编号, 核内位置) 递增分配，满足 stratify 的性质 P1
+    （核内每个核的 sid 升序即为 listsched 给出的调度序）。
+    """
+    core_of_op = {v: core_of_block[bs.block_of[v]] for v in g.nodes}
+    if level_mode == 'asap':
+        levels = stratify.cross_core_levels(g, core_of_op)
+    else:
+        from . import levels as levels_mod
+        levels = levels_mod.assign_levels(g, core_of_op, level_mode)
+    orders = listsched.schedule(g, core_of_op, levels, problem, cfg,
+                                alpha, mu, nu, noise=noise, seed=seed,
+                                num_cores=num_cores)
+    pos_in_core = {}
+    for order in orders:
+        for i, v in enumerate(order):
+            pos_in_core[v] = i
+    ops_sorted = sorted(g.nodes,
+                       key=lambda v: (levels[v], core_of_op[v], pos_in_core[v]))
+    mapping = {v: sid for sid, v in enumerate(ops_sorted)}
+    schedules = [sorted(mapping[v] for v in order) for order in orders]
+    return evaluate.make_plan(mapping, schedules)
+
+
 def cap_ls(g, num_cores, problem, block_cap=0.35, comm_weight=0.0,
            local_search=True, use_affinity=True, use_cache_aware=None,
            sync_weight=None, max_ops=None, max_work=None,
            cores_used=None, init='lpt', subgraph_mode='level', seed=0,
-           level_mode='asap', _return_cost=False, **kw):
+           level_mode='asap', alpha=0.8, mu=0.0, nu=0.0, noise=0.0,
+           _return_cost=False, **kw):
     """主算法。
 
     ``init``           分配初始解：``lpt`` 最大优先装箱 / ``rr`` 轮转（多起点）；
     ``subgraph_mode``  子图成形：``level`` 按 (核心, 跨核同步层次) /
-                       ``block`` 直接以块为子图（细粒度，保留 σ 顺序）；
+                       ``block`` 直接以块为子图（细粒度，保留 σ 顺序）/
+                       ``op`` 单算子子图 + 容量感知表调度（见 ``listsched``）；
     ``cores_used``     只使用前 c 个核（自适应降并行度，用于通信受限的图）；
-    ``level_mode``     子图分层方式（``subgraph_mode='level'`` 时生效）：``asap``
-                       （默认，跨核同步层次的最小合法层）/ ``alap_fill``
+    ``level_mode``     子图分层方式（``subgraph_mode`` 为 ``level``/``op`` 时生效）：
+                       ``asap``（默认，跨核同步层次的最小合法层）/ ``alap_fill``
                        （尽量后移、按核内负载均衡填充）/ ``compress``
-                       （ASAP 后合并过薄层）/ ``alap_compress``（先 alap_fill 再合并）。
+                       （ASAP 后合并过薄层）/ ``alap_compress``（先 alap_fill 再合并）；
+    ``alpha,mu,nu,noise``  仅 ``subgraph_mode='op'`` 时生效，见 ``listsched.schedule``；
     ``_return_cost``   True 时返回 ``(plan, cost)``，``cost`` 为局部搜索内部用的
                        ``TrafficState.cost()`` 解析估计（单核退化时为 0.0）；
                        仅供 大图 P1 的代理排序兜底使用，不作为任何正式指标。
@@ -311,6 +341,9 @@ def cap_ls(g, num_cores, problem, block_cap=0.35, comm_weight=0.0,
         core = state.core
     if subgraph_mode == 'block':
         plan = _plan_blocks_as_subgraphs(bs, core, num_cores)
+    elif subgraph_mode == 'op':
+        plan = _plan_op_mode(g, bs, core, num_cores, problem, cfg,
+                             alpha, mu, nu, noise, seed, level_mode=level_mode)
     else:
         plan = _plan_from_core_map(g, bs, core, num_cores,
                                    max_ops=max_ops, max_work=max_work,
@@ -322,7 +355,29 @@ def cap_ls(g, num_cores, problem, block_cap=0.35, comm_weight=0.0,
 # 多起点候选集
 # --------------------------------------------------------------------------
 
-def candidate_params(problem: int, num_cores: int, level: str = 'full'):
+_OP_MAX_N = 'unset'
+
+
+def _op_max_n():
+    """试点判定的单算子子图适用上限（results/pilot_op_gate.json 的 OP_MAX_N）。
+
+    文件不存在或字段缺失时视为 ``None``（不限制）。进程内缓存一次。
+    """
+    global _OP_MAX_N
+    if _OP_MAX_N == 'unset':
+        gate = paths.RESULTS_DIR / 'pilot_op_gate.json'
+        if gate.is_file():
+            import json
+            try:
+                _OP_MAX_N = json.loads(gate.read_text(encoding='utf-8')).get('OP_MAX_N')
+            except (json.JSONDecodeError, OSError):
+                _OP_MAX_N = None
+        else:
+            _OP_MAX_N = None
+    return _OP_MAX_N
+
+
+def candidate_params(problem: int, num_cores: int, level: str = 'full', n_ops=None):
     if num_cores <= 1:
         return [dict(block_cap=0.35),
                 dict(block_cap=0.35, max_ops=2000),
@@ -352,6 +407,19 @@ def candidate_params(problem: int, num_cores: int, level: str = 'full'):
         dict(block_cap=0.35, init='rr', level_mode='alap_fill'),
         dict(block_cap=0.35, init='rr', level_mode='alap_compress'),
     ]
+    if problem in (2, 3):
+        op_max_n = _op_max_n()
+        if op_max_n is None or n_ops is None or n_ops < op_max_n:
+            grid += [
+                dict(block_cap=0.35, init='rr', subgraph_mode='op',
+                    alpha=0.8, mu=1.0, nu=0.5),
+                dict(block_cap=0.35, init='rr', subgraph_mode='op',
+                    alpha=1.0, mu=1.0, nu=0.5),
+                dict(block_cap=0.35, init='rr', subgraph_mode='op',
+                    alpha=0.8, mu=0.0, nu=0.0),
+                dict(block_cap=0.15, init='rr', subgraph_mode='op',
+                    alpha=0.8, mu=1.0, nu=0.5),
+            ]
     return grid
 
 
