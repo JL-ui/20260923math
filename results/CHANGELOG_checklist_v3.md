@@ -44,3 +44,13 @@
   * `grep -n "geomean(" plots.py` → 第 93（def）、771（敏感性）、841（下界）行。
 * 回归：P2 58984、P1 116868、搬运量 90/90 一致。
 * 改动文件：`solution/npu/plots.py`、`solution/make_report.py`、`solution/fill_paper.py`、`solution/digest.py`、`SOLUTION.md`、`results/summary.json`、`figures/*.png`（12 张重绘）、`paper/论文_完整.md`（重新装配）。
+
+## T03 分层抽样规则 — 完成
+
+* 新建 `solution/sample_cases.py`，输出 `results/samples.json`（`pilot20`、`study30`、`l2_strata=[]`、`rule`）。样本内按用例名升序存储；JSON 以 ASCII 转义写出，使规格中不带 `encoding` 的 `json.load(open(...))` 在 Windows（GBK 默认编码）下也能读取。
+* `solution/run_all.sh`：粒度与敏感性阶段的 `--cases` 改为 `$STUDY30`（一行 `python -c` 从 `samples.json` 读取）。
+* 验收输出：`20 30 分层：按最大连通分量占比 ρmax 分为 rho<0.2 / 0.2<=rho<`；两次运行 md5 均为 `bae9323933e0bce56d31ea169fd0e184`。
+* 分层核对：pilot20 = 12/2/6，study30 = 18/4/8；n_ops 最大的 `case_014`(35705)、`case_076`(32528)、`case_091`(31554) 均在 pilot20 中。
+* pilot20：case_006 case_007 case_014 case_015 case_020 case_021 case_034 case_043 case_053 case_065 case_066 case_071 case_074 case_076 case_086 case_088 case_091 case_093 case_094 case_096。
+* 回归：P2 58984、P1 116868、搬运量 90/90 一致。
+* 改动文件：`solution/sample_cases.py`（新）、`results/samples.json`（新）、`solution/run_all.sh`。

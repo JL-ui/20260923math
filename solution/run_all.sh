@@ -31,19 +31,17 @@ run baseline  --stage baseline
 # 5) 消融
 run ablation  --stage ablation
 
+# 分层抽样的 study30 子集（由 solution/sample_cases.py 生成，规则见 results/samples.json 的 rule 字段）
+STUDY30=$(python -c "import json;print(' '.join(json.load(open('results/samples.json'))['study30']))")
+
 # 6) 切图粒度敏感性（子集）
 run granularity --stage granularity --problems 1 2 3 --cores 4 \
-    --cases case_001 case_003 case_005 case_007 case_009 case_012 case_014 \
-            case_016 case_019 case_020 case_024 case_025 case_028 case_030 \
-            case_040 case_047 case_050 case_062 case_071 case_080 case_085 \
-            case_088 case_092 case_097 case_100 \
+    --cases $STUDY30 \
     --out results/granularity.csv
 
 # 7) 硬件参数敏感性（研究性，不用于正式成绩）
 run sensitivity --stage sensitivity --cores 4 \
-    --cases case_001 case_003 case_005 case_007 case_009 case_012 case_016 \
-            case_019 case_020 case_024 case_025 case_047 case_062 case_071 \
-            case_085 case_088 case_097 case_100 \
+    --cases $STUDY30 \
     --out results/sensitivity.csv
 
 echo "=== $(date +%H:%M:%S)  all stages done ===" | tee -a "$LOG"
