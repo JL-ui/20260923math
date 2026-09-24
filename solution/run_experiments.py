@@ -19,7 +19,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from npu import algorithms, evaluate, experiment, paths        # noqa: E402
+from npu import algorithms, evaluate, experiment, paths, variants  # noqa: E402
 
 CORES = (2, 3, 4, 5)
 PROBLEMS = (1, 2, 3)
@@ -65,15 +65,7 @@ def task_p3(case, ncores):
     return recs
 
 
-ABLATIONS = {
-    'full': dict(),
-    'no_comm': dict(use_affinity=False),
-    'no_balance': dict(comm_weight=0.0, local_search=False, _rr=True),
-    'no_sync': dict(sync_weight=0.0),
-    'no_localsearch': dict(local_search=False),
-    'no_cache_aware': dict(use_cache_aware=False),
-    'no_level': dict(_no_level=True),
-}
+ABLATIONS = variants.ABLATIONS
 
 
 SENSITIVITY = {
@@ -144,42 +136,15 @@ def task_granularity(case, problem, ncores):
 
 
 def task_ablation(case, problem, ncores):
-    from npu import graphlib, partition, assign, stratify
     g = experiment.get_graph(case)
     base = evaluate.singlecore_baseline(case)
     out = []
-    for name, params in ABLATIONS.items():
-        params = dict(params)
-        rr = params.pop('_rr', False)
-        no_level = params.pop('_no_level', False)
+    for name in ABLATIONS:
         t0 = time.perf_counter()
         try:
-            if rr or no_level:
-                cfg = paths.official_config()
-                bs = partition.make_blocks(
-                    g, ncores, block_cap=params.get('block_cap', 0.35),
-                    use_affinity=params.get('use_affinity', True))
-                if rr:
-                    core = assign.round_robin_assign(bs, ncores)
-                else:
-                    core = assign.lpt_assign(bs, ncores)
-                    state = algorithms.TrafficState(
-                        bs, core, ncores, cfg,
-                        sync_penalty=(cfg['task_cross_core_wait_cycles']
-                                      if problem == 1
-                                      else cfg['cross_core_copy_delay_cycles']),
-                        cache_capacity=(cfg['cache_capacity_bytes']
-                                        if problem == 3 else 0))
-                    algorithms._local_search(bs, state, ncores, problem == 3)
-                    core = state.core
-                if no_level:
-                    plan = algorithms._plan_blocks_as_subgraphs(bs, core, ncores)
-                else:
-                    plan = algorithms._plan_from_core_map(g, bs, core, ncores)
-            else:
-                plan = algorithms.cap_ls(g, ncores, problem, **params)
+            plan = variants.ablation_plan(g, name, problem, ncores)
             runtime = time.perf_counter() - t0
-            res = evaluate.evaluate_plan(problem, case, evaluate.canonical_plan(plan))
+            res = evaluate.default_cache().evaluate(problem, case, plan)
         except Exception as exc:                                # noqa: BLE001
             out.append({'case': case, 'problem': problem, 'num_cores': ncores,
                         'algorithm': 'ablation', 'variant': name,

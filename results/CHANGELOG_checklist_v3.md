@@ -54,3 +54,20 @@
 * pilot20：case_006 case_007 case_014 case_015 case_020 case_021 case_034 case_043 case_053 case_065 case_066 case_071 case_074 case_076 case_086 case_088 case_091 case_093 case_094 case_096。
 * 回归：P2 58984、P1 116868、搬运量 90/90 一致。
 * 改动文件：`solution/sample_cases.py`（新）、`results/samples.json`（新）、`solution/run_all.sh`。
+
+## T05 变体方案生成器统一化 — 完成（提交顺序先于 T04）
+
+* 说明：T05 仅依赖 T00；经用户确认，在 T04 全量运行（大图 P1 官方评估耗时数小时）期间先行提交 T05，T04 在运行结束后补提交。
+* 新建 `solution/npu/variants.py`：`LABELS(problem, N)`（c0…c{k-1}、b_random/topo/balance/comm、a_full…a_no_level、g_0.03…g_2.0、single，顺序固定）、`label_params`、`ablation_plan`（原 `run_experiments.task_ablation` 第 157–180 行的构造逻辑原样迁入，含 `ABLATIONS` 表）、`build`（一律返回 `canonical_plan`）。
+* `solution/run_experiments.py`：`ABLATIONS = variants.ABLATIONS`；`task_ablation` 改为调用 `variants.ablation_plan`，评估由 `evaluate.evaluate_plan(...)` 改为 `evaluate.default_cache().evaluate(...)`（0.1 第 4 条）。
+* 新建 `solution/check_variants.py`（保留在仓库）。
+* 验收输出：
+  ```
+  case_001: 31 labels, 12 portfolio candidates compared
+  case_016: 31 labels, 8 portfolio candidates compared
+  case_044: 31 labels, 12 portfolio candidates compared
+  ALL OK
+  ```
+  （case_016 有 17995 个算子，现行 run_portfolio 对 n>6000 只保留前 8 个候选，故比较 8 个。）
+* 回归：P2 58984、P1 116868、搬运量 90/90 一致。
+* 改动文件：`solution/npu/variants.py`（新）、`solution/check_variants.py`（新）、`solution/run_experiments.py`。
