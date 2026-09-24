@@ -1,0 +1,628 @@
+case_074       makespan=     1682239 added=   6070280 feasible=True 0.0s
+case_073       makespan=    10081626 added= 141570432 feasible=True 0.0s
+case_043       makespan=      677656 added=     49160 feasible=True 0.0s
+case_011       makespan=      184697 added=         0 feasible=True 0.0s
+case_072       makespan=    23897828 added= 108613680 feasible=True 0.0s
+case_042       makespan=     1686740 added=   6629376 feasible=True 0.0s
+case_005       makespan=       95618 added=         0 feasible=True 0.0s
+case_071       makespan=       18919 added=         0 feasible=True 0.0s
+case_041       makespan=     6003957 added=  30898176 feasible=True 0.0s
+case_014       makespan=    17698626 added=  71010720 feasible=True 0.0s
+case_040       makespan=      253454 added=         0 feasible=True 0.0s
+case_070       makespan=      117300 added=         0 feasible=True 0.0s
+case_039       makespan=     1435262 added=   7929856 feasible=True 0.0s
+case_069       makespan=       25144 added=         0 feasible=True 0.0s
+case_038       makespan=     1364555 added=   5627904 feasible=True 0.0s
+case_018       makespan=     1004367 added=   1970176 feasible=True 0.0s
+case_004       makespan=      392357 added=         0 feasible=True 0.0s
+case_067       makespan=    63834834 added= 264449408 feasible=True 0.0s
+case_037       makespan=      210001 added=         0 feasible=True 0.0s
+case_019       makespan=       81144 added=         0 feasible=True 0.0s
+case_066       makespan=      359070 added=         0 feasible=True 0.0s
+case_036       makespan=      931510 added=         0 feasible=True 0.0s
+case_017       makespan=      162810 added=     22528 feasible=True 0.0s
+case_065       makespan=       53068 added=         0 feasible=True 0.0s
+case_035       makespan=      169571 added=         0 feasible=True 0.0s
+case_003       makespan=      602212 added=         0 feasible=True 0.0s
+case_016       makespan=     7715523 added=         0 feasible=True 0.0s
+case_064       makespan=       19116 added=         0 feasible=True 0.0s
+case_034       makespan=      842996 added=   1079832 feasible=True 0.0s
+case_033       makespan=     1774196 added=   4592640 feasible=True 0.0s
+case_063       makespan=     1070397 added=         0 feasible=True 0.0s
+case_032       makespan=       41443 added=         0 feasible=True 0.0s
+case_062       makespan=     2854809 added=         0 feasible=True 0.0s
+case_031       makespan=     1414369 added=   3491328 feasible=True 0.0s
+case_001       makespan=      233110 added=         0 feasible=True 0.0s
+case_061       makespan=       77191 added=         0 feasible=True 0.0s
+case_030       makespan=     2808034 added=   5519360 feasible=True 0.0s
+case_015       makespan=      177362 added=    180256 feasible=True 0.0s
+case_060       makespan=      888789 added=   2068520 feasible=True 0.0s
+case_002       makespan=      261945 added=         0 feasible=True 0.0s
+case_008       makespan=      487605 added=         0 feasible=True 0.0s
+case_029       makespan=       37555 added=         0 feasible=True 0.0s
+case_059       makespan=      829473 added=   1691648 feasible=True 0.0s
+case_028       makespan=    43836040 added= 277412256 feasible=True 0.0s
+case_058       makespan=     4539717 added=  28696576 feasible=True 0.0s
+case_021       makespan=     6567937 added=   4501504 feasible=True 0.0s
+case_027       makespan=     2363952 added=   1400832 feasible=True 0.0s
+case_057       makespan=       59726 added=     94216 feasible=True 0.0s
+case_006       makespan=       82837 added=     16400 feasible=True 0.0s
+case_026       makespan=       99203 added=         0 feasible=True 0.0s
+case_056       makespan=      277285 added=         0 feasible=True 0.0s
+case_020       makespan=      532746 added=         0 feasible=True 0.0s
+case_025       makespan=     4863026 added=         0 feasible=True 0.0s
+case_055       makespan=      118835 added=     69632 feasible=True 0.0s
+case_007       makespan=     1012562 added=         0 feasible=True 0.0s
+case_054       makespan=      815051 added=         0 feasible=True 0.0s
+case_053       makespan=     1472686 added=   5405536 feasible=True 0.0s
+case_024       makespan=     2555343 added=         0 feasible=True 0.0s
+case_052       makespan=      180301 added=         0 feasible=True 0.0s
+case_023       makespan=      122614 added=         0 feasible=True 0.0s
+case_010       makespan=       86969 added=         0 feasible=True 0.0s
+case_051       makespan=      607628 added=         0 feasible=True 0.0s
+case_081       makespan=      151795 added=         0 feasible=True 0.0s
+case_050       makespan=      149690 added=         0 feasible=True 0.0s
+case_009       makespan=      153261 added=         0 feasible=True 0.0s
+case_080       makespan=      292138 added=    548864 feasible=True 0.0s
+case_049       makespan=      196276 added=         0 feasible=True 0.0s
+case_068       makespan=      362095 added=         0 feasible=True 0.0s
+case_079       makespan=    31052251 added=  32448512 feasible=True 0.0s
+case_048       makespan=      222220 added=         0 feasible=True 0.0s
+case_078       makespan=     2296143 added=  12644568 feasible=True 0.0s
+case_047       makespan=      326508 added=         0 feasible=True 0.0s
+case_022       makespan=       56780 added=         0 feasible=True 0.0s
+case_077       makespan=      495320 added=         0 feasible=True 0.0s
+case_046       makespan=      276455 added=   3176288 feasible=True 0.0s
+case_012       makespan=       59088 added=         0 feasible=True 0.0s
+case_045       makespan=      125614 added=         0 feasible=True 0.0s
+case_076       makespan=     6185113 added=  28280832 feasible=True 0.0s
+case_075       makespan=     1441809 added=         0 feasible=True 0.0s
+case_044       makespan=      154407 added=   4438112 feasible=True 0.0s
+case_013       makespan=      263949 added=         0 feasible=True 0.0s
+case_082       makespan=      721041 added=         0 feasible=True 0.0s
+case_083       makespan=     1057993 added=  13934688 feasible=True 0.0s
+case_085       makespan=     3187899 added=         0 feasible=True 0.0s
+case_084       makespan=     2507412 added=         0 feasible=True 0.0s
+case_087       makespan=     3974071 added=   7902720 feasible=True 0.0s
+case_086       makespan=      118403 added=         0 feasible=True 0.0s
+case_089       makespan=      693092 added=         0 feasible=True 0.0s
+case_090       makespan=     1178363 added=  21233592 feasible=True 0.0s
+case_091       makespan=     9186769 added=  53947008 feasible=True 0.0s
+case_088       makespan=      243623 added=         0 feasible=True 0.0s
+case_093       makespan=       74205 added=         0 feasible=True 0.0s
+case_092       makespan=     4815554 added=  66000096 feasible=True 0.0s
+case_094       makespan=       94892 added=         0 feasible=True 0.0s
+case_096       makespan=       84194 added=         0 feasible=True 0.0s
+case_095       makespan=     2084853 added=         0 feasible=True 0.0s
+case_097       makespan=    11491509 added=  10584064 feasible=True 0.0s
+case_098       makespan=      177430 added=         0 feasible=True 0.0s
+case_099       makespan=     1622999 added=   5484544 feasible=True 0.0s
+case_100       makespan=      151223 added=         0 feasible=True 0.0s
+
+wrote C:\Users\13985\Desktop\x\results\singlecore_baseline.json infeasible: []
+=== 19:38:53  stage=n1 ===
+[n1] 10/300 tasks  0.5s  rows=10
+[n1] 20/300 tasks  0.9s  rows=20
+[n1] 30/300 tasks  1.5s  rows=30
+[n1] 40/300 tasks  2.7s  rows=40
+[n1] 50/300 tasks  4.6s  rows=50
+[n1] 60/300 tasks  6.4s  rows=60
+[n1] 70/300 tasks  8.6s  rows=70
+[n1] 80/300 tasks  14.2s  rows=80
+[n1] 90/300 tasks  16.8s  rows=90
+[n1] 100/300 tasks  18.8s  rows=100
+[n1] 110/300 tasks  21.7s  rows=110
+[n1] 120/300 tasks  27.7s  rows=120
+[n1] 130/300 tasks  34.0s  rows=130
+[n1] 140/300 tasks  38.6s  rows=140
+[n1] 150/300 tasks  43.8s  rows=150
+[n1] 160/300 tasks  53.5s  rows=160
+[n1] 170/300 tasks  63.6s  rows=170
+[n1] 180/300 tasks  72.3s  rows=180
+[n1] 190/300 tasks  82.9s  rows=190
+[n1] 200/300 tasks  84.1s  rows=200
+[n1] 210/300 tasks  99.6s  rows=210
+[n1] 220/300 tasks  109.6s  rows=220
+[n1] 230/300 tasks  121.8s  rows=230
+[n1] 240/300 tasks  130.1s  rows=240
+[n1] 250/300 tasks  145.3s  rows=250
+[n1] 260/300 tasks  184.0s  rows=260
+[n1] 270/300 tasks  202.7s  rows=270
+[n1] 280/300 tasks  209.6s  rows=280
+[n1] 290/300 tasks  284.1s  rows=290
+[n1] 300/300 tasks  681.2s  rows=300
+wrote C:\Users\13985\Desktop\x\results\n1.csv 300 rows in 682.8s
+=== 19:50:16  stage=main ===
+[main] 10/1200 tasks  1.4s  rows=130
+[main] 20/1200 tasks  6.1s  rows=260
+[main] 30/1200 tasks  8.9s  rows=390
+[main] 40/1200 tasks  20.0s  rows=488
+[main] 50/1200 tasks  28.4s  rows=570
+[main] 60/1200 tasks  30.7s  rows=692
+[main] 70/1200 tasks  36.9s  rows=822
+[main] 80/1200 tasks  39.6s  rows=952
+[main] 90/1200 tasks  41.4s  rows=1074
+[main] 100/1200 tasks  47.4s  rows=1204
+[main] 110/1200 tasks  52.4s  rows=1334
+[main] 120/1200 tasks  55.6s  rows=1464
+[main] 130/1200 tasks  60.6s  rows=1594
+[main] 140/1200 tasks  63.3s  rows=1724
+[main] 150/1200 tasks  68.1s  rows=1854
+[main] 160/1200 tasks  74.1s  rows=1984
+[main] 170/1200 tasks  109.6s  rows=2098
+[main] 180/1200 tasks  123.0s  rows=2156
+[main] 190/1200 tasks  128.3s  rows=2246
+[main] 200/1200 tasks  132.3s  rows=2344
+[main] 210/1200 tasks  140.0s  rows=2474
+[main] 220/1200 tasks  142.9s  rows=2604
+[main] 230/1200 tasks  152.4s  rows=2710
+[main] 240/1200 tasks  163.0s  rows=2816
+[main] 250/1200 tasks  169.1s  rows=2946
+[main] 260/1200 tasks  173.0s  rows=3076
+[main] 270/1200 tasks  177.0s  rows=3206
+[main] 280/1200 tasks  192.5s  rows=3336
+[main] 290/1200 tasks  215.5s  rows=3434
+[main] 300/1200 tasks  219.2s  rows=3540
+[main] 310/1200 tasks  226.8s  rows=3662
+[main] 320/1200 tasks  259.7s  rows=3760
+[main] 330/1200 tasks  291.0s  rows=3858
+[main] 340/1200 tasks  349.6s  rows=3964
+[main] 350/1200 tasks  456.7s  rows=4042
+[main] 360/1200 tasks  511.2s  rows=4136
+[main] 370/1200 tasks  519.8s  rows=4262
+[main] 380/1200 tasks  545.2s  rows=4368
+[main] 390/1200 tasks  568.4s  rows=4490
+[main] 400/1200 tasks  591.3s  rows=4616
+[main] 410/1200 tasks  608.3s  rows=4746
+[main] 420/1200 tasks  615.1s  rows=4876
+[main] 430/1200 tasks  619.2s  rows=5006
+[main] 440/1200 tasks  644.8s  rows=5136
+[main] 450/1200 tasks  686.7s  rows=5266
+[main] 460/1200 tasks  712.6s  rows=5388
+[main] 470/1200 tasks  733.1s  rows=5518
+[main] 480/1200 tasks  768.7s  rows=5616
+[main] 490/1200 tasks  813.8s  rows=5714
+[main] 500/1200 tasks  872.7s  rows=5828
+[main] 510/1200 tasks  889.1s  rows=5934
+[main] 520/1200 tasks  896.3s  rows=6064
+[main] 530/1200 tasks  901.2s  rows=6190
+[main] 540/1200 tasks  905.8s  rows=6316
+[main] 550/1200 tasks  935.4s  rows=6398
+[main] 560/1200 tasks  953.6s  rows=6496
+[main] 570/1200 tasks  974.8s  rows=6610
+[main] 580/1200 tasks  992.8s  rows=6740
+[main] 590/1200 tasks  1010.2s  rows=6870
+[main] 600/1200 tasks  1015.1s  rows=7000
+[main] 610/1200 tasks  1019.8s  rows=7130
+[main] 620/1200 tasks  1057.7s  rows=7244
+[main] 630/1200 tasks  1114.2s  rows=7326
+[main] 640/1200 tasks  1134.7s  rows=7408
+[main] 650/1200 tasks  1143.1s  rows=7522
+[main] 660/1200 tasks  1168.2s  rows=7608
+[main] 670/1200 tasks  1175.6s  rows=7730
+[main] 680/1200 tasks  1210.4s  rows=7816
+[main] 690/1200 tasks  1248.9s  rows=7914
+[main] 700/1200 tasks  1318.3s  rows=8020
+[main] 710/1200 tasks  1344.4s  rows=8150
+[main] 720/1200 tasks  1351.6s  rows=8280
+[main] 730/1200 tasks  1424.4s  rows=8354
+[main] 740/1200 tasks  1474.0s  rows=8424
+[main] 750/1200 tasks  1495.4s  rows=8530
+[main] 760/1200 tasks  1501.1s  rows=8660
+[main] 770/1200 tasks  1504.7s  rows=8790
+[main] 780/1200 tasks  1548.0s  rows=8908
+[main] 790/1200 tasks  1574.6s  rows=9014
+[main] 800/1200 tasks  1605.3s  rows=9120
+[main] 810/1200 tasks  1617.9s  rows=9250
+[main] 820/1200 tasks  1626.8s  rows=9380
+[main] 830/1200 tasks  1631.0s  rows=9510
+[main] 840/1200 tasks  1636.4s  rows=9640
+[main] 850/1200 tasks  1708.4s  rows=9722
+[main] 860/1200 tasks  1755.6s  rows=9820
+[main] 870/1200 tasks  1791.7s  rows=9950
+[main] 880/1200 tasks  1830.9s  rows=10072
+[main] 890/1200 tasks  1878.7s  rows=10162
+[main] 900/1200 tasks  2062.5s  rows=10220
+[main] 910/1200 tasks  2140.4s  rows=10350
+[main] 920/1200 tasks  2161.0s  rows=10480
+[main] 930/1200 tasks  2547.5s  rows=10554
+[main] 940/1200 tasks  2633.1s  rows=10652
+[main] 950/1200 tasks  2676.8s  rows=10782
+[main] 960/1200 tasks  2731.3s  rows=10904
+[main] 970/1200 tasks  2792.8s  rows=11034
+[main] 980/1200 tasks  2827.1s  rows=11156
+[main] 990/1200 tasks  2910.3s  rows=11262
+[main] 1000/1200 tasks  3027.6s  rows=11336
+[main] 1010/1200 tasks  3107.0s  rows=11402
+[main] 1020/1200 tasks  3183.3s  rows=11532
+[main] 1030/1200 tasks  3623.3s  rows=11582
+[main] 1040/1200 tasks  3687.3s  rows=11704
+[main] 1050/1200 tasks  3746.9s  rows=11834
+[main] 1060/1200 tasks  3775.3s  rows=11964
+[main] 1070/1200 tasks  4539.3s  rows=12070
+[main] 1080/1200 tasks  4771.5s  rows=12120
+[main] 1090/1200 tasks  4956.1s  rows=12178
+[main] 1100/1200 tasks  4964.3s  rows=12300
+[main] 1110/1200 tasks  4970.9s  rows=12422
+[main] 1120/1200 tasks  5004.9s  rows=12544
+[main] 1130/1200 tasks  5027.1s  rows=12666
+[main] 1140/1200 tasks  5035.9s  rows=12796
+[main] 1150/1200 tasks  5086.9s  rows=12890
+[main] 1160/1200 tasks  5097.4s  rows=13008
+[main] 1170/1200 tasks  5153.2s  rows=13118
+[main] 1180/1200 tasks  5171.9s  rows=13220
+[main] 1190/1200 tasks  5241.0s  rows=13342
+[main] 1200/1200 tasks  6821.5s  rows=13392
+wrote C:\Users\13985\Desktop\x\results\main.csv 13392 rows in 6829.0s
+=== 21:44:05  stage=p3 ===
+[p3] 10/500 tasks  0.7s  rows=80
+[p3] 20/500 tasks  1.4s  rows=196
+[p3] 30/500 tasks  2.2s  rows=304
+[p3] 40/500 tasks  3.1s  rows=420
+[p3] 50/500 tasks  4.4s  rows=528
+[p3] 60/500 tasks  6.0s  rows=636
+[p3] 70/500 tasks  8.7s  rows=752
+[p3] 80/500 tasks  10.1s  rows=852
+[p3] 90/500 tasks  11.5s  rows=944
+[p3] 100/500 tasks  12.5s  rows=1044
+[p3] 110/500 tasks  13.7s  rows=1140
+[p3] 120/500 tasks  14.9s  rows=1244
+[p3] 130/500 tasks  16.1s  rows=1352
+[p3] 140/500 tasks  17.5s  rows=1452
+[p3] 150/500 tasks  19.4s  rows=1536
+[p3] 160/500 tasks  21.8s  rows=1636
+[p3] 170/500 tasks  23.2s  rows=1736
+[p3] 180/500 tasks  24.0s  rows=1844
+[p3] 190/500 tasks  26.3s  rows=1960
+[p3] 200/500 tasks  28.7s  rows=2068
+[p3] 210/500 tasks  31.3s  rows=2176
+[p3] 220/500 tasks  33.0s  rows=2280
+[p3] 230/500 tasks  34.8s  rows=2384
+[p3] 240/500 tasks  37.2s  rows=2492
+[p3] 250/500 tasks  39.5s  rows=2596
+[p3] 260/500 tasks  41.7s  rows=2704
+[p3] 270/500 tasks  43.2s  rows=2796
+[p3] 280/500 tasks  45.4s  rows=2896
+[p3] 290/500 tasks  47.7s  rows=2988
+[p3] 300/500 tasks  49.3s  rows=3080
+[p3] 310/500 tasks  51.2s  rows=3180
+[p3] 320/500 tasks  52.6s  rows=3272
+[p3] 330/500 tasks  54.6s  rows=3364
+[p3] 340/500 tasks  56.0s  rows=3464
+[p3] 350/500 tasks  58.3s  rows=3576
+[p3] 360/500 tasks  60.1s  rows=3684
+[p3] 370/500 tasks  62.4s  rows=3796
+[p3] 380/500 tasks  65.2s  rows=3884
+[p3] 390/500 tasks  67.5s  rows=3996
+[p3] 400/500 tasks  69.6s  rows=4076
+[p3] 410/500 tasks  72.1s  rows=4184
+[p3] 420/500 tasks  74.3s  rows=4268
+[p3] 430/500 tasks  77.9s  rows=4360
+[p3] 440/500 tasks  81.1s  rows=4468
+[p3] 450/500 tasks  83.8s  rows=4568
+[p3] 460/500 tasks  84.9s  rows=4668
+[p3] 470/500 tasks  87.0s  rows=4752
+[p3] 480/500 tasks  88.0s  rows=4856
+[p3] 490/500 tasks  90.0s  rows=4960
+[p3] 500/500 tasks  93.7s  rows=5064
+wrote results\p3_compare.csv 5064 rows in 96.0s
+=== 21:45:41  stage=baseline ===
+[baseline] 10/1200 tasks  0.7s  rows=40
+[baseline] 20/1200 tasks  1.9s  rows=80
+[baseline] 30/1200 tasks  3.0s  rows=120
+[baseline] 40/1200 tasks  9.3s  rows=160
+[baseline] 50/1200 tasks  18.5s  rows=200
+[baseline] 60/1200 tasks  20.3s  rows=240
+[baseline] 70/1200 tasks  24.9s  rows=280
+[baseline] 80/1200 tasks  25.5s  rows=320
+[baseline] 90/1200 tasks  26.2s  rows=360
+[baseline] 100/1200 tasks  27.7s  rows=400
+[baseline] 110/1200 tasks  29.1s  rows=440
+[baseline] 120/1200 tasks  30.6s  rows=480
+[baseline] 130/1200 tasks  31.5s  rows=520
+[baseline] 140/1200 tasks  32.1s  rows=560
+[baseline] 150/1200 tasks  33.8s  rows=600
+[baseline] 160/1200 tasks  35.4s  rows=640
+[baseline] 170/1200 tasks  64.0s  rows=680
+[baseline] 180/1200 tasks  104.9s  rows=720
+[baseline] 190/1200 tasks  107.9s  rows=760
+[baseline] 200/1200 tasks  111.2s  rows=800
+[baseline] 210/1200 tasks  112.7s  rows=840
+[baseline] 220/1200 tasks  113.7s  rows=880
+[baseline] 230/1200 tasks  121.4s  rows=920
+[baseline] 240/1200 tasks  126.1s  rows=960
+[baseline] 250/1200 tasks  127.7s  rows=1000
+[baseline] 260/1200 tasks  128.6s  rows=1040
+[baseline] 270/1200 tasks  129.3s  rows=1080
+[baseline] 280/1200 tasks  133.4s  rows=1120
+[baseline] 290/1200 tasks  178.2s  rows=1160
+[baseline] 300/1200 tasks  179.7s  rows=1200
+[baseline] 310/1200 tasks  182.5s  rows=1240
+[baseline] 320/1200 tasks  227.1s  rows=1280
+[baseline] 330/1200 tasks  232.2s  rows=1320
+[baseline] 340/1200 tasks  260.0s  rows=1360
+[baseline] 350/1200 tasks  279.2s  rows=1400
+[baseline] 360/1200 tasks  287.5s  rows=1440
+[baseline] 370/1200 tasks  291.5s  rows=1480
+[baseline] 380/1200 tasks  298.1s  rows=1520
+[baseline] 390/1200 tasks  302.2s  rows=1560
+[baseline] 400/1200 tasks  308.6s  rows=1600
+[baseline] 410/1200 tasks  312.9s  rows=1640
+[baseline] 420/1200 tasks  315.3s  rows=1680
+[baseline] 430/1200 tasks  316.2s  rows=1720
+[baseline] 440/1200 tasks  317.2s  rows=1760
+[baseline] 450/1200 tasks  332.1s  rows=1800
+[baseline] 460/1200 tasks  340.3s  rows=1840
+[baseline] 470/1200 tasks  343.5s  rows=1880
+[baseline] 480/1200 tasks  361.2s  rows=1920
+[baseline] 490/1200 tasks  387.2s  rows=1960
+[baseline] 500/1200 tasks  400.4s  rows=2000
+[baseline] 510/1200 tasks  403.5s  rows=2040
+[baseline] 520/1200 tasks  406.1s  rows=2080
+[baseline] 530/1200 tasks  407.3s  rows=2120
+[baseline] 540/1200 tasks  408.4s  rows=2160
+[baseline] 550/1200 tasks  425.2s  rows=2200
+[baseline] 560/1200 tasks  433.8s  rows=2240
+[baseline] 570/1200 tasks  441.8s  rows=2280
+[baseline] 580/1200 tasks  445.9s  rows=2320
+[baseline] 590/1200 tasks  451.2s  rows=2360
+[baseline] 600/1200 tasks  452.5s  rows=2400
+[baseline] 610/1200 tasks  453.6s  rows=2440
+[baseline] 620/1200 tasks  454.1s  rows=2480
+[baseline] 630/1200 tasks  472.0s  rows=2520
+[baseline] 640/1200 tasks  485.3s  rows=2560
+[baseline] 650/1200 tasks  497.3s  rows=2600
+[baseline] 660/1200 tasks  501.9s  rows=2640
+[baseline] 670/1200 tasks  503.9s  rows=2680
+[baseline] 680/1200 tasks  511.1s  rows=2720
+[baseline] 690/1200 tasks  521.1s  rows=2760
+[baseline] 700/1200 tasks  545.1s  rows=2800
+[baseline] 710/1200 tasks  552.5s  rows=2840
+[baseline] 720/1200 tasks  554.9s  rows=2880
+[baseline] 730/1200 tasks  577.8s  rows=2920
+[baseline] 740/1200 tasks  602.8s  rows=2960
+[baseline] 750/1200 tasks  605.0s  rows=3000
+[baseline] 760/1200 tasks  607.4s  rows=3040
+[baseline] 770/1200 tasks  609.1s  rows=3080
+[baseline] 780/1200 tasks  617.6s  rows=3120
+[baseline] 790/1200 tasks  628.4s  rows=3160
+[baseline] 800/1200 tasks  631.8s  rows=3200
+[baseline] 810/1200 tasks  636.7s  rows=3240
+[baseline] 820/1200 tasks  638.0s  rows=3280
+[baseline] 830/1200 tasks  639.2s  rows=3320
+[baseline] 840/1200 tasks  639.8s  rows=3360
+[baseline] 850/1200 tasks  640.5s  rows=3400
+[baseline] 860/1200 tasks  661.0s  rows=3440
+[baseline] 870/1200 tasks  680.6s  rows=3480
+[baseline] 880/1200 tasks  699.1s  rows=3520
+[baseline] 890/1200 tasks  707.6s  rows=3560
+[baseline] 900/1200 tasks  790.0s  rows=3600
+[baseline] 910/1200 tasks  797.1s  rows=3640
+[baseline] 920/1200 tasks  801.0s  rows=3680
+[baseline] 930/1200 tasks  840.1s  rows=3720
+[baseline] 940/1200 tasks  852.9s  rows=3760
+[baseline] 950/1200 tasks  862.2s  rows=3800
+[baseline] 960/1200 tasks  879.9s  rows=3840
+[baseline] 970/1200 tasks  885.7s  rows=3880
+[baseline] 980/1200 tasks  893.5s  rows=3920
+[baseline] 990/1200 tasks  907.2s  rows=3960
+[baseline] 1000/1200 tasks  922.0s  rows=4000
+[baseline] 1010/1200 tasks  954.9s  rows=4040
+[baseline] 1020/1200 tasks  961.5s  rows=4080
+[baseline] 1030/1200 tasks  979.1s  rows=4120
+[baseline] 1040/1200 tasks  1002.2s  rows=4160
+[baseline] 1050/1200 tasks  1005.5s  rows=4200
+[baseline] 1060/1200 tasks  1008.6s  rows=4240
+[baseline] 1070/1200 tasks  1010.2s  rows=4280
+[baseline] 1080/1200 tasks  1081.8s  rows=4320
+[baseline] 1090/1200 tasks  1112.3s  rows=4360
+[baseline] 1100/1200 tasks  1114.7s  rows=4400
+[baseline] 1110/1200 tasks  1116.5s  rows=4440
+[baseline] 1120/1200 tasks  1122.8s  rows=4480
+[baseline] 1130/1200 tasks  1128.4s  rows=4520
+[baseline] 1140/1200 tasks  1130.1s  rows=4560
+[baseline] 1150/1200 tasks  1143.3s  rows=4600
+[baseline] 1160/1200 tasks  1146.2s  rows=4640
+[baseline] 1170/1200 tasks  1150.9s  rows=4680
+[baseline] 1180/1200 tasks  1159.3s  rows=4720
+[baseline] 1190/1200 tasks  1161.0s  rows=4760
+[baseline] 1200/1200 tasks  1296.7s  rows=4800
+wrote C:\Users\13985\Desktop\x\results\baseline.csv 4800 rows in 1303.2s
+=== 22:07:25  stage=ablation ===
+[ablation] 10/1200 tasks  1.1s  rows=70
+[ablation] 20/1200 tasks  2.9s  rows=140
+[ablation] 30/1200 tasks  4.9s  rows=210
+[ablation] 40/1200 tasks  16.6s  rows=280
+[ablation] 50/1200 tasks  29.3s  rows=350
+[ablation] 60/1200 tasks  31.6s  rows=420
+[ablation] 70/1200 tasks  39.8s  rows=490
+[ablation] 80/1200 tasks  43.0s  rows=560
+[ablation] 90/1200 tasks  44.8s  rows=630
+[ablation] 100/1200 tasks  54.9s  rows=700
+[ablation] 110/1200 tasks  56.7s  rows=770
+[ablation] 120/1200 tasks  58.0s  rows=840
+[ablation] 130/1200 tasks  59.4s  rows=910
+[ablation] 140/1200 tasks  61.0s  rows=980
+[ablation] 150/1200 tasks  65.6s  rows=1050
+[ablation] 160/1200 tasks  73.4s  rows=1120
+[ablation] 170/1200 tasks  147.6s  rows=1190
+[ablation] 180/1200 tasks  195.9s  rows=1260
+[ablation] 190/1200 tasks  200.4s  rows=1330
+[ablation] 200/1200 tasks  208.2s  rows=1400
+[ablation] 210/1200 tasks  216.4s  rows=1470
+[ablation] 220/1200 tasks  218.7s  rows=1540
+[ablation] 230/1200 tasks  241.7s  rows=1610
+[ablation] 240/1200 tasks  253.8s  rows=1680
+[ablation] 250/1200 tasks  259.3s  rows=1750
+[ablation] 260/1200 tasks  261.8s  rows=1820
+[ablation] 270/1200 tasks  264.9s  rows=1890
+[ablation] 280/1200 tasks  277.1s  rows=1960
+[ablation] 290/1200 tasks  341.8s  rows=2030
+[ablation] 300/1200 tasks  345.4s  rows=2100
+[ablation] 310/1200 tasks  353.1s  rows=2170
+[ablation] 320/1200 tasks  438.2s  rows=2240
+[ablation] 330/1200 tasks  507.2s  rows=2310
+[ablation] 340/1200 tasks  736.0s  rows=2380
+[ablation] 350/1200 tasks  867.3s  rows=2450
+[ablation] 360/1200 tasks  891.9s  rows=2520
+[ablation] 370/1200 tasks  896.3s  rows=2590
+[ablation] 380/1200 tasks  916.9s  rows=2660
+[ablation] 390/1200 tasks  937.4s  rows=2730
+[ablation] 400/1200 tasks  955.3s  rows=2800
+[ablation] 410/1200 tasks  965.2s  rows=2870
+[ablation] 420/1200 tasks  976.4s  rows=2940
+[ablation] 430/1200 tasks  979.2s  rows=3010
+[ablation] 440/1200 tasks  994.0s  rows=3080
+[ablation] 450/1200 tasks  1056.5s  rows=3150
+[ablation] 460/1200 tasks  1085.2s  rows=3220
+[ablation] 470/1200 tasks  1097.7s  rows=3290
+[ablation] 480/1200 tasks  1187.1s  rows=3360
+[ablation] 490/1200 tasks  1239.1s  rows=3430
+[ablation] 500/1200 tasks  1280.0s  rows=3500
+[ablation] 510/1200 tasks  1301.0s  rows=3570
+[ablation] 520/1200 tasks  1305.7s  rows=3640
+[ablation] 530/1200 tasks  1307.9s  rows=3710
+[ablation] 540/1200 tasks  1311.5s  rows=3780
+[ablation] 550/1200 tasks  1362.7s  rows=3850
+[ablation] 560/1200 tasks  1393.9s  rows=3920
+[ablation] 570/1200 tasks  1406.7s  rows=3990
+[ablation] 580/1200 tasks  1425.0s  rows=4060
+[ablation] 590/1200 tasks  1432.7s  rows=4130
+[ablation] 600/1200 tasks  1437.3s  rows=4200
+[ablation] 610/1200 tasks  1440.3s  rows=4270
+[ablation] 620/1200 tasks  1490.9s  rows=4340
+[ablation] 630/1200 tasks  1564.1s  rows=4410
+[ablation] 640/1200 tasks  1589.8s  rows=4480
+[ablation] 650/1200 tasks  1611.7s  rows=4550
+[ablation] 660/1200 tasks  1637.6s  rows=4620
+[ablation] 670/1200 tasks  1643.1s  rows=4690
+[ablation] 680/1200 tasks  1722.4s  rows=4760
+[ablation] 690/1200 tasks  1802.6s  rows=4830
+[ablation] 700/1200 tasks  1889.6s  rows=4900
+[ablation] 710/1200 tasks  1910.8s  rows=4970
+[ablation] 720/1200 tasks  1919.3s  rows=5040
+[ablation] 730/1200 tasks  2434.3s  rows=5110
+[ablation] 740/1200 tasks  2570.8s  rows=5180
+[ablation] 750/1200 tasks  2578.9s  rows=5250
+[ablation] 760/1200 tasks  2584.8s  rows=5320
+[ablation] 770/1200 tasks  2604.5s  rows=5390
+[ablation] 780/1200 tasks  2634.6s  rows=5460
+[ablation] 790/1200 tasks  2754.6s  rows=5530
+[ablation] 800/1200 tasks  2806.3s  rows=5600
+[ablation] 810/1200 tasks  2819.2s  rows=5670
+[ablation] 820/1200 tasks  2828.4s  rows=5740
+[ablation] 830/1200 tasks  2833.5s  rows=5810
+[ablation] 840/1200 tasks  2840.0s  rows=5880
+[ablation] 850/1200 tasks  3097.1s  rows=5950
+[ablation] 860/1200 tasks  3144.2s  rows=6020
+[ablation] 870/1200 tasks  3184.5s  rows=6090
+[ablation] 880/1200 tasks  3215.5s  rows=6160
+[ablation] 890/1200 tasks  3247.6s  rows=6230
+[ablation] 900/1200 tasks  3560.5s  rows=6300
+[ablation] 910/1200 tasks  3601.5s  rows=6370
+[ablation] 920/1200 tasks  3609.9s  rows=6440
+[ablation] 930/1200 tasks  4383.1s  rows=6510
+[ablation] 940/1200 tasks  4470.6s  rows=6580
+[ablation] 950/1200 tasks  4503.0s  rows=6650
+[ablation] 960/1200 tasks  4536.7s  rows=6720
+[ablation] 970/1200 tasks  4565.8s  rows=6790
+[ablation] 980/1200 tasks  4598.4s  rows=6860
+[ablation] 990/1200 tasks  4840.2s  rows=6930
+[ablation] 1000/1200 tasks  5032.7s  rows=7000
+[ablation] 1010/1200 tasks  5124.0s  rows=7070
+[ablation] 1020/1200 tasks  5158.5s  rows=7140
+[ablation] 1030/1200 tasks  5669.4s  rows=7210
+[ablation] 1040/1200 tasks  5719.1s  rows=7280
+[ablation] 1050/1200 tasks  5759.9s  rows=7350
+[ablation] 1060/1200 tasks  5778.6s  rows=7420
+[ablation] 1070/1200 tasks  8416.3s  rows=7490
+[ablation] 1080/1200 tasks  8823.6s  rows=7560
+[ablation] 1090/1200 tasks  9237.4s  rows=7630
+[ablation] 1100/1200 tasks  9242.2s  rows=7700
+[ablation] 1110/1200 tasks  9248.2s  rows=7770
+[ablation] 1120/1200 tasks  9307.4s  rows=7840
+[ablation] 1130/1200 tasks  9340.4s  rows=7910
+[ablation] 1140/1200 tasks  9349.7s  rows=7980
+[ablation] 1150/1200 tasks  9451.7s  rows=8050
+[ablation] 1160/1200 tasks  9462.1s  rows=8120
+[ablation] 1170/1200 tasks  9521.8s  rows=8190
+[ablation] 1180/1200 tasks  9550.6s  rows=8260
+[ablation] 1190/1200 tasks  9564.3s  rows=8330
+[ablation] 1200/1200 tasks  12391.7s  rows=8400
+wrote C:\Users\13985\Desktop\x\results\ablation.csv 8400 rows in 12397.0s
+=== 01:34:02  stage=granularity ===
+[granularity] 10/75 tasks  3.3s  rows=70
+[granularity] 20/75 tasks  10.8s  rows=140
+[granularity] 30/75 tasks  16.5s  rows=210
+[granularity] 40/75 tasks  26.8s  rows=280
+[granularity] 50/75 tasks  35.5s  rows=350
+[granularity] 60/75 tasks  44.1s  rows=420
+[granularity] 70/75 tasks  66.9s  rows=490
+[granularity] 75/75 tasks  23524.7s  rows=525
+wrote results\granularity.csv 525 rows in 23525.5s
+=== 08:06:08  stage=sensitivity ===
+[sensitivity] 10/630 tasks  0.6s  rows=10
+[sensitivity] 20/630 tasks  0.7s  rows=20
+[sensitivity] 30/630 tasks  0.9s  rows=30
+[sensitivity] 40/630 tasks  16.8s  rows=40
+[sensitivity] 50/630 tasks  18.1s  rows=50
+[sensitivity] 60/630 tasks  28.2s  rows=60
+[sensitivity] 70/630 tasks  33.8s  rows=70
+[sensitivity] 80/630 tasks  38.9s  rows=80
+[sensitivity] 90/630 tasks  42.4s  rows=90
+[sensitivity] 100/630 tasks  45.7s  rows=100
+[sensitivity] 110/630 tasks  47.7s  rows=110
+[sensitivity] 120/630 tasks  49.5s  rows=120
+[sensitivity] 130/630 tasks  50.7s  rows=130
+[sensitivity] 140/630 tasks  53.7s  rows=140
+[sensitivity] 150/630 tasks  59.9s  rows=150
+[sensitivity] 160/630 tasks  63.5s  rows=160
+[sensitivity] 170/630 tasks  68.2s  rows=170
+[sensitivity] 180/630 tasks  69.9s  rows=180
+[sensitivity] 190/630 tasks  71.4s  rows=190
+[sensitivity] 200/630 tasks  72.5s  rows=200
+[sensitivity] 210/630 tasks  76.8s  rows=210
+[sensitivity] 220/630 tasks  88.7s  rows=220
+[sensitivity] 230/630 tasks  96.3s  rows=230
+[sensitivity] 240/630 tasks  98.9s  rows=240
+[sensitivity] 250/630 tasks  100.9s  rows=250
+[sensitivity] 260/630 tasks  102.6s  rows=260
+[sensitivity] 270/630 tasks  104.8s  rows=270
+[sensitivity] 280/630 tasks  108.1s  rows=280
+[sensitivity] 290/630 tasks  111.1s  rows=290
+[sensitivity] 300/630 tasks  113.8s  rows=300
+[sensitivity] 310/630 tasks  118.4s  rows=310
+[sensitivity] 320/630 tasks  121.3s  rows=320
+[sensitivity] 330/630 tasks  124.7s  rows=330
+[sensitivity] 340/630 tasks  126.7s  rows=340
+[sensitivity] 350/630 tasks  129.8s  rows=350
+[sensitivity] 360/630 tasks  143.8s  rows=360
+[sensitivity] 370/630 tasks  147.2s  rows=370
+[sensitivity] 380/630 tasks  159.5s  rows=380
+[sensitivity] 390/630 tasks  176.9s  rows=390
+[sensitivity] 400/630 tasks  188.7s  rows=400
+[sensitivity] 410/630 tasks  203.5s  rows=410
+[sensitivity] 420/630 tasks  229.7s  rows=420
+[sensitivity] 430/630 tasks  245.6s  rows=430
+[sensitivity] 440/630 tasks  263.7s  rows=440
+[sensitivity] 450/630 tasks  268.9s  rows=450
+[sensitivity] 460/630 tasks  271.8s  rows=460
+[sensitivity] 470/630 tasks  273.9s  rows=470
+[sensitivity] 480/630 tasks  275.8s  rows=480
+[sensitivity] 490/630 tasks  306.7s  rows=490
+[sensitivity] 500/630 tasks  315.3s  rows=500
+[sensitivity] 510/630 tasks  338.8s  rows=510
+[sensitivity] 520/630 tasks  351.3s  rows=520
+[sensitivity] 530/630 tasks  359.5s  rows=530
+[sensitivity] 540/630 tasks  365.9s  rows=540
+[sensitivity] 550/630 tasks  373.2s  rows=550
+[sensitivity] 560/630 tasks  381.2s  rows=560
+[sensitivity] 570/630 tasks  387.8s  rows=570
+[sensitivity] 580/630 tasks  392.7s  rows=580
+[sensitivity] 590/630 tasks  396.3s  rows=590
+[sensitivity] 600/630 tasks  398.4s  rows=600
+[sensitivity] 610/630 tasks  400.7s  rows=610
+[sensitivity] 620/630 tasks  403.3s  rows=620
+[sensitivity] 630/630 tasks  543.8s  rows=630
+wrote results\sensitivity.csv 630 rows in 545.6s
+=== 08:15:14  all stages done ===

@@ -1,0 +1,16 @@
+{
+ "feasible": true,
+ "makespan": 77191,
+ "num_cores": 1,
+ "added_copy_bytes": 0,
+ "scheduled_copy_bytes": 544188,
+ "partition_added_copy_bytes": 0,
+ "spill_added_copy_bytes": 0,
+ "original_graph_copy_bytes": 544188,
+ "cross_task_traffic": 0,
+ "eval_seconds": 0.353,
+ "problem": 1,
+ "error": "",
+ "l1_peak": 53760,
+ "ub_peak": 52260
+}
