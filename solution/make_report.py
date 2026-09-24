@@ -171,12 +171,16 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows, run_rows=None):
         per_stratum = defaultdict(lambda: defaultdict(list))
         adds = defaultdict(list)
         hits = defaultdict(list)
+        spill = defaultdict(int)
+        part = defaultdict(int)
         for (case, n), r in best.items():
             if r['speedup']:
                 per_n[n].append(r['speedup'])
                 per_stratum[n][stats.strata(case)].append(r['speedup'])
             if r['added_copy_bytes'] is not None:
                 adds[n].append(r['added_copy_bytes'])
+                spill[n] += r.get('spill_added_copy_bytes') or 0
+                part[n] += r.get('partition_added_copy_bytes') or 0
             if r.get('cache_hit_rate') is not None:
                 hits[n].append(r['cache_hit_rate'])
         out[f'problem{problem}'] = {
@@ -191,6 +195,8 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows, run_rows=None):
             'cases': {n: len(v) for n, v in sorted(per_n.items())},
             'added_copy_total': {n: int(sum(v)) for n, v in sorted(adds.items())},
             'added_copy_median': {n: int(st.median(v)) for n, v in sorted(adds.items())},
+            'spill_added_total': {n: int(v) for n, v in sorted(spill.items())},
+            'partition_added_total': {n: int(v) for n, v in sorted(part.items())},
             'cache_hit_mean': {n: round(sum(v) / len(v), 4)
                                for n, v in sorted(hits.items()) if v},
             'speedup_ci': {n: [round(x, 4) for x in stats.bootstrap_ci(v, 'amean')]
@@ -219,6 +225,13 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows, run_rows=None):
         for (p, n), d in sorted(cmp_rows.items())}
     out['baseline_failrate'] = {
         f'p{p}_{a}': round(f[0] / f[1], 4) for (p, a), f in sorted(fails.items())}
+    # 各基线的额外搬运总量（可行方案；论文用它与 CAP-LS 的总量并列）
+    base_added = defaultdict(lambda: defaultdict(int))
+    for r in base_rows:
+        if r['feasible'] and r['added_copy_bytes'] is not None:
+            base_added[f"p{int(r['problem'])}_n{int(r['num_cores'] or 0)}"][
+                r['algorithm']] += r['added_copy_bytes']
+    out['baseline_added_total'] = {k: dict(v) for k, v in sorted(base_added.items())}
     for problem in (1, 2, 3):
         for n in (2, 3, 4, 5):
             rows = main_rows
@@ -258,11 +271,21 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows, run_rows=None):
                     int(r.get('eval_problem') or 0)] = r
         gain = defaultdict(list)
         hit = defaultdict(list)
-        for (case, n), d in pairs.items():
+        gain_case = defaultdict(list)
+        for (case, n), d in sorted(pairs.items()):
             if 2 in d and 3 in d and d[3]['makespan']:
                 gain[n].append(d[2]['makespan'] / d[3]['makespan'])
+                gain_case[n].append(case)
                 if d[3].get('cache_hit_rate') is not None:
                     hit[n].append(d[3]['cache_hit_rate'])
+        out['l2_gain_gt1pct'] = {n: sum(1 for x in v if x > 1.01)
+                                 for n, v in sorted(gain.items())}
+        out['l2_gain_maxcase'] = {
+            n: gain_case[n][max(range(len(v)), key=v.__getitem__)]
+            for n, v in sorted(gain.items())}
+        out['l2_hit_nonzero'] = {n: sum(1 for x in v if x > 0)
+                                 for n, v in sorted(hit.items())}
+        out['l2_hit_max'] = {n: round(max(v), 4) for n, v in sorted(hit.items()) if v}
         out['l2_gain'] = {n: round(stats.amean(v), 4) for n, v in sorted(gain.items())}
         out['l2_gain_geomean'] = {n: round(plots.geomean(v), 4)
                                   for n, v in sorted(gain.items())}
@@ -275,8 +298,13 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows, run_rows=None):
         g = plots.bound_gap(_champion_csv(), problem)
         out['bound_gap'][f'problem{problem}'] = {
             n: round(plots.geomean(v), 4) for n, v in sorted(g.items())}
-    # 运行时间（始终取原始 main.csv 的逐候选记录）
-    rt = [r['runtime_s'] for r in run_rows if r['runtime_s']]
+    # 运行时间（始终取原始 main.csv 的逐候选记录）。"单候选算法时间"指 S1–S3 的构造时间：
+    # 排除 T14 的退火行（sa*，独立阶段）与大图 P1 的代理兜底行（其 runtime_s 在早期版本里
+    # 误记成了官方评估耗时，且是每配置一行而非逐候选）；官方评估耗时 eval_s 不受影响。
+    def _is_construction_row(r):
+        return (not str(r.get('variant', '')).startswith('sa')
+                and 'proxy_fallback' not in str(r.get('params', '')))
+    rt = [r['runtime_s'] for r in run_rows if r['runtime_s'] and _is_construction_row(r)]
     ev = [r['eval_s'] for r in run_rows if r['eval_s']]
     if rt:
         out['runtime'] = {'mean': round(sum(rt) / len(rt), 3),

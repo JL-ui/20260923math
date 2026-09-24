@@ -86,6 +86,25 @@ def main():
                       and r['feasible'])
     report['p2_n4_spill_added_total'] = spill_total
 
+    # T11 前后（主阶段冠军口径）P2 N=4 的 spill 字节总和及降幅：论文 §11.3 引用。
+    def champ_spill(rows):
+        best = {}
+        for r in rows:
+            if (int(r['problem']) != 2 or int(r['num_cores'] or 0) != 4
+                    or not r['feasible'] or not r['makespan']):
+                continue
+            if r['case'] not in best or r['makespan'] < best[r['case']]['makespan']:
+                best[r['case']] = r
+        return sum(int(r.get('spill_added_copy_bytes') or 0) for r in best.values())
+
+    snap = paths.RESULTS_DIR / 'baseline_snapshot' / 'main_before_T11.csv'
+    if snap.is_file():
+        before = champ_spill(plots.read_csv(snap))
+        after = champ_spill(plots.read_csv('main.csv'))
+        report['p2_n4_spill_champions_before_T11'] = before
+        report['p2_n4_spill_champions_after_T11'] = after
+        report['spill_drop_frac'] = round(1 - after / before, 4) if before else None
+
     # mu=0,nu=0 vs mu=1,nu=0.5 配对比较：由 candidate_params 的固定顺序，
     # 4 个 op 候选中第 1/2/4 个用 mu=1,nu=0.5，第 3 个用 mu=0,nu=0。
     pair_a, pair_b = {}, {}

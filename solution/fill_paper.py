@@ -10,9 +10,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
+import statistics as st
 import sys
+from collections import defaultdict
 from pathlib import Path
+
+import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -95,6 +100,7 @@ def build_values() -> dict:
     if d2.get('full') and d2.get('no_level'):
         v['ABL_LEVEL'] = '{:.1%}'.format(1 - d2['no_level'] / d2['full'])
     rt = s.get('runtime', {})
+    v['RUNTIME_N'] = '{:,}'.format(rt.get('n', 0))
     v['RUNTIME_MED'] = '{:.2f}'.format(rt.get('median', 0))
     v['RUNTIME_P95'] = '{:.1f}'.format(rt.get('p95', 0))
     v['RUNTIME_MAX'] = '{:.1f}'.format(rt.get('max', 0))
@@ -164,6 +170,8 @@ def build_values() -> dict:
         lines.append('| {} | {} |'.format(text, ' | '.join(cells)))
     v['TABLE_PAIRED'] = chr(10).join(lines)
 
+    _extra_values(s_all, v)
+
     # 评估总次数 = 所有缓存条目数
     total = 0
     for d in paths.CACHE_DIR.glob('p*'):
@@ -176,6 +184,207 @@ def build_values() -> dict:
     return v
 
 
+MINUS = '−'
+
+
+def _sgn(x, fmt):
+    """带符号格式化，负号用 U+2212（与论文其余部分一致）。"""
+    return format(x, fmt).replace('-', MINUS)
+
+
+def _sci(x):
+    """把整数字节数写成 $m\\times10^{e}$。"""
+    m, e = '{:.2e}'.format(x).split('e')
+    return '$' + m + r'\times10^{' + str(int(e)) + '}$'
+
+
+def _load_json(name):
+    p = paths.RESULTS_DIR / name
+    return json.loads(p.read_text(encoding='utf-8')) if p.is_file() else {}
+
+
+def _by_key(d, k):
+    return d.get(str(k), d.get(k))
+
+
+def _extra_values(s, v):
+    """T23 新增的占位符：数据来自 summary.json 之外的结果文件
+    （final.csv、bounds.json、model_validation_summary_*.json、op_mode_report.json 等）。"""
+    final = [r for r in plots.read_csv('final.csv') if r['feasible']]
+    feats = {f['case']: f for f in json.loads(
+        (paths.RESULTS_DIR / 'features.json').read_text(encoding='utf-8'))}
+
+    # ---- 并行效率、分层表 ----
+    for p in (1, 2, 3):
+        sp = s.get(f'problem{p}', {})
+        m4 = _by_key(sp.get('speedup_mean', {}), 4)
+        d4 = _by_key(sp.get('speedup_median', {}), 4)
+        v[f'P{p}_EFF_N4'] = '{:.0%}'.format(m4 / 4) if m4 else '--'
+        v[f'P{p}_MEDEFF_N4'] = '{:.0%}'.format(d4 / 4) if d4 else '--'
+    strat = _by_key(s.get('problem2', {}).get('speedup_by_strata', {}), 4) or {}
+    lines = ['| 分层 | 用例数 | 算术平均 | 中位数 | 最小值 |', '|---|---|---|---|---|']
+    for key, text in (('rho<0.2', r'$\rho_{\max}<0.2$（分量碎片化）'),
+                      ('0.2<=rho<0.5', r'$0.2\le\rho_{\max}<0.5$'),
+                      ('rho>=0.5', r'$\rho_{\max}\ge0.5$（单一主分量）')):
+        d = strat.get(key) or {}
+        if d.get('n'):
+            lines.append('| {} | {} | **{:.2f}** | {:.2f} | {:.2f} |'.format(
+                text, d['n'], d['amean'], d['median'], d['min']))
+    v['TABLE_STRATA'] = chr(10).join(lines)
+
+    # ---- 由 final.csv 派生的数字 ----
+    sp_all = [r['speedup'] for r in final if r['speedup']]
+    v['MIN_SPEEDUP_ALL'] = '{:.2f}'.format(min(sp_all)) if sp_all else '--'
+    p2n4 = sorted((r for r in final if int(r['problem']) == 2
+                   and r['num_cores'] == 4 and r['speedup']),
+                  key=lambda r: r['speedup'])
+    v['HARDEST_P2_N4'] = '、'.join('{}（{:.2f}）'.format(r['case'], r['speedup'])
+                                for r in p2n4[:6])
+    c16 = [r['speedup'] for r in p2n4 if r['case'] == 'case_016']
+    v['CASE016_P2_N4'] = '{:.2f}'.format(c16[0]) if c16 else '--'
+    v['SUPER_P2_N4'] = str(sum(1 for r in p2n4 if r['speedup'] > 4))
+    v['SUPER_P2_N2'] = str(sum(1 for r in final if int(r['problem']) == 2
+                               and r['num_cores'] == 2 and r['speedup']
+                               and r['speedup'] > 2))
+    v['ZERO_ADDED_P2_N4'] = str(sum(1 for r in p2n4 if r['added_copy_bytes'] == 0))
+    subg = []
+    for p in (1, 2, 3):
+        vals = [r['n_subgraphs'] for r in final
+                if int(r['problem']) == p and r['n_subgraphs']]
+        subg.append('{:,}'.format(int(st.median(vals))) if vals else '--')
+    v['SUBG_MED'] = ' / '.join(subg)
+
+    def corr(key, log):
+        xs, ys = [], []
+        for r in p2n4:
+            x = feats[r['case']][key]
+            if x is None or x == float('inf') or (log and x <= 0):
+                continue
+            xs.append(math.log(x) if log else x)
+            ys.append(r['speedup'])
+        return _sgn(float(np.corrcoef(xs, ys)[0, 1]), '+.2f')
+    for name, key, lg in (('RHO', 'largest_component_frac', False),
+                          ('CP', 'cp_over_total', False),
+                          ('WIDTH', 'avg_width', True),
+                          ('BW', 'compute_over_ddr', True),
+                          ('NOPS', 'n_ops', True)):
+        v[f'CORR_{name}'] = corr(key, lg)
+
+    # ---- 搬运量 ----
+    p2 = s.get('problem2', {})
+    added = _by_key(p2.get('added_copy_total', {}), 4)
+    spill = _by_key(p2.get('spill_added_total', {}), 4)
+    part = _by_key(p2.get('partition_added_total', {}), 4)
+    v['ADDED_TOTAL_P2_N4'] = _sci(added)
+    v['CUT_SHARE_P2_N4'] = '{:.1%}'.format(part / (part + spill))
+    v['SPILL_SHARE_P2_N4'] = '{:.1%}'.format(spill / (part + spill))
+    b3 = (s.get('baseline_added_total', {}).get('p2_n4', {}) or {}).get('balance')
+    v['ADDED_TOTAL_B3_P2_N4'] = _sci(b3)
+    singles = _load_json('singlecore_baseline.json')
+    single_spill = sum(int(x.get('added_copy_bytes') or 0) for x in singles.values())
+    v['SINGLE_SPILL_TOTAL'] = _sci(single_spill)
+    v['ADDED_VS_SINGLE_P2_N4'] = _sgn(added / single_spill - 1, '+.0%')
+    op = _load_json('op_mode_report.json')
+    v['SPILL_DROP_OP'] = ('{:.0%}'.format(op['spill_drop_frac'])
+                          if op.get('spill_drop_frac') is not None else '--')
+
+    # ---- 基线 / 消融 / L2 ----
+    bs = s.get('baseline_speedup', {})
+    v['RANDOM_P1_N4'] = '{:.2f}'.format(bs['p1_n4']['random'])
+    v['BASE_P2_N4_B2'] = '{:.2f}'.format(bs['p2_n4']['topo'])
+    v['BASE_P2_N4_B3'] = '{:.2f}'.format(bs['p2_n4']['balance'])
+    v['BASE_B4_N4'] = ' / '.join('{:.2f}'.format(bs[f'p{p}_n4']['comm'])
+                                 for p in (1, 2, 3))
+    v['GAIN_VS_B4'] = '、'.join(
+        '问题 {} {}'.format(p, _sgn(bs[f'p{p}_n4']['capls'] / bs[f'p{p}_n4']['comm'] - 1,
+                                  '+.0%')) for p in (1, 2, 3))
+    abl = s.get('ablation', {})
+    for p in (1, 2, 3):
+        d = abl.get(f'problem{p}', {})
+        for name in ('no_comm', 'no_balance', 'no_sync', 'no_localsearch',
+                     'no_cache_aware', 'no_level'):
+            if d.get('full') and d.get(name):
+                v[f'ABL_REL_{name}_P{p}'] = _sgn(d[name] / d['full'] - 1, '+.1%')
+    gain, hit = s.get('l2_gain', {}), s.get('l2_hit_rate', {})
+    for n in (1, 2, 3, 4, 5):
+        v[f'L2_GAIN_N{n}'] = '{:.3f}'.format(_by_key(gain, n) or 0)
+        v[f'HIT_N{n}'] = '{:.1%}'.format(_by_key(hit, n) or 0)
+    gmax = s.get('l2_gain_max', {})
+    v['L2_GT1_N5'] = str(_by_key(s.get('l2_gain_gt1pct', {}), 5))
+    v['L2_MAX_N5'] = '{:.2f}'.format(_by_key(gmax, 5) or 0)
+    v['L2_MAXCASE_N5'] = str(_by_key(s.get('l2_gain_maxcase', {}), 5))
+    v['L2_HITNZ_N1'] = str(_by_key(s.get('l2_hit_nonzero', {}), 1))
+    v['L2_HITMAX_N1'] = '{:.0%}'.format(_by_key(s.get('l2_hit_max', {}), 1) or 0)
+    v['L2_GAINMAX_N1'] = '{:.2f}'.format(_by_key(gmax, 1) or 0)
+
+    # ---- 下界 ----
+    bounds = _load_json('bounds.json')
+    v['LB_SINGLE_MED'] = '{:.2f}'.format(bounds['single_over_lb1_median'])
+    v['BOUND_EFF_N4'] = ' / '.join(
+        '{:.2f}'.format(bounds['efficiency'][f'p{p}_n4']['amean']) for p in (1, 2, 3))
+    bg = s.get('bound_gap', {})
+    lines = ['| | $N=2$ | $N=3$ | $N=4$ | $N=5$ |', '|---|---|---|---|---|']
+    for p in (1, 2, 3):
+        lines.append('| 问题 {} | {} |'.format(p, ' | '.join(
+            '{:.2f}'.format(_by_key(bg.get(f'problem{p}', {}), n)) for n in (2, 3, 4, 5))))
+    v['TABLE_BOUND'] = chr(10).join(lines)
+    v['BOUND_GAP_P3_N5'] = '{:.0%}'.format(_by_key(bg['problem3'], 5) - 1)
+
+    # ---- 代理检验（用例内指标）----
+    mv = {px: _load_json(f'model_validation_summary_{px}.json') for px in ('legacy', 'sim')}
+    for px, d in mv.items():
+        for p in (1, 2, 3):
+            m = d.get(f'problem{p}', {})
+            v[f'PROXY_SP_P{p}_{px.upper()}'] = '{:.2f}'.format(m['spearman_median'])
+            v[f'PROXY_R3_P{p}_{px.upper()}'] = '{:.0%}'.format(m['recall3'])
+    v['PROXY_POOLED_P2_LEGACY'] = '{:.2f}'.format(
+        mv['legacy']['problem2']['pooled_spearman'])
+    lines = ['| 问题 | 代理 | Spearman 中位 | Kendall $\\tau$ 中位 | Top-1 减速比（中位/P90/最大） '
+             '| Top-3 减速比 | Top-5 减速比 | Recall@1 / @3 / @5 |',
+             '|---|---|---|---|---|---|---|---|']
+    for p in (1, 2, 3):
+        for px, name in (('legacy', '旧代理'), ('sim', '事件模拟')):
+            m = mv[px].get(f'problem{p}', {})
+            slow = ' | '.join('{:.1%} / {:.1%} / {:.0%}'.format(
+                m[f'top{k}_slowdown_median'], m[f'top{k}_slowdown_p90'],
+                m[f'top{k}_slowdown_max']) for k in (1, 3, 5))
+            lines.append('| 问题 {} | {} | {:.2f} | {:.2f} | {} | {} |'.format(
+                p, name, m['spearman_median'], m['kendall_median'], slow,
+                ' / '.join('{:.0%}'.format(m[f'recall{k}']) for k in (1, 3, 5))))
+    v['TABLE_PROXY'] = chr(10).join(lines)
+
+    # ---- 条件 4 的已知例外 ----
+    c4 = _load_json('pool_condition4_exceptions.json')
+    v['COND4_COUNT'] = str(c4.get('count', 0))
+    v['COND4_MAXREL'] = '{:.2%}'.format(c4.get('max_rel_observed', 0.0))
+
+    # ---- 粒度扫描（25 个用例，N=4，单配置；算术平均）----
+    gran = [r for r in plots.read_csv('granularity.csv') if r['feasible'] and r['speedup']]
+    by = defaultdict(lambda: defaultdict(list))
+    for r in gran:
+        by[int(r['problem'])][float(r['variant'])].append(r['speedup'])
+    betas = sorted({b for p in by for b in by[p]})
+    means = {p: {b: sum(x) / len(x) for b, x in by[p].items()} for p in by}
+    lines = ['| $\\beta$ | ' + ' | '.join('{:g}'.format(b) for b in betas) + ' |',
+             '|---|' + '---|' * len(betas)]
+    for p in (1, 2, 3):
+        best = max(means[p].values())
+        lines.append('| 问题 {} | '.format(p) + ' | '.join(
+            ('**{:.2f}**' if means[p][b] == best else '{:.2f}').format(means[p][b])
+            for b in betas) + ' |')
+    v['TABLE_GRAN'] = chr(10).join(lines)
+    big, small, plateau = [], [], 0.0
+    for p in (1, 2, 3):
+        best = max(means[p].values())
+        big.append('{:.0%}'.format(1 - means[p][2.0] / best))
+        small.append('{:.0%}'.format(1 - means[p][0.03] / best))
+        flat = [means[p][b] for b in (0.12, 0.25, 0.5)]
+        plateau = max(plateau, (best - min(flat)) / best)
+    v['GRAN_LOSS_BIG'] = ' / '.join(big)
+    v['GRAN_LOSS_SMALL'] = ' / '.join(small)
+    v['GRAN_PLATEAU'] = '{:.1%}'.format(plateau)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('markdown')
@@ -185,7 +394,7 @@ def main():
     text = Path(args.markdown).read_text(encoding='utf-8')
     for k, val in values.items():
         text = text.replace(f'@@{k}@@', str(val))
-    left = sorted(set(re.findall(r'@@([A-Z0-9_]+)@@', text)))
+    left = sorted(set(re.findall(r'@@([A-Za-z0-9_]+)@@', text)))
     out = Path(args.output) if args.output else Path(args.markdown)
     out.write_text(text, encoding='utf-8')
     print('filled {} placeholders -> {}'.format(len(values), out))
