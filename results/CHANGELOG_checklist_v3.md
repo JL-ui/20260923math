@@ -161,3 +161,20 @@ T06 提交后发现遗漏了 `run_experiments.py --stage main/p3` 重跑产生�
   `results/pool_condition4_exceptions.json`（新）、`results/plans_final/`（新，1200 个方案）、
   `results/final_plans/`（更新为 1500 个方案 + `manifest.csv`）、`results/summary.json`、
   `paper/tables/*`、`figures/*`（12 张重绘）。
+
+## T08 最终方案官方 CLI 复核 — 完成
+
+* 新建 `solution/verify_final.py`：对 `results/final_plans/p<P>/n<N>/<case>_multicore_res.json`
+  （N=1..5）逐个用 `subprocess` 调用官方 CLI（`code/multicore_cut_evaluate_problem_<P>.py`），
+  trace/log 显式指定到系统临时目录（避免写入只读的 `data/`），按并发槽位复用临时文件；
+  读取 makespan、`data_movement_bytes.added_copy_bytes`、（问题 3）`cache_stats.hit_rate`
+  与 `results/final_plans/manifest.csv`（N≥2）/`results/n1.csv`（N=1）逐项比较，命中率
+  比较到 1e-9。输出 `results/verify_final.csv` 与 `checked=<数量> mismatches=<数量>`。
+* 命令：
+  - `python solution/verify_final.py --problems 2 3 --jobs 16` → `checked=1000 mismatches=0`（130 s）。
+  - `python solution/verify_final.py --problems 1 --jobs 16`（用户确认后执行）→
+    `checked=500 mismatches=0`（1868 s ≈ 31 分钟；P1 官方 CLI 对大图较慢，最大用例
+    单次可达数百秒）。
+* 验收：两次 `mismatches=0`；`checked` 分别为 `2×100×5=1000` 与 `100×5=500`，与规格一致。
+* 回归：P2 58984、P1 116868、搬运量 90/90 一致。
+* 改动文件：`solution/verify_final.py`（新）、`results/verify_final.csv`（新）。
