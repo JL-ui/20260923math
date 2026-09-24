@@ -324,3 +324,17 @@ T06 提交后发现遗漏了 `run_experiments.py --stage main/p3` 重跑产生�
   `results/final.csv`、`results/pool.csv`、`results/plans_final/`、`results/final_plans/`、
   `results/summary.json`、`paper/tables/*`、`figures/*`、
   `results/baseline_snapshot/main_before_T11.csv`（新）。
+
+## 补提交说明（T11/T12 漏提交的模块与计划文件）
+
+* 发现：T12、T11 提交时漏加了新建模块 `solution/npu/levels.py`、`solution/npu/listsched.py`
+  与验收脚本 `solution/check_levels.py`（`algorithms.py`、`stratify.py` 已在提交中引用它们），
+  导致这两个提交在干净检出下无法导入。经对全部已跟踪 `solution/*.py` 的相对导入做一次
+  "导入目标是否已跟踪"的扫描确认，缺口只有这三个文件（其余命中项是 `# noqa: E402` 注释、
+  `levels_mod` 别名，以及 T14 进行中的 `p1_anneal`/`proxy_a`）。本次以独立补提交补入。
+* 同源问题：T11/T12 的 `run_experiments.py --stage main/p3` 重跑会覆盖
+  `results/plans/*_capls_best.json`（`save_plan=True`），两次提交都没有暂存这些文件（与 T06
+  当时的遗漏相同）。已把 427 个 P2/P3 计划文件并入 T11 提交（`git commit --amend`，T11 哈希由
+  `bc35d24` 变为 `ec5d069`）；它们对应 T11 重跑后的最终状态（T12 的同名文件已被 T11 覆盖）。
+* 教训：此后每次提交前都用 `git status --short` 核对"本任务实际写出的文件"，而不是只按
+  预想的清单 `git add`。
