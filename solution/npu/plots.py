@@ -97,6 +97,13 @@ def geomean(values):
     return math.exp(sum(math.log(v) for v in values) / len(values))
 
 
+def amean(values):
+    values = [v for v in values if v and v > 0]
+    if not values:
+        return float('nan')
+    return sum(values) / len(values)
+
+
 def save(fig, name):
     paths.FIGURES_DIR.mkdir(parents=True, exist_ok=True)
     out = paths.FIGURES_DIR / name
@@ -335,7 +342,7 @@ def fig_speedup(main_csv='main.csv', n1_csv='n1.csv'):
     fig, ax = plt.subplots(figsize=(6.4, 4.2))
     for i, problem in enumerate(sorted(table)):
         xs = sorted(table[problem])
-        ys = [geomean(table[problem][n]) for n in xs]
+        ys = [amean(table[problem][n]) for n in xs]
         ax.plot(xs, ys, marker='o', color=CORE_COLORS[i], lw=1.8,
                 label=f'问题 {problem}')
         dy = {0: -15, 1: 6, 2: 15}.get(i, 7)
@@ -348,7 +355,7 @@ def fig_speedup(main_csv='main.csv', n1_csv='n1.csv'):
     xs = sorted(set().union(*[set(table[p]) for p in table])) or [1]
     ax.plot(xs, xs, ls='--', color='#999999', lw=1.0, label='理想线性加速')
     ax.set_xlabel('核心数 N')
-    ax.set_ylabel('平均加速比（{} 个用例的几何平均）'.format(len(cases)))
+    ax.set_ylabel('平均加速比（{} 个用例的算术平均）'.format(len(cases)))
     ax.set_xticks(xs)
     ax.legend(fontsize=8.5)
     ax.set_title('CAP-LS 在三个问题上的平均加速比', fontsize=10)
@@ -418,10 +425,10 @@ def fig_makespan_compare(problem=2, ncores=4, main_csv='main.csv',
         patch.set_facecolor(CORE_COLORS[i % len(CORE_COLORS)])
         patch.set_alpha(0.45)
     for i, v in enumerate(vals):
-        ax.scatter([i + 1], [geomean(v)], marker='D', color='k', s=22, zorder=4)
+        ax.scatter([i + 1], [amean(v)], marker='D', color='k', s=22, zorder=4)
     ax.axhline(1.0, ls='--', color='#999999', lw=1.0)
     ax.set_ylabel('加速比（相对官方单核基准）')
-    ax.set_title(f'问题 {problem}、N={ncores}：各算法加速比对比（◆ 为几何平均）',
+    ax.set_title(f'问题 {problem}、N={ncores}：各算法加速比对比（◆ 为算术平均）',
                  fontsize=10)
     return save(fig, f'fig06_makespan_compare_p{problem}_n{ncores}.png')
 
@@ -508,11 +515,11 @@ def fig_cache(main_csv='main.csv', p3_csv='p3_compare.csv'):
             byn2[n].append(d[2]['makespan'] / d[3]['makespan'])
     xs2 = sorted(byn2)
     if xs2:
-        axes[1].plot(xs2, [geomean(byn2[x]) for x in xs2], marker='o',
+        axes[1].plot(xs2, [amean(byn2[x]) for x in xs2], marker='o',
                      color='#d1603d', lw=1.8)
         for x in xs2:
-            axes[1].annotate('{:.3f}'.format(geomean(byn2[x])),
-                             (x, geomean(byn2[x])), textcoords='offset points',
+            axes[1].annotate('{:.3f}'.format(amean(byn2[x])),
+                             (x, amean(byn2[x])), textcoords='offset points',
                              xytext=(0, 7), ha='center', fontsize=7.5)
     axes[1].axhline(1.0, ls='--', color='#999999', lw=1.0)
     axes[1].set_xlabel('核心数 N')
@@ -558,7 +565,7 @@ def fig_p3_curve(p3_csv='p3_compare.csv', main_csv='main.csv'):
         xs = sorted(byn[p])
         if not xs:
             continue
-        ys = [geomean(byn[p][x]) for x in xs]
+        ys = [amean(byn[p][x]) for x in xs]
         ax.plot(xs, ys, marker='o' if p == 2 else 's', color=CORE_COLORS[i],
                 lw=1.8, label=labels[p])
         for x, y in zip(xs, ys):
@@ -567,10 +574,10 @@ def fig_p3_curve(p3_csv='p3_compare.csv', main_csv='main.csv'):
                         fontsize=7.5, color=CORE_COLORS[i])
     xs3 = sorted(x for x in e2e if e2e[x])
     if xs3:
-        ax.plot(xs3, [geomean(e2e[x]) for x in xs3], marker='^', ls='--',
+        ax.plot(xs3, [amean(e2e[x]) for x in xs3], marker='^', ls='--',
                 color='#777777', lw=1.3, label='无 L2（场景 B 自身最优方案）')
     ax.set_xlabel('核心数 N')
-    ax.set_ylabel('平均加速比（相对官方单核基准，几何平均）')
+    ax.set_ylabel('平均加速比（相对官方单核基准，算术平均）')
     ax.set_xticks(sorted(set(byn[2]) | set(byn[3])) or [1])
     ax.legend(fontsize=8)
     ax.set_title('问题 3：无 L2 与只读 Cache 两种配置的加速比曲线', fontsize=10)
@@ -604,7 +611,7 @@ def fig_ablation(abl_csv='ablation.csv'):
              'no_level', 'no_cache_aware']
     for ax, p in zip(axes, problems):
         names = [v for v in order if v in data[p]]
-        vals = [geomean(data[p][v]) for v in names]
+        vals = [amean(data[p][v]) for v in names]
         base = vals[0] if names and names[0] == 'full' else max(vals)
         colors = ['#3b6fb6'] + ['#b0b7c3'] * (len(names) - 1)
         ax.barh(range(len(names))[::-1], vals, color=colors, alpha=0.85)
@@ -684,8 +691,8 @@ def fig_pareto(main_csv='main.csv', baseline_csv='baseline.csv',
             continue
         ax.scatter([p[0] for p in pts], [p[1] for p in pts], s=13,
                    alpha=0.55, color=CORE_COLORS[i % 5], label=ALGO_LABEL[name])
-        gx = geomean([p[0] for p in pts])
-        gy = geomean([p[1] for p in pts])
+        gx = amean([p[0] for p in pts])
+        gy = amean([p[1] for p in pts])
         ax.scatter([gx], [gy], marker='*', s=190, color=CORE_COLORS[i % 5],
                    edgecolors='k', linewidths=0.6, zorder=5)
     ax.set_xscale('log')
@@ -693,7 +700,7 @@ def fig_pareto(main_csv='main.csv', baseline_csv='baseline.csv',
     ax.set_ylabel('加速比')
     ax.legend(fontsize=8)
     ax.set_title(f'问题 {problem}、N={ncores}：Makespan–搬运量 Pareto 视图'
-                 '（★ 为几何平均）', fontsize=10)
+                 '（★ 为算术平均）', fontsize=10)
     return save(fig, f'fig13_pareto_p{problem}_n{ncores}.png')
 
 
@@ -708,7 +715,7 @@ def fig_granularity(gran_csv='granularity.csv'):
     fig, ax = plt.subplots(figsize=(6.6, 4.0))
     for i, p in enumerate(sorted(data)):
         variants = sorted(data[p], key=lambda s: float(s))
-        ys = [geomean(data[p][v]) for v in variants]
+        ys = [amean(data[p][v]) for v in variants]
         ax.plot([float(v) for v in variants], ys, marker='o',
                 color=CORE_COLORS[i], label=f'问题 {p}')
     ax.set_xscale('log')
@@ -835,7 +842,7 @@ def fig_lower_bound(main_csv='main.csv'):
                 color=CORE_COLORS[i], label=f'问题 {problem}')
     ax.axhline(1.0, ls='--', color='#999999', lw=1.0, label='理论下界')
     ax.set_xlabel('核心数 N')
-    ax.set_ylabel('Makespan / 理论下界（几何平均）')
+    ax.set_ylabel('Makespan / 理论下界（几何平均，比值型指标）')
     ax.set_xticks(sorted(bound_gap(main_csv, 2)) or [1])
     ax.legend(fontsize=8.5)
     ax.set_title('CAP-LS 解与理论下界 max(M/N, V/N, B/bw, CP) 的距离',

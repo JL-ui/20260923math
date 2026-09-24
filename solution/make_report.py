@@ -17,7 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from npu import paths, plots                                    # noqa: E402
+from npu import paths, plots, stats                             # noqa: E402
 
 TABLE_DIR = paths.PAPER_DIR / 'tables'
 
@@ -158,11 +158,13 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows):
         ep = 3 if problem == 3 else problem
         best = best_per_case(rows, problem, eval_problem=ep)
         per_n = defaultdict(list)
+        per_stratum = defaultdict(lambda: defaultdict(list))
         adds = defaultdict(list)
         hits = defaultdict(list)
         for (case, n), r in best.items():
             if r['speedup']:
                 per_n[n].append(r['speedup'])
+                per_stratum[n][stats.strata(case)].append(r['speedup'])
             if r['added_copy_bytes'] is not None:
                 adds[n].append(r['added_copy_bytes'])
             if r.get('cache_hit_rate') is not None:
@@ -181,6 +183,11 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows):
             'added_copy_median': {n: int(st.median(v)) for n, v in sorted(adds.items())},
             'cache_hit_mean': {n: round(sum(v) / len(v), 4)
                                for n, v in sorted(hits.items()) if v},
+            'speedup_ci': {n: [round(x, 4) for x in stats.bootstrap_ci(v, 'amean')]
+                           for n, v in sorted(per_n.items())},
+            'speedup_by_strata': {n: {s: stats.describe(per_stratum[n][s])
+                                      for s in stats.STRATA}
+                                  for n in sorted(per_n)},
         }
     # 基线对比
     cmp_rows = defaultdict(lambda: defaultdict(list))
@@ -195,6 +202,9 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows):
         if not r['feasible']:
             fails[key][0] += 1
     out['baseline_speedup'] = {
+        f'p{p}_n{n}': {a: round(stats.amean(v), 4) for a, v in sorted(d.items())}
+        for (p, n), d in sorted(cmp_rows.items())}
+    out['baseline_speedup_geomean'] = {
         f'p{p}_n{n}': {a: round(plots.geomean(v), 4) for a, v in sorted(d.items())}
         for (p, n), d in sorted(cmp_rows.items())}
     out['baseline_failrate'] = {
@@ -208,15 +218,20 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows):
                  if nn == n and r['speedup']]
             if v:
                 out['baseline_speedup'].setdefault(f'p{problem}_n{n}', {})[
+                    'capls'] = round(stats.amean(v), 4)
+                out['baseline_speedup_geomean'].setdefault(f'p{problem}_n{n}', {})[
                     'capls'] = round(plots.geomean(v), 4)
     # 消融
     abl = defaultdict(lambda: defaultdict(list))
     for r in abl_rows:
         if r['feasible'] and r['speedup']:
             abl[int(r['problem'])][r['variant']].append(r['speedup'])
-    out['ablation'] = {f'problem{p}': {v: round(plots.geomean(s), 4)
+    out['ablation'] = {f'problem{p}': {v: round(stats.amean(s), 4)
                                        for v, s in sorted(d.items())}
                        for p, d in sorted(abl.items())}
+    out['ablation_geomean'] = {f'problem{p}': {v: round(plots.geomean(s), 4)
+                                               for v, s in sorted(d.items())}
+                               for p, d in sorted(abl.items())}
     abl_fail = defaultdict(lambda: [0, 0])
     for r in abl_rows:
         abl_fail[(int(r['problem']), r['variant'])][1] += 1
@@ -238,7 +253,9 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows):
                 gain[n].append(d[2]['makespan'] / d[3]['makespan'])
                 if d[3].get('cache_hit_rate') is not None:
                     hit[n].append(d[3]['cache_hit_rate'])
-        out['l2_gain'] = {n: round(plots.geomean(v), 4) for n, v in sorted(gain.items())}
+        out['l2_gain'] = {n: round(stats.amean(v), 4) for n, v in sorted(gain.items())}
+        out['l2_gain_geomean'] = {n: round(plots.geomean(v), 4)
+                                  for n, v in sorted(gain.items())}
         out['l2_gain_max'] = {n: round(max(v), 4) for n, v in sorted(gain.items())}
         out['l2_hit_rate'] = {n: round(sum(v) / len(v), 4)
                               for n, v in sorted(hit.items()) if v}
@@ -260,6 +277,36 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows):
     if ev:
         out['eval_time'] = {'mean': round(sum(ev) / len(ev), 3),
                             'max': round(max(ev), 3)}
+    # 配对比较（N=4）：CAP-LS 冠军 vs 各基线；完整 vs 各消融变体。
+    # a 为本文方法，rel > 0 表示本文方法更好；每个问题内做 Holm 校正。
+    out['paired'] = {}
+    for problem in (1, 2, 3):
+        rows = p3_rows if (problem == 3 and p3_rows) else main_rows
+        ep = 3 if problem == 3 else problem
+        best = best_per_case(rows, problem, eval_problem=ep)
+        ours = {(c, n): r['speedup'] for (c, n), r in best.items()
+                if n == 4 and r['speedup']}
+        res = {}
+        for algo in ('random', 'topo', 'balance', 'comm'):
+            other = {(r['case'], 4): r['speedup'] for r in base_rows
+                     if int(r['problem']) == problem
+                     and int(r['num_cores'] or 0) == 4
+                     and r['algorithm'] == algo
+                     and r['feasible'] and r['speedup']}
+            res[f'capls_vs_{algo}'] = stats.paired(ours, other)
+        by_var = defaultdict(dict)
+        for r in abl_rows:
+            if (int(r['problem']) == problem and int(r['num_cores'] or 0) == 4
+                    and r['feasible'] and r['speedup']):
+                by_var[r['variant']][(r['case'], 4)] = r['speedup']
+        for variant in sorted(by_var):
+            if variant != 'full':
+                res[f'full_vs_{variant}'] = stats.paired(by_var['full'],
+                                                         by_var[variant])
+        adj = stats.holm({k: d['p'] for k, d in res.items()})
+        for k, d in res.items():
+            d['p_holm'] = adj[k]
+        out['paired'][f'problem{problem}'] = res
     return out
 
 

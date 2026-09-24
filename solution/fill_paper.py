@@ -16,7 +16,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from npu import paths, plots                                    # noqa: E402
+from npu import paths, plots, stats                             # noqa: E402
 
 
 def _curve(d, keys=(1, 2, 3, 4, 5), unit_at_one=True):
@@ -37,11 +37,23 @@ def build_values() -> dict:
     v = {}
     for p in (1, 2, 3):
         key = f'problem{p}'
-        g = s.get(key, {}).get('speedup_geomean', {})
+        g = s.get(key, {}).get('speedup_mean', {})
         v[f'P{p}_CURVE'] = _curve(g)
         for n in (2, 3, 4, 5):
             val = g.get(str(n), g.get(n))
             v[f'P{p}_SU_N{n}'] = '{:.2f}'.format(val) if val else '--'
+        geo = s.get(key, {}).get('speedup_geomean', {})
+        for n in (2, 3, 4, 5):
+            val = geo.get(str(n), geo.get(n))
+            v[f'P{p}_GEO_N{n}'] = '{:.2f}'.format(val) if val else '--'
+        ci = s.get(key, {}).get('speedup_ci', {})
+        ci4 = ci.get('4', ci.get(4))
+        v[f'P{p}_CI_N4'] = '[{:.2f}, {:.2f}]'.format(*ci4) if ci4 else '--'
+        strat = s.get(key, {}).get('speedup_by_strata', {})
+        s4 = strat.get('4', strat.get(4, {}))
+        v[f'P{p}_SU_N4_STRATA'] = ' / '.join(
+            '{:.2f}'.format(s4[k]['amean']) if s4.get(k, {}).get('n') else '--'
+            for k in stats.STRATA)
         med = s.get(key, {}).get('speedup_median', {})
         v[f'P{p}_MED_N4'] = '{:.2f}'.format(med.get('4', med.get(4, 0)) or 0)
         mx = s.get(key, {}).get('speedup_max', {})
@@ -128,6 +140,29 @@ def build_values() -> dict:
                 cells.append('--')
         lines.append('| {} | {} |'.format(label[name], ' | '.join(cells)))
     v['TABLE_ABLATION'] = chr(10).join(lines)
+
+    # --- 表格：配对比较（N=4，Holm 校正后的 p 值）---
+    pair_rows = [('capls_vs_random', 'CAP-LS 对 B1 随机'),
+                 ('capls_vs_topo', 'CAP-LS 对 B2 拓扑等分'),
+                 ('capls_vs_balance', 'CAP-LS 对 B3 负载均衡'),
+                 ('capls_vs_comm', 'CAP-LS 对 B4 通信聚类')]
+    pair_rows += [(f'full_vs_{name}', '完整 CAP-LS 对{}'.format(label[name]))
+                  for name in order if name != 'full']
+    pr = s_all.get('paired', {})
+    lines = ['| 比较对象 | 问题 1 | 问题 2 | 问题 3 |', '|---|---|---|---|']
+    for key, text in pair_rows:
+        cells = []
+        for p in (1, 2, 3):
+            d = pr.get(f'problem{p}', {}).get(key)
+            if not d or not d.get('n'):
+                cells.append('--')
+                continue
+            pv = d.get('p_holm', d['p'])
+            ptxt = 'p<0.001' if pv < 0.001 else 'p={:.3f}'.format(pv)
+            cells.append('{:+.1%}（{}，胜/平/负 {}/{}/{}）'.format(
+                d['rel'], ptxt, d['win'], d['tie'], d['loss']))
+        lines.append('| {} | {} |'.format(text, ' | '.join(cells)))
+    v['TABLE_PAIRED'] = chr(10).join(lines)
 
     # 评估总次数 = 所有缓存条目数
     total = 0

@@ -28,3 +28,19 @@
   * `from solution.npu import stats` 与 `cd solution && from npu import stats` 两种导入均可用。
 * 回归：P2 58984、P1 116868、搬运量 90/90 一致。
 * 改动文件：`solution/npu/stats.py`（新）。
+
+## T02 口径改为算术平均 — 完成
+
+* `plots.py`：新增 `amean`；图 5/6/8/10/11/13/14 的聚合改为算术平均，图题/轴标签同步；第 764/834 行附近（敏感性倍数、下界比值）保留几何平均，图 17 轴标签改为“几何平均，比值型指标”。
+* `make_report.summary`：`baseline_speedup`、`ablation`、`l2_gain` 改为算术平均，另存 `*_geomean`；每个问题新增 `speedup_ci`（bootstrap 算术平均 95% 区间）、`speedup_by_strata`；新增 `paired`（N=4，CAP-LS 冠军 vs random/topo/balance/comm，完整 vs 各消融变体；a 为本文方法，每个问题内 Holm 校正，字段 `p_holm`）。
+* `fill_paper.py`：主曲线改读 `speedup_mean`；新增 `P{p}_GEO_N{n}`、`P{p}_CI_N4`、`P{p}_SU_N4_STRATA`、`TABLE_PAIRED`（单元格用 Holm 校正后的 p）。
+* `digest.py`：第 1 节标题与打印改为先 `mean=` 后 `geo=`。
+* `SOLUTION.md`：主要结果表三行改为 `summary.json` 的 `speedup_mean`（原样 4 位小数）。L2 两行未在规格范围内，未改。
+* 验收输出：
+  * `problem2.speedup_mean = {'2': 1.8279, '3': 2.5975, '4': 3.2623, '5': 3.7943}`，与快照逐项相等（P1/P3 同样相等）。
+  * `problem2.speedup_ci = {'2': [1.7569, 1.8957], '3': [2.4908, 2.6944], '4': [3.0888, 3.4231], '5': [3.5544, 4.0194]}`，全部包含均值。
+  * `l2_gain = {'1': 1.0086, '2': 1.0058, '3': 1.0075, '4': 1.0255, '5': 1.0455}`；`'paired' in s` → `True`。
+  * `fill_paper.py`：`filled 62 placeholders`，无未替换占位符。
+  * `grep -n "geomean(" plots.py` → 第 93（def）、771（敏感性）、841（下界）行。
+* 回归：P2 58984、P1 116868、搬运量 90/90 一致。
+* 改动文件：`solution/npu/plots.py`、`solution/make_report.py`、`solution/fill_paper.py`、`solution/digest.py`、`SOLUTION.md`、`results/summary.json`、`figures/*.png`（12 张重绘）、`paper/论文_完整.md`（重新装配）。

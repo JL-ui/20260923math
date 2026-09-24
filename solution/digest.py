@@ -32,7 +32,7 @@ def main():
     gran_rows = plots.read_csv('granularity.csv')
     sens_rows = plots.read_csv('sensitivity.csv')
 
-    sec('1. 主结果：加速比（几何平均 / 中位 / min / max / 超线性用例数）')
+    sec('1. 主结果：加速比（算术平均 / 几何平均 / 中位 / min / max / 超线性用例数）')
     for problem in (1, 2, 3):
         rows = p3_rows if (problem == 3 and p3_rows) else main_rows
         ep = 3 if problem == 3 else problem
@@ -51,9 +51,10 @@ def main():
             if not v:
                 continue
             sup = sum(1 for x in v if x > n)
-            print('  P{} N={}  geo={:.3f}  med={:.3f}  min={:.3f}  max={:.3f}  '
-                  'n={}  超线性={}'.format(problem, n, plots.geomean(v),
-                                          st.median(v), min(v), max(v), len(v), sup))
+            print('  P{} N={}  mean={:.3f}  geo={:.3f}  med={:.3f}  min={:.3f}  '
+                  'max={:.3f}  n={}  超线性={}'.format(
+                      problem, n, plots.amean(v), plots.geomean(v),
+                      st.median(v), min(v), max(v), len(v), sup))
         v4 = {c: r for (c, nn), r in best.items() if nn == 4}
         if v4:
             worst = sorted(v4.items(), key=lambda kv: kv[1]['speedup'] or 0)[:6]
