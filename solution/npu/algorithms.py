@@ -262,13 +262,17 @@ def _local_search(bs, state, num_cores, use_cache, passes=6, budget=None,
 def cap_ls(g, num_cores, problem, block_cap=0.35, comm_weight=0.0,
            local_search=True, use_affinity=True, use_cache_aware=None,
            sync_weight=None, max_ops=None, max_work=None,
-           cores_used=None, init='lpt', subgraph_mode='level', seed=0, **kw):
+           cores_used=None, init='lpt', subgraph_mode='level', seed=0,
+           _return_cost=False, **kw):
     """主算法。
 
     ``init``           分配初始解：``lpt`` 最大优先装箱 / ``rr`` 轮转（多起点）；
     ``subgraph_mode``  子图成形：``level`` 按 (核心, 跨核同步层次) /
                        ``block`` 直接以块为子图（细粒度，保留 σ 顺序）；
     ``cores_used``     只使用前 c 个核（自适应降并行度，用于通信受限的图）。
+    ``_return_cost``   True 时返回 ``(plan, cost)``，``cost`` 为局部搜索内部用的
+                       ``TrafficState.cost()`` 解析估计（单核退化时为 0.0）；
+                       仅供 大图 P1 的代理排序兜底使用，不作为任何正式指标。
     """
     cfg = paths.official_config()
     if use_cache_aware is None:
@@ -279,6 +283,7 @@ def cap_ls(g, num_cores, problem, block_cap=0.35, comm_weight=0.0,
     active = min(num_cores, cores_used or num_cores)
     bs = partition.make_blocks(g, max(1, active), block_cap=block_cap,
                                use_affinity=use_affinity)
+    cost = 0.0
     if active <= 1:
         core = [0] * bs.m
     else:
@@ -293,11 +298,14 @@ def cap_ls(g, num_cores, problem, block_cap=0.35, comm_weight=0.0,
             cache_capacity=cfg['cache_capacity_bytes'] if use_cache_aware else 0)
         if local_search:
             _local_search(bs, state, active, use_cache_aware, seed=seed)
+        cost = state.cost(use_cache_aware)
         core = state.core
     if subgraph_mode == 'block':
-        return _plan_blocks_as_subgraphs(bs, core, num_cores)
-    return _plan_from_core_map(g, bs, core, num_cores,
-                               max_ops=max_ops, max_work=max_work)
+        plan = _plan_blocks_as_subgraphs(bs, core, num_cores)
+    else:
+        plan = _plan_from_core_map(g, bs, core, num_cores,
+                                   max_ops=max_ops, max_work=max_work)
+    return (plan, cost) if _return_cost else plan
 
 
 # --------------------------------------------------------------------------

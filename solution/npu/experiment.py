@@ -95,6 +95,87 @@ def run_one(case: str, problem: int, num_cores: int, algorithm: str,
     return records
 
 
+_LARGE_P1_CACHE = None
+
+
+def _large_p1_cases():
+    """P1 端到端耗时中位数 > 600s 的用例集合（大图代理兜底的判定集）。
+
+    从 ``results/main.csv`` 里问题 1 的候选行统计 ``eval_s`` 中位数；
+    该文件不存在或用例未出现时不计入。进程内缓存一次。
+    """
+    global _LARGE_P1_CACHE
+    if _LARGE_P1_CACHE is None:
+        import csv
+        import statistics
+        by_case: dict = {}
+        path = paths.RESULTS_DIR / 'main.csv'
+        if path.is_file():
+            with path.open(encoding='utf-8', newline='') as fh:
+                for r in csv.DictReader(fh):
+                    if r.get('problem') != '1':
+                        continue
+                    ev = r.get('eval_s')
+                    if ev in (None, '', 'None'):
+                        continue
+                    by_case.setdefault(r['case'], []).append(float(ev))
+        _LARGE_P1_CACHE = {c for c, vals in by_case.items()
+                          if vals and statistics.median(vals) > 600}
+    return _LARGE_P1_CACHE
+
+
+def _proxy_fallback_portfolio(case, problem, num_cores, grid, g, seed, save_plan):
+    """大图 P1 代理兜底：跳过全部候选的官方评估，只用 cap_ls 局部搜索内部的
+    ``TrafficState.cost()`` 解析估计排序选 top-1，官方评估只调用一次核实。
+
+    仅用于 ``_large_p1_cases()`` 命中的用例；正式成绩仍来自这一次官方评估。
+    """
+    best = None
+    for i, params in enumerate(grid):
+        try:
+            plan, cost = algorithms.cap_ls(g, num_cores, problem, seed=seed,
+                                           _return_cost=True, **params)
+        except Exception:                                       # noqa: BLE001
+            continue
+        if best is None or cost < best[0]:
+            best = (cost, i, plan)
+    base = evaluate.singlecore_baseline(case)
+    if best is None:
+        return [{'case': case, 'problem': problem, 'eval_problem': problem,
+                'num_cores': num_cores, 'algorithm': 'capls', 'variant': 'c0',
+                'seed': seed, 'feasible': False, 'makespan': None,
+                'speedup': None,
+                'error': 'PLAN: all candidates failed to build (proxy_fallback)',
+                'params': json.dumps({'proxy_fallback': True})}]
+    cost, i, plan = best
+    plan = evaluate.canonical_plan(plan)
+    t0 = time.perf_counter()
+    res = evaluate.default_cache().evaluate(problem, case, plan)
+    n_sub = len(set(plan['node_to_subgraph'].values()))
+    params = dict(grid[i])
+    params['proxy_fallback'] = True
+    rec = {'case': case, 'problem': problem, 'eval_problem': problem,
+          'num_cores': num_cores, 'algorithm': 'capls', 'variant': f'c{i}',
+          'seed': seed, 'runtime_s': round(time.perf_counter() - t0, 3),
+          'eval_s': res.get('eval_seconds'),
+          'feasible': bool(res.get('feasible')), 'makespan': res.get('makespan'),
+          'added_copy_bytes': res.get('added_copy_bytes'),
+          'partition_added_copy_bytes': res.get('partition_added_copy_bytes'),
+          'spill_added_copy_bytes': res.get('spill_added_copy_bytes'),
+          'scheduled_copy_bytes': res.get('scheduled_copy_bytes'),
+          'cache_hit_rate': res.get('cache_hit_rate'), 'n_subgraphs': n_sub,
+          'baseline_makespan': base.get('makespan'), 'error': res.get('error', ''),
+          'is_best': True, 'params': json.dumps(params, sort_keys=True)}
+    rec['speedup'] = (base['makespan'] / rec['makespan']
+                      if rec['feasible'] and base.get('makespan') else None)
+    if save_plan:
+        path = (paths.PLAN_DIR /
+               f'{case}_p{problem}_n{num_cores}_capls_best.json')
+        path.write_text(json.dumps(plan, ensure_ascii=False), encoding='utf-8')
+        rec['plan_path'] = str(path.relative_to(paths.ROOT))
+    return [rec]
+
+
 def _fasteval_portfolio(case, problem, num_cores, grid, g, seed):
     """T09 快速评估器初筛：全部候选先用 evaluate_fast 打分，只对冠军调用一次
     官方评估器核实；不等则记录到 fasteval_mismatch.csv 并返回 None（回退官方全评）。
@@ -157,6 +238,12 @@ def run_portfolio(case: str, problem: int, num_cores: int,
     """主算法的多起点组合：候选逐个评估，返回全部候选记录 + 最优标记。"""
     g = get_graph(case)
     n = g.n
+    if problem == 1 and case in _large_p1_cases():
+        # 大图 P1 代理兜底：优先于 NPU_FASTEVAL 与常规候选网格裁剪，跳过全部
+        # 候选的官方评估，只用解析代价排序选 top-1 后官方核实一次。
+        full_grid = algorithms.candidate_params(problem, num_cores, 'full')
+        return _proxy_fallback_portfolio(case, problem, num_cores, full_grid,
+                                         g, seed, save_plan)
     use_fast = problem == 1 and os.environ.get('NPU_FASTEVAL') == '1'
     if level == 'auto' and problem == 1:
         level = 'fast' if (n > 12000 and not use_fast) else 'full'

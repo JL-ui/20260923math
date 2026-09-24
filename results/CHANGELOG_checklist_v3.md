@@ -244,3 +244,32 @@ T06 提交后发现遗漏了 `run_experiments.py --stage main/p3` 重跑产生�
 * 回归：P2 58984、P1 116868、搬运量 90/90 一致。
 * 改动文件：`solution/npu/simproxy.py`（新）、`results/model_validation_summary_sim.json`（新）、
   `results/model_validation_full_sim.csv`（新）、`results/simproxy_gate.json`（新）。
+
+## T09-proxy 大图 P1 代理 top-1 兜底 — 完成（用户新增 Step 0，A 档执行计划）
+
+* 背景：用户提供修订版执行计划（"只做 A 档"，约 6–10 h），本步骤为其"步骤 0"，
+  在 T09（已完成、已验证有效的逐字节等价快速评估器）之上再加一层更激进的兜底：
+  对 P1 端到端耗时中位数 > 600 s 的用例，官方候选评估完全跳过（不使用 fasteval，
+  也不用 NPU_FASTEVAL），改用局部搜索内部已经计算的解析代价 `TrafficState.cost()`
+  直接排序选 top-1，只对这一个候选调用一次官方评估器核实。
+* `solution/npu/algorithms.py`：`cap_ls` 新增 `_return_cost=False` 参数，为 `True`
+  时返回 `(plan, cost)` 而非仅 `plan`（`cost = state.cost(use_cache_aware)`，单核
+  退化时为 0.0）；不改变默认行为（默认仍只返回 `plan`，兼容全部现有调用方）。
+* `solution/npu/experiment.py`：
+  - 新增 `_large_p1_cases()`：从 `results/main.csv` 问题 1 候选行按用例聚合
+    `eval_s`，取中位数 > 600 的用例集合（进程内缓存一次）；
+  - 新增 `_proxy_fallback_portfolio(...)`：对 `candidate_params(1, N, 'full')`
+    的全部候选只做 `cap_ls(..., _return_cost=True)` 构造（不评估），取 cost 最小者，
+    对它调用一次 `default_cache().evaluate`；记录的 `params` 字段加
+    `"proxy_fallback": true`；
+  - `run_portfolio` 开头新增判定：`problem == 1 and case in _large_p1_cases()`
+    时优先于 `NPU_FASTEVAL` 与 T06 保留的候选裁剪，直接调用上述兜底并返回。
+* 验证：`_large_p1_cases()` 命中 4 个用例（`case_014`、`case_072`、`case_076`、
+  `case_091`；判定口径是"该用例全部候选 `eval_s` 的中位数"，比 T09 使用的
+  "按 (用例,N) 求和 > 600s" 更严格，因此集合更小）。`case_014` N=5 在此路径下
+  13.5 s 完成（此前同一 (用例,N) 官方逐候选评估需 5757–6329 s），选中 makespan
+  3752694（与遍历全部候选官方评估选出的真实最优 3722693 相差 0.8%，属预期的
+  代理近似损失）；非大图用例（`case_001` P1/P2）候选数与官方评估路径不受影响
+  （仍为 12 个候选，逐一官方评估）。
+* 回归：P2 58984、P1 116868、搬运量 90/90 一致。
+* 改动文件：`solution/npu/algorithms.py`、`solution/npu/experiment.py`。
