@@ -58,14 +58,20 @@ def level_stats(levels: dict, core_of_op: dict, num_cores: int):
 
 def build_subgraphs(g: graphlib.Graph, core_of_op: dict, num_cores: int,
                     rank: dict, max_ops: int | None = None,
-                    max_work: float | None = None):
+                    max_work: float | None = None, levels: dict | None = None):
     """按 (核心, 层次) 成形子图，必要时再按规模沿 σ 序切开。
+
+    ``levels``：显式传入非 ASAP 层指派（T12 的 alap_fill / compress 等）；
+    缺省时按 ``cross_core_levels``（ASAP）计算。任何传入的层指派都必须满足
+    单调性（``levels.check_monotone``），否则不能保证子图商图无环等硬约束。
 
     返回 ``(mapping, core_schedules)``：``mapping`` 是 op→sgid，
     ``core_schedules[k]`` 是核 k 上按 sgid 升序的子图列表。
     子图编号顺序 = (层次 r, 核心 c, 组内切片序)，满足性质 P1。
     """
-    levels = cross_core_levels(g, core_of_op)
+    from . import levels as levels_mod
+    levels = levels if levels is not None else cross_core_levels(g, core_of_op)
+    levels_mod.check_monotone(g, core_of_op, levels)
     buckets = defaultdict(list)
     for v in g.nodes:
         buckets[(levels[v], core_of_op[v])].append(v)

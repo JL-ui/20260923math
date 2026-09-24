@@ -155,11 +155,16 @@ class TrafficState:
 # --------------------------------------------------------------------------
 
 def _plan_from_core_map(g, bs, core_of_block, num_cores, max_ops=None,
-                        max_work=None):
+                        max_work=None, level_mode='asap'):
     core_of_op = {v: core_of_block[bs.block_of[v]] for v in g.nodes}
     rank = {v: i for i, v in enumerate(bs.sigma)}
+    lv = None
+    if level_mode != 'asap':
+        from . import levels as levels_mod
+        lv = levels_mod.assign_levels(g, core_of_op, level_mode)
     mapping, schedules, _ = stratify.build_subgraphs(
-        g, core_of_op, num_cores, rank, max_ops=max_ops, max_work=max_work)
+        g, core_of_op, num_cores, rank, max_ops=max_ops, max_work=max_work,
+        levels=lv)
     return evaluate.make_plan(mapping, schedules)
 
 
@@ -263,13 +268,17 @@ def cap_ls(g, num_cores, problem, block_cap=0.35, comm_weight=0.0,
            local_search=True, use_affinity=True, use_cache_aware=None,
            sync_weight=None, max_ops=None, max_work=None,
            cores_used=None, init='lpt', subgraph_mode='level', seed=0,
-           _return_cost=False, **kw):
+           level_mode='asap', _return_cost=False, **kw):
     """主算法。
 
     ``init``           分配初始解：``lpt`` 最大优先装箱 / ``rr`` 轮转（多起点）；
     ``subgraph_mode``  子图成形：``level`` 按 (核心, 跨核同步层次) /
                        ``block`` 直接以块为子图（细粒度，保留 σ 顺序）；
-    ``cores_used``     只使用前 c 个核（自适应降并行度，用于通信受限的图）。
+    ``cores_used``     只使用前 c 个核（自适应降并行度，用于通信受限的图）；
+    ``level_mode``     子图分层方式（``subgraph_mode='level'`` 时生效）：``asap``
+                       （默认，跨核同步层次的最小合法层）/ ``alap_fill``
+                       （尽量后移、按核内负载均衡填充）/ ``compress``
+                       （ASAP 后合并过薄层）/ ``alap_compress``（先 alap_fill 再合并）。
     ``_return_cost``   True 时返回 ``(plan, cost)``，``cost`` 为局部搜索内部用的
                        ``TrafficState.cost()`` 解析估计（单核退化时为 0.0）；
                        仅供 大图 P1 的代理排序兜底使用，不作为任何正式指标。
@@ -304,7 +313,8 @@ def cap_ls(g, num_cores, problem, block_cap=0.35, comm_weight=0.0,
         plan = _plan_blocks_as_subgraphs(bs, core, num_cores)
     else:
         plan = _plan_from_core_map(g, bs, core, num_cores,
-                                   max_ops=max_ops, max_work=max_work)
+                                   max_ops=max_ops, max_work=max_work,
+                                   level_mode=level_mode)
     return (plan, cost) if _return_cost else plan
 
 
@@ -338,6 +348,10 @@ def candidate_params(problem: int, num_cores: int, level: str = 'full'):
         grid.append(dict(block_cap=0.35, cores_used=max(1, num_cores // 2)))
     else:
         grid.append(dict(block_cap=0.35, sync_weight=0.0))
+    grid += [
+        dict(block_cap=0.35, init='rr', level_mode='alap_fill'),
+        dict(block_cap=0.35, init='rr', level_mode='alap_compress'),
+    ]
     return grid
 
 
