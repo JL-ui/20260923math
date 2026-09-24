@@ -224,3 +224,23 @@ T06 提交后发现遗漏了 `run_experiments.py --stage main/p3` 重跑产生�
   （`run_portfolio` 接入 `NPU_FASTEVAL`）、`solution/check_fasteval.py`（新，通用差分测试工具，
   本次未做穷尽运行）、`results/p1_slow_cases.txt`（新）、
   `results/fasteval_slow_case_verification.json`（新）。
+
+## T10 算子级事件模拟代理 — 完成
+
+* 新建 `solution/npu/simproxy.py`：`estimate(g, plan, problem, cfg) -> float`。
+  - 问题 1：子图即 Task，直接调用 `validate_model.estimate_scene_a_from_plan`（与旧代理共用同一 Task 激活规则，故 P1 指标与旧代理逐位一致）；
+  - 问题 2/3：核内算子序列 = 方案核内子图顺序 + 子图内按 `g.topo` 位置排序；图输入张量每核首次使用前插入 MTE2，跨核边在生产核最后一次生产后插入 MTE3、消费核首次使用前插入 MTE2（就绪时间 = 对端完成 + `cross_core_copy_delay_cycles`）；四条流水各自串行，计算时长 = `cycles`，搬运时长 = 字节 /（带宽 / 开始时刻的在途 DDR 搬运数），问题 3 中命中 FIFO Cache（容量 `cache_capacity_bytes`）的搬入改用 `cache_bandwidth_bytes_per_cycle` 且不占 DDR 在途计数；核内按序发射（全局申请序，`last_start[k]` 单调不减）、各流水可乱序完成；返回 `max(全部完成时刻, DDR 总字节/带宽)`；不模拟 spill。
+  - `validate_model.py` 的 `--proxy sim` 调用点已在 T04 预留提交，本任务不改该文件。
+* 命令：`python solution/validate_model.py --all --proxy sim --jobs 16` → `results/model_validation_summary_sim.json`，`coverage=1.0`。
+* 验收（写入 `results/simproxy_gate.json`）：
+  ```
+  P1: spearman_median=0.9429 (>=0.93 ✓，与旧代理 legacy 完全一致，因共用同一函数)
+  P2: spearman_median=0.8000 (>=0.60 ✓)  recall3=0.8250 (>=60% ✓)
+  P3: spearman_median=0.7970 (>=0.60 ✓)  recall3=0.8375 (>=60% ✓)
+  pass_rank=true, pass_p1=true
+  ```
+  两条门槛均通过。下游规则：T13、T21 用 `simproxy` 排序；`TrafficState.cost` 保持不变；
+  本任务未修改 `algorithms._local_search`。
+* 回归：P2 58984、P1 116868、搬运量 90/90 一致。
+* 改动文件：`solution/npu/simproxy.py`（新）、`results/model_validation_summary_sim.json`（新）、
+  `results/model_validation_full_sim.csv`（新）、`results/simproxy_gate.json`（新）。

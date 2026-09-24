@@ -1,0 +1,33 @@
+{
+ "pass_rank": true,
+ "pass_p1": true,
+ "metrics": {
+  "sim": {
+   "problem1": {
+    "spearman_median": 0.9429,
+    "recall3": 0.9225,
+    "recall1": 0.6675,
+    "kendall_median": 0.8571
+   },
+   "problem2": {
+    "spearman_median": 0.8,
+    "recall3": 0.825,
+    "recall1": 0.51,
+    "kendall_median": 0.6444
+   },
+   "problem3": {
+    "spearman_median": 0.797,
+    "recall3": 0.8375,
+    "recall1": 0.51,
+    "kendall_median": 0.6667
+   }
+  },
+  "legacy_problem1_spearman_median": 0.9429
+ },
+ "thresholds": {
+  "pass_rank_spearman_min": 0.6,
+  "pass_rank_recall3_min": 0.6,
+  "pass_p1_spearman_min": 0.93
+ },
+ "downstream_rule": "pass_rank=true -> T13/T21 用 simproxy 排序，TrafficState.cost 不改；pass_rank=false -> T13 改用全部候选交官方评估(K=4)，T21 取消。本任务不修改 algorithms._local_search。"
+}
