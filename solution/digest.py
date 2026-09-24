@@ -25,7 +25,7 @@ def sec(title):
 def main():
     feats = {f['case']: f for f in json.loads(
         (paths.RESULTS_DIR / 'features.json').read_text(encoding='utf-8'))}
-    main_rows = plots.read_csv('main.csv')
+    main_rows = plots.read_csv('final.csv') or plots.read_csv('main.csv')
     p3_rows = plots.read_csv('p3_compare.csv')
     base_rows = plots.read_csv('baseline.csv')
     abl_rows = plots.read_csv('ablation.csv')

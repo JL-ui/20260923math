@@ -23,7 +23,11 @@ from npu import evaluate, experiment, paths, plots               # noqa: E402
 
 
 def main():
-    rows = plots.read_csv('main.csv') + plots.read_csv('p3_compare.csv')
+    final_path = paths.RESULTS_DIR / 'final.csv'
+    if final_path.is_file():
+        rows = plots.read_csv('final.csv')
+    else:
+        rows = plots.read_csv('main.csv') + plots.read_csv('p3_compare.csv')
     best = {}
     for r in rows:
         if not r['feasible'] or not r.get('plan_path'):

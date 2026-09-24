@@ -30,6 +30,11 @@ def _fmt(x, nd=0):
     return '{:.{}f}'.format(x, nd)
 
 
+def _champion_csv() -> str:
+    """保底池冠军表存在时用 final.csv，否则回退到 main.csv。"""
+    return 'final.csv' if (paths.RESULTS_DIR / 'final.csv').is_file() else 'main.csv'
+
+
 def best_per_case(rows, problem, eval_problem=None):
     out = {}
     for r in rows:
@@ -49,7 +54,9 @@ def best_per_case(rows, problem, eval_problem=None):
 # 附录表：逐用例 Makespan / 额外搬运量 / 命中率
 # --------------------------------------------------------------------------
 
-def appendix_tables(main_rows, n1_rows, p3_rows, cores=(1, 2, 3, 4, 5)):
+def appendix_tables(main_rows, n1_rows, p3_rows, cores=(1, 2, 3, 4, 5),
+                    final_mode=False):
+    """``final_mode``：main_rows 为保底池冠军表（含问题 3 冠军），三个问题一律取它。"""
     TABLE_DIR.mkdir(parents=True, exist_ok=True)
     singles = json.loads((paths.RESULTS_DIR / 'singlecore_baseline.json')
                          .read_text(encoding='utf-8'))
@@ -59,7 +66,7 @@ def appendix_tables(main_rows, n1_rows, p3_rows, cores=(1, 2, 3, 4, 5)):
             n1[(r['case'], int(r['problem']))] = r
     made = []
     for problem in (1, 2, 3):
-        rows = main_rows if problem != 3 else (p3_rows or main_rows)
+        rows = main_rows if (problem != 3 or final_mode) else (p3_rows or main_rows)
         ep = 3 if problem == 3 else problem
         best = best_per_case(rows, problem, eval_problem=ep)
         out_rows = []
@@ -151,10 +158,13 @@ def appendix_tables(main_rows, n1_rows, p3_rows, cores=(1, 2, 3, 4, 5)):
 # 正文数字
 # --------------------------------------------------------------------------
 
-def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows):
+def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows, run_rows=None):
+    """``main_rows`` 为冠军记录（final.csv，存在时）；``run_rows`` 为原始 main.csv，
+    只用于运行时间统计。"""
     out = {}
+    run_rows = main_rows if run_rows is None else run_rows
     for problem in (1, 2, 3):
-        rows = p3_rows if (problem == 3 and p3_rows) else main_rows
+        rows = main_rows
         ep = 3 if problem == 3 else problem
         best = best_per_case(rows, problem, eval_problem=ep)
         per_n = defaultdict(list)
@@ -211,7 +221,7 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows):
         f'p{p}_{a}': round(f[0] / f[1], 4) for (p, a), f in sorted(fails.items())}
     for problem in (1, 2, 3):
         for n in (2, 3, 4, 5):
-            rows = p3_rows if (problem == 3 and p3_rows) else main_rows
+            rows = main_rows
             ep = 3 if problem == 3 else problem
             best = best_per_case(rows, problem, eval_problem=ep)
             v = [r['speedup'] for (c, nn), r in best.items()
@@ -262,12 +272,12 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows):
     # 与理论下界的距离
     out['bound_gap'] = {}
     for problem in (1, 2, 3):
-        g = plots.bound_gap('main.csv', problem)
+        g = plots.bound_gap(_champion_csv(), problem)
         out['bound_gap'][f'problem{problem}'] = {
             n: round(plots.geomean(v), 4) for n, v in sorted(g.items())}
-    # 运行时间
-    rt = [r['runtime_s'] for r in main_rows if r['runtime_s']]
-    ev = [r['eval_s'] for r in main_rows if r['eval_s']]
+    # 运行时间（始终取原始 main.csv 的逐候选记录）
+    rt = [r['runtime_s'] for r in run_rows if r['runtime_s']]
+    ev = [r['eval_s'] for r in run_rows if r['eval_s']]
     if rt:
         out['runtime'] = {'mean': round(sum(rt) / len(rt), 3),
                           'median': round(st.median(rt), 3),
@@ -281,7 +291,7 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows):
     # a 为本文方法，rel > 0 表示本文方法更好；每个问题内做 Holm 校正。
     out['paired'] = {}
     for problem in (1, 2, 3):
-        rows = p3_rows if (problem == 3 and p3_rows) else main_rows
+        rows = main_rows
         ep = 3 if problem == 3 else problem
         best = best_per_case(rows, problem, eval_problem=ep)
         ours = {(c, n): r['speedup'] for (c, n), r in best.items()
@@ -320,16 +330,20 @@ def main():
         args.figures = args.tables = args.summary = True
 
     main_rows = plots.read_csv('main.csv')
+    final_rows = plots.read_csv('final.csv') or main_rows
     n1_rows = plots.read_csv('n1.csv')
     base_rows = plots.read_csv('baseline.csv')
     abl_rows = plots.read_csv('ablation.csv')
     p3_rows = plots.read_csv('p3_compare.csv')
+    champ_csv = _champion_csv()
 
     if args.tables:
-        for p in appendix_tables(main_rows, n1_rows, p3_rows):
+        for p in appendix_tables(final_rows, n1_rows, p3_rows,
+                                 final_mode=(champ_csv == 'final.csv')):
             print('table ->', p)
     if args.summary:
-        s = summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows)
+        s = summary(final_rows, n1_rows, base_rows, abl_rows, p3_rows,
+                    run_rows=main_rows)
         path = paths.RESULTS_DIR / 'summary.json'
         path.write_text(json.dumps(s, ensure_ascii=False, indent=1),
                         encoding='utf-8')
@@ -341,14 +355,14 @@ def main():
         plots.fig_partition_sketch()
         plots.fig_framework()
         if main_rows:
-            plots.fig_speedup()
-            plots.fig_speedup_box()
-            plots.fig_runtime()
+            plots.fig_speedup(main_csv=champ_csv)
+            plots.fig_speedup_box(main_csv=champ_csv)
+            plots.fig_runtime(main_csv='main.csv')
             for p in (1, 2, 3):
-                plots.fig_makespan_compare(p, 4)
-                plots.fig_addedcopy_compare(p, 4)
-                plots.fig_pareto(problem=p, ncores=4)
-            plots.fig_feature_effect(problem=2, ncores=4)
+                plots.fig_makespan_compare(p, 4, main_csv=champ_csv)
+                plots.fig_addedcopy_compare(p, 4, main_csv=champ_csv)
+                plots.fig_pareto(main_csv=champ_csv, problem=p, ncores=4)
+            plots.fig_feature_effect(main_csv=champ_csv, problem=2, ncores=4)
         if p3_rows:
             plots.fig_cache()
             plots.fig_p3_curve()
@@ -357,8 +371,8 @@ def main():
         plots.fig_granularity()
         plots.fig_sensitivity()
         if main_rows:
-            plots.fig_subgraph_count()
-            plots.fig_lower_bound()
+            plots.fig_subgraph_count(main_csv=champ_csv)
+            plots.fig_lower_bound(main_csv=champ_csv)
 
 
 if __name__ == '__main__':

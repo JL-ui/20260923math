@@ -110,3 +110,54 @@ T04 全量运行与 T05/T06 的代码修改、实验重跑在时间上重叠（�
 但每个任务的验收与改动范围保持独立、互不依赖：T05 只依赖 T00，T06 只依赖 T05，T04 只依赖 T01、T03。
 T06 提交后发现遗漏了 `run_experiments.py --stage main/p3` 重跑产生的 `results/plans/*_best.json`
 更新（该阶段默认 `save_plan=True`），已用 `git commit --amend` 补入同一次 T06 提交，未产生额外提交记录。
+
+## T07 保底池 — 完成（验收条件 4 经用户确认放宽为"至多 7 个已理解例外"）
+
+* 新建 `solution/build_pool.py`：对每个 (用例, 问题, N) 按 T05 的 `variants.LABELS` 重建全部标签
+  （问题 2 另加 `x3_c*`：问题 3 候选参数、问题 2 评估），问题 2/3 一律走 `default_cache().evaluate`；
+  问题 1 缓存未命中时按"是否在 main/baseline/ablation/granularity 中有同配置记录且优于当前
+  main.csv 冠军"剪枝（`p1_pruned_labels`），命中记录一律与 CSV 逐位核对，不等写入
+  `results/pool_mismatch.csv` 且不入池；N≥3 做 N−1 嵌入（`embed_n{N-1}`）；单核兜底仅在当前最优
+  加速比 < 1.0 时评估；同一 N 内 P2/P3 完成后做跨问题互投（`cross_from_p2`/`cross_from_p3`）。
+  输出 `results/final.csv`（冠军）、`results/pool.csv`（全部候选）、
+  `results/plans_final/<case>_p<problem>_n<N>.json`。
+* 新建 `solution/check_pool.py`：5 条验收，全部满足打印 `POOL OK`。
+* `solution/make_report.py`：新增 `_champion_csv()`（`final.csv` 存在则用它，否则回退 `main.csv`）；
+  `appendix_tables` 新增 `final_mode` 参数（`final.csv` 存在时问题 3 也从冠军表取，不再依赖
+  `p3_compare.csv`）；`summary` 增加 `run_rows` 参数，运行时间统计固定读原始 `main.csv`；
+  `main()` 中表格/正文数字改读 `final.csv`（存在时），图表调用改传 `main_csv=champ_csv`。
+* `solution/export_plans.py`：`results/final.csv` 存在时只读它（`plan_path` 已指向
+  `results/plans_final/...`），不再合并 `main.csv`+`p3_compare.csv`。
+* `solution/digest.py`：`main_rows` 优先读 `final.csv`。
+* **验收条件 4 的表述变更**（用户明确指示）：原表述"每个用例、每个 N：问题 3 冠军
+  makespan ≤ 问题 2 冠军 makespan"（无例外）改为"……，至多 7 个已理解例外，每个例外
+  必须附物理机制说明且相对偏差 ≤ 1%"。变更原因：直接用官方评估器复核发现，
+  同一方案在问题 3（带只读 L2）下的 Makespan 有极小概率高于同一方案在问题 2（无 L2）
+  下的 Makespan——问题 3 的 FIFO 淘汰顺序取决于 COPY_IN 完成时刻，而命中比未命中更快
+  且不占 DDR 带宽池，会改变后续 COPY_IN 的相对完成顺序，个别情况下让一次本可命中的
+  读取因张量被提前淘汰而变成未命中；若该算子在关键路径上，问题 3 Makespan 会略高于
+  问题 2。已用 `evaluate_plan(2,...)`/`evaluate_plan(3,...)` 直接复核同一方案确认
+  （例：case_002 N=5 某方案 P2=55382、P3=55399），排除了本项目 `cross_from_p2` 互投构造
+  或代码逻辑的问题——`cross_from_p2` 本身就是"用问题 3 评估问题 2 冠军的原始方案"，
+  已是这一比较能达到的最优形式，无法通过增加候选来消除。
+  实际结果：400 个 (用例, N) 配置中 7 个违反，相对偏差 0.001%–0.31%（见
+  `results/pool_condition4_exceptions.json`，含逐条机制说明与数值）。
+* 验收输出：
+  ```
+  condition 4: 7 known exception(s) (max rel 0.3136%) -> results/pool_condition4_exceptions.json
+  summary problem2 speedup_mean N=5 = 3.9885 (OK)
+  POOL OK
+  ```
+  其余 4 条（1200 行全可行、加速比≥1.0、N 单调不增、冠军不劣于五张参照 CSV 的已知最优）
+  全部无例外通过。
+* 运行：`python solution/build_pool.py --jobs 16`（100 用例，2715 s ≈ 45 分钟；最大用例 case_014
+  单案例 2714 s，主要花在 N−1 嵌入与跨问题互投对大图 P1 的官方评估）；
+  `make_report.py --tables --figures`；`export_plans.py`（导出 1500 个方案文件：
+  100×3 问题×N=2..5 的 1200 个冠军 + 100×3 问题×N=1 的 300 个单核方案）。
+* 回归：P2 58984、P1 116868、搬运量 90/90 一致。
+* 改动文件：`solution/build_pool.py`（新）、`solution/check_pool.py`（新）、
+  `solution/make_report.py`、`solution/export_plans.py`、`solution/digest.py`、
+  `results/final.csv`（新）、`results/pool.csv`（新）、`results/pool_mismatch.csv`（新，空表）、
+  `results/pool_condition4_exceptions.json`（新）、`results/plans_final/`（新，1200 个方案）、
+  `results/final_plans/`（更新为 1500 个方案 + `manifest.csv`）、`results/summary.json`、
+  `paper/tables/*`、`figures/*`（12 张重绘）。
