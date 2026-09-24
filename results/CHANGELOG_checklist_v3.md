@@ -85,3 +85,28 @@
   * P1 行数 4464 == 备份中的 4464（未受影响）。
 * 回归：P2 58984、P1 116868、搬运量 90/90 一致。
 * 改动文件：`solution/npu/experiment.py`、`solution/solve.py`、`solution/merge_main.py`（新）、`results/main.csv`、`results/main_p23.csv`（新）、`results/p3_compare.csv`、`results/baseline_snapshot/main_before_T06.csv`（新）。
+
+## T04 代理检验改用用例内指标 — 完成
+
+* 说明：因 T04 全量运行耗时较长（100 用例 × 4 核数 × 3 问题，大图 P1 官方评估单次可达 1800+ s），经用户确认与 T05/T06 并行执行；本节记录其结果，提交顺序落在 T05、T06 之后。
+* `solution/validate_model.py`：
+  - 新增 `--all`（全部 100 用例 × N=2,3,4,5）、`--proxy {legacy,sim}`；
+  - `--proxy sim` 时 `_estimate` 调用 `npu.simproxy.estimate`（T10 模块，本任务只预留调用点，未随本次提交引入 `simproxy.py`）；
+  - 新增 `within_case_report(rows)`：组内候选按 makespan 去重后计算 Spearman/Kendall（`scipy.stats.spearmanr/kendalltau`，组内候选 <3 跳过）、Top-K（1/3/5）减速比、Recall@K；`pooled_spearman` 作为混合秩相关附带输出；
+  - 结果写 `results/model_validation_summary_<proxy>.json`，`--all` 时 CSV 默认改名为 `results/model_validation_full_<proxy>.csv`；
+  - 任务队列按图规模降序提交，缩短大图 P1 长尾对总墙钟时间的影响；命中率 < 100% 时会在未命中处触发官方评估，评估后立即 `flush()`（原代码只在全部完成后统一 flush，大图 P1 单次评估耗时远超单进程崩溃/重启窗口，逐条落盘避免重算）。
+* 命令：`python solution/validate_model.py --all --proxy legacy --jobs 16`。
+* 验收：
+  - `results/model_validation_summary_legacy.json` 存在，`coverage=1.0`（100 × 4 × 3 = 1200 组全部覆盖，≥95% 要求）；
+  - N=4、前 40 个用例子集：P2 用例内 Spearman 中位数 = **0.4512**，落在 0.43–0.53 区间内（基底清单核实值 0.48）；
+  - 全量指标：P1 Spearman 中位 0.9429／Recall@3 92.25%；P2 0.4555／58%；P3 0.4492／58%。
+* 回归：P2 58984、P1 116868、搬运量 90/90 一致。
+* 改动文件：`solution/validate_model.py`、`results/model_validation_summary_legacy.json`（新）、`results/model_validation_full_legacy.csv`（新）。
+
+## 提交顺序说明
+
+T04 全量运行与 T05/T06 的代码修改、实验重跑在时间上重叠（经用户确认并行执行以缩短总时长）。
+实际提交顺序为 T00 → T01 → T02 → T03 → **T05 → T06** → **T04**，晚于规格 0.4 节列出的编号顺序，
+但每个任务的验收与改动范围保持独立、互不依赖：T05 只依赖 T00，T06 只依赖 T05，T04 只依赖 T01、T03。
+T06 提交后发现遗漏了 `run_experiments.py --stage main/p3` 重跑产生的 `results/plans/*_best.json`
+更新（该阶段默认 `save_plan=True`），已用 `git commit --amend` 补入同一次 T06 提交，未产生额外提交记录。

@@ -12,6 +12,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import math
 import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -96,7 +97,10 @@ def estimate_scene_a_from_plan(g, mapping, schedules, cfg):
     return max(makespan, total_bytes / bw)
 
 
-def _estimate(g, bs, core, num_cores, problem, cfg, plan):
+def _estimate(g, bs, core, num_cores, problem, cfg, plan, proxy='legacy'):
+    if proxy == 'sim':
+        from npu import simproxy
+        return simproxy.estimate(g, plan, problem, cfg)
     if problem == 1:
         mapping = {int(k): int(v) for k, v in plan['node_to_subgraph'].items()}
         return estimate_scene_a_from_plan(g, mapping, plan['core_schedules'], cfg)
@@ -106,7 +110,7 @@ def _estimate(g, bs, core, num_cores, problem, cfg, plan):
     return est
 
 
-def task(case, problem, ncores):
+def task(case, problem, ncores, proxy='legacy'):
     cfg = paths.official_config()
     g = experiment.get_graph(case)
     rows = []
@@ -144,8 +148,10 @@ def task(case, problem, ncores):
                 plan = algorithms._plan_from_core_map(
                     g, bs, core, ncores, max_ops=params.get('max_ops'))
             plan = evaluate.canonical_plan(plan)
-            est = _estimate(g, bs, core, active, problem, cfg, plan)
+            est = _estimate(g, bs, core, active, problem, cfg, plan, proxy)
             res = evaluate.default_cache().evaluate(problem, case, plan)
+            if not res.get('cached'):
+                evaluate.default_cache().flush()     # 大图 P1 单次评估可达半小时
         except Exception as exc:                                # noqa: BLE001
             rows.append({'case': case, 'problem': problem, 'num_cores': ncores,
                          'variant': idx, 'feasible': False,
@@ -153,6 +159,7 @@ def task(case, problem, ncores):
             continue
         rows.append({'case': case, 'problem': problem, 'num_cores': ncores,
                      'variant': idx, 'feasible': bool(res.get('feasible')),
+                     'proxy': proxy,
                      'estimate': round(est, 1),
                      'makespan': res.get('makespan'),
                      'error': res.get('error', '')})
@@ -180,47 +187,134 @@ def _corr(xs, ys):
     return sum((x - mx) * (y - my) for x, y in zip(xs, ys)) / (sx * sy)
 
 
+def _num(x):
+    if x in (None, '', 'None'):
+        return None
+    return float(x)
+
+
+def _q(xs, q):
+    xs = sorted(xs)
+    if not xs:
+        return float('nan')
+    pos = (len(xs) - 1) * q
+    lo = int(math.floor(pos))
+    hi = min(lo + 1, len(xs) - 1)
+    return xs[lo] + (xs[hi] - xs[lo]) * (pos - lo)
+
+
+def _r4(x):
+    return None if x is None or (isinstance(x, float) and math.isnan(x)) \
+        else round(x, 4)
+
+
+def within_case_report(rows) -> dict:
+    """用例内（同一 (case, num_cores) 的候选之间）代理排序质量。
+
+    组内候选按真实 makespan 去重（同值保留候选编号最小者）。
+    Spearman / Kendall τ 只在组内候选 ≥ 3 时计算；
+    Top-K 减速比 = 代理排序前 K 个中的最小真实 makespan / 组内真实最小 − 1；
+    Recall@K = 真实最优是否落在代理前 K 个中。混合秩相关只作附带输出。
+    """
+    from scipy.stats import kendalltau, spearmanr
+    out = {}
+    for problem in (1, 2, 3):
+        ok = [r for r in rows if int(r['problem']) == problem
+              and str(r.get('feasible')).lower() == 'true'
+              and _num(r.get('estimate')) and _num(r.get('makespan'))]
+        groups = {}
+        for r in sorted(ok, key=lambda r: int(r['variant'])):
+            g = groups.setdefault((r['case'], int(r['num_cores'])), {})
+            mk = _num(r['makespan'])
+            if mk not in g:
+                g[mk] = _num(r['estimate'])
+        sp, kt = [], []
+        topk = {1: [], 3: [], 5: []}
+        recall = {1: [], 3: [], 5: []}
+        for g in groups.values():
+            mks = list(g)
+            ests = [g[m] for m in mks]
+            if len(mks) >= 3:
+                s = spearmanr(ests, mks).statistic
+                t = kendalltau(ests, mks).statistic
+                if not math.isnan(s):
+                    sp.append(float(s))
+                if not math.isnan(t):
+                    kt.append(float(t))
+            order = sorted(range(len(mks)), key=lambda i: ests[i])
+            best = min(mks)
+            for k in (1, 3, 5):
+                top = [mks[i] for i in order[:k]]
+                topk[k].append(min(top) / best - 1)
+                recall[k].append(1.0 if best in top else 0.0)
+        pooled = float('nan')
+        if len(ok) >= 3:
+            pooled = float(spearmanr([_num(r['estimate']) for r in ok],
+                                     [_num(r['makespan']) for r in ok]).statistic)
+        rep = {
+            'n_rows': len(ok), 'n_groups': len(groups), 'n_groups_rank': len(sp),
+            'spearman_median': _r4(_q(sp, 0.5)),
+            'spearman_mean': _r4(sum(sp) / len(sp)) if sp else None,
+            'kendall_median': _r4(_q(kt, 0.5)),
+            'kendall_mean': _r4(sum(kt) / len(kt)) if kt else None,
+            'pooled_spearman': _r4(pooled),
+        }
+        for k in (1, 3, 5):
+            rep[f'top{k}_slowdown_median'] = _r4(_q(topk[k], 0.5))
+            rep[f'top{k}_slowdown_p90'] = _r4(_q(topk[k], 0.9))
+            rep[f'top{k}_slowdown_max'] = _r4(max(topk[k])) if topk[k] else None
+            rep[f'recall{k}'] = _r4(sum(recall[k]) / len(recall[k])) \
+                if recall[k] else None
+        out[f'problem{problem}'] = rep
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--jobs', type=int, default=8)
     ap.add_argument('--cases', nargs='*')
     ap.add_argument('--cores', type=int, default=4)
-    ap.add_argument('-o', '--output', default='results/model_validation.csv')
+    ap.add_argument('--all', action='store_true',
+                    help='全部 100 个用例 × N=2..5')
+    ap.add_argument('--proxy', choices=['legacy', 'sim'], default='legacy')
+    ap.add_argument('-o', '--output')
     args = ap.parse_args()
-    cases = args.cases or paths.all_cases()[:40]
-    tasks = [(c, p, args.cores) for c in cases for p in (1, 2, 3)]
+    if args.all:
+        cases = args.cases or paths.all_cases()
+        cores = (2, 3, 4, 5)
+        output = args.output or f'results/model_validation_full_{args.proxy}.csv'
+    else:
+        cases = args.cases or paths.all_cases()[:40]
+        cores = (args.cores,)
+        output = args.output or 'results/model_validation.csv'
+    tasks = [(c, p, n, args.proxy) for c in cases for p in (1, 2, 3) for n in cores]
+    # 大图先提交（P1 大图单次官方评估可达半小时），缩短总墙钟时间
+    feats = {f['case']: f['n_ops'] for f in json.loads(
+        (paths.RESULTS_DIR / 'features.json').read_text(encoding='utf-8'))}
+    tasks.sort(key=lambda t: (-feats.get(t[0], 0), t[1], t[2]))
     rows = []
     with ProcessPoolExecutor(max_workers=args.jobs) as ex:
         futs = [ex.submit(task, *t) for t in tasks]
         for i, f in enumerate(as_completed(futs), 1):
             rows.extend(f.result())
-            if i % 20 == 0:
+            if i % 20 == 0 or i == len(futs):
                 print(f'{i}/{len(futs)}', flush=True)
-    experiment.write_csv(rows, Path(args.output))
+    rows.sort(key=lambda r: (r['case'], r['problem'], r['num_cores'], r['variant']))
+    experiment.write_csv(rows, Path(output))
 
-    print('\n=== 模型检验 ===')
-    for problem in (1, 2, 3):
-        ok = [r for r in rows if r['problem'] == problem and r.get('feasible')
-              and r.get('estimate') and r.get('makespan')]
-        if len(ok) < 5:
-            continue
-        lx = [math.log(r['estimate']) for r in ok]
-        ly = [math.log(r['makespan']) for r in ok]
-        pear = _corr(lx, ly)
-        spear = _corr(_rank(lx), _rank(ly))
-        # 选择损失：按解析模型选 vs 按真值选
-        bycase = {}
-        for r in ok:
-            bycase.setdefault((r['case'], r['num_cores']), []).append(r)
-        loss = []
-        for group in bycase.values():
-            pick = min(group, key=lambda r: r['estimate'])
-            best = min(group, key=lambda r: r['makespan'])
-            loss.append(pick['makespan'] / best['makespan'] - 1)
-        print('问题 {}: n={} log-Pearson={:.3f} Spearman={:.3f} '
-              '代理选择损失 中位数={:.2%} 均值={:.2%}'.format(
-                  problem, len(ok), pear, spear,
-                  sorted(loss)[len(loss) // 2], sum(loss) / len(loss)))
+    report = within_case_report(rows)
+    report['proxy'] = args.proxy
+    report['cases'] = len(cases)
+    report['cores'] = list(cores)
+    groups = {(r['case'], r['problem'], r['num_cores']) for r in rows
+              if r.get('feasible') and r.get('estimate') and r.get('makespan')}
+    report['coverage'] = round(len(groups) / len(tasks), 4) if tasks else 0.0
+    path = paths.RESULTS_DIR / f'model_validation_summary_{args.proxy}.json'
+    path.write_text(json.dumps(report, ensure_ascii=False, indent=1),
+                    encoding='utf-8')
+    print('\n=== 模型检验（用例内指标）===')
+    print(json.dumps(report, ensure_ascii=False, indent=1))
+    print('summary ->', path)
 
 
 if __name__ == '__main__':
