@@ -172,9 +172,11 @@ def build_values() -> dict:
 
     _extra_values(s_all, v)
 
-    # 评估总次数 = 所有缓存条目数
+    # 评估总次数 = 正式配置下的缓存条目数
     total = 0
-    for d in paths.CACHE_DIR.glob('p*'):
+    # 只统计题目固定配置下的正式评估（p1/p2/p3）；敏感性实验的覆盖配置缓存目录
+    # （p<k>_<哈希>）不计入。
+    for d in [paths.CACHE_DIR / f'p{k}' for k in (1, 2, 3)]:
         for f in d.glob('*.json'):
             try:
                 total += len(json.loads(f.read_text(encoding='utf-8')))
