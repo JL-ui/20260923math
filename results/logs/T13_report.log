@@ -1,0 +1,170 @@
+{
+ "new_official_evals": 2400,
+ "champion_s_configs": 165,
+ "configs": 800,
+ "by_K": {
+  "0": {
+   "P2_N2": 2.0503,
+   "P2_N3": 2.8501,
+   "P2_N4": 3.5359,
+   "P2_N5": 4.0896,
+   "P3_N2": 2.052,
+   "P3_N3": 2.857,
+   "P3_N4": 3.6324,
+   "P3_N5": 4.1767
+  },
+  "1": {
+   "P2_N2": 2.051,
+   "P2_N3": 2.8535,
+   "P2_N4": 3.54,
+   "P2_N5": 4.0979,
+   "P3_N2": 2.0529,
+   "P3_N3": 2.8578,
+   "P3_N4": 3.6324,
+   "P3_N5": 4.1812
+  },
+  "4": {
+   "P2_N2": 2.0518,
+   "P2_N3": 2.8575,
+   "P2_N4": 3.5558,
+   "P2_N5": 4.1175,
+   "P3_N2": 2.0537,
+   "P3_N3": 2.8633,
+   "P3_N4": 3.6373,
+   "P3_N5": 4.186
+  },
+  "16": {
+   "P2_N2": 2.0546,
+   "P2_N3": 2.8626,
+   "P2_N4": 3.5766,
+   "P2_N5": 4.1437,
+   "P3_N2": 2.0565,
+   "P3_N3": 2.8676,
+   "P3_N4": 3.6544,
+   "P3_N5": 4.2078
+  }
+ },
+ "champion_s_examples": [
+  {
+   "case": "case_002",
+   "problem": 2,
+   "num_cores": 4,
+   "variant": "s9"
+  },
+  {
+   "case": "case_002",
+   "problem": 3,
+   "num_cores": 4,
+   "variant": "s10"
+  },
+  {
+   "case": "case_002",
+   "problem": 2,
+   "num_cores": 5,
+   "variant": "s6"
+  },
+  {
+   "case": "case_002",
+   "problem": 3,
+   "num_cores": 5,
+   "variant": "s6"
+  },
+  {
+   "case": "case_004",
+   "problem": 2,
+   "num_cores": 2,
+   "variant": "s2"
+  },
+  {
+   "case": "case_004",
+   "problem": 3,
+   "num_cores": 2,
+   "variant": "s2"
+  },
+  {
+   "case": "case_006",
+   "problem": 2,
+   "num_cores": 4,
+   "variant": "s16"
+  },
+  {
+   "case": "case_006",
+   "problem": 2,
+   "num_cores": 5,
+   "variant": "s14"
+  },
+  {
+   "case": "case_005",
+   "problem": 2,
+   "num_cores": 3,
+   "variant": "s15"
+  },
+  {
+   "case": "case_006",
+   "problem": 3,
+   "num_cores": 3,
+   "variant": "s5"
+  },
+  {
+   "case": "case_005",
+   "problem": 3,
+   "num_cores": 3,
+   "variant": "s2"
+  },
+  {
+   "case": "case_005",
+   "problem": 2,
+   "num_cores": 4,
+   "variant": "s2"
+  },
+  {
+   "case": "case_006",
+   "problem": 3,
+   "num_cores": 4,
+   "variant": "s9"
+  },
+  {
+   "case": "case_006",
+   "problem": 3,
+   "num_cores": 5,
+   "variant": "s1"
+  },
+  {
+   "case": "case_005",
+   "problem": 3,
+   "num_cores": 5,
+   "variant": "s9"
+  },
+  {
+   "case": "case_010",
+   "problem": 2,
+   "num_cores": 3,
+   "variant": "s10"
+  },
+  {
+   "case": "case_010",
+   "problem": 2,
+   "num_cores": 5,
+   "variant": "s7"
+  },
+  {
+   "case": "case_010",
+   "problem": 3,
+   "num_cores": 2,
+   "variant": "s1"
+  },
+  {
+   "case": "case_010",
+   "problem": 3,
+   "num_cores": 3,
+   "variant": "s10"
+  },
+  {
+   "case": "case_010",
+   "problem": 3,
+   "num_cores": 4,
+   "variant": "s10"
+  }
+ ]
+}
+T13 PIPELINE DONE

@@ -1,0 +1,3 @@
+condition 4: 2 known exception(s) (max rel 0.0067%) -> C:\Users\13985\Desktop\x\results\pool_condition4_exceptions.json
+summary problem2 speedup_mean N=5 = 4.2405 (OK)
+POOL OK

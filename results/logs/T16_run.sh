@@ -1,0 +1,19 @@
+#!/bin/bash
+cd /c/Users/13985/Desktop/x
+export PYTHONIOENCODING=utf-8
+python -u solution/run_experiments.py --stage ablation2 --jobs 16 --problems 2 3 --out results/ablation2_p23.csv > results/logs/T16_p23.log 2>&1 || { echo "P23 FAILED rc=$?" >> results/logs/T16_p23.log; exit 1; }
+python -u solution/run_experiments.py --stage ablation2 --jobs 16 --problems 1 --cases case_001 case_002 case_003 case_004 case_005 case_006 case_007 case_008 case_009 case_010 case_011 case_012 case_013 case_015 case_016 case_017 case_018 case_019 case_020 case_021 case_022 case_023 case_024 case_025 case_026 case_027 case_028 case_029 case_030 case_031 case_032 case_033 case_034 case_035 case_036 case_037 case_038 case_039 case_040 case_041 case_042 case_043 case_044 case_045 case_046 case_047 case_048 case_049 case_050 case_051 case_052 case_053 case_054 case_055 case_056 case_057 case_058 case_059 case_060 case_061 case_062 case_063 case_064 case_065 case_066 case_067 case_068 case_069 case_070 case_071 case_073 case_074 case_075 case_077 case_078 case_079 case_080 case_081 case_082 case_083 case_084 case_085 case_086 case_087 case_088 case_089 case_090 case_092 case_093 case_094 case_095 case_096 case_097 case_098 case_099 case_100 --out results/ablation2_p1.csv > results/logs/T16_p1.log 2>&1 || { echo "P1 FAILED rc=$?" >> results/logs/T16_p1.log; exit 1; }
+python - <<'PY' > results/logs/T16_merge.log 2>&1
+import csv
+rows=[]; heads=[]
+for f in ('results/ablation2_p1.csv','results/ablation2_p23.csv'):
+    with open(f,encoding='utf-8',newline='') as fh:
+        rd=csv.DictReader(fh)
+        for h in rd.fieldnames:
+            if h not in heads: heads.append(h)
+        rows+=list(rd)
+with open('results/ablation2.csv','w',encoding='utf-8',newline='') as fh:
+    w=csv.DictWriter(fh,fieldnames=heads); w.writeheader(); w.writerows(rows)
+print('merged',len(rows))
+PY
+echo "T16 RUN DONE" >> results/logs/T16_merge.log

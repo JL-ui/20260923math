@@ -1,0 +1,140 @@
+20/1200
+40/1200
+60/1200
+80/1200
+100/1200
+120/1200
+140/1200
+160/1200
+180/1200
+200/1200
+220/1200
+240/1200
+260/1200
+280/1200
+300/1200
+320/1200
+340/1200
+360/1200
+380/1200
+400/1200
+420/1200
+440/1200
+460/1200
+480/1200
+500/1200
+520/1200
+540/1200
+560/1200
+580/1200
+600/1200
+620/1200
+640/1200
+660/1200
+680/1200
+700/1200
+720/1200
+740/1200
+760/1200
+780/1200
+800/1200
+820/1200
+840/1200
+860/1200
+880/1200
+900/1200
+920/1200
+940/1200
+960/1200
+980/1200
+1000/1200
+1020/1200
+1040/1200
+1060/1200
+1080/1200
+1100/1200
+1120/1200
+1140/1200
+1160/1200
+1180/1200
+1200/1200
+
+=== 模型检验（用例内指标）===
+{
+ "problem1": {
+  "n_rows": 4800,
+  "n_groups": 400,
+  "n_groups_rank": 400,
+  "spearman_median": 0.9429,
+  "spearman_mean": 0.8759,
+  "kendall_median": 0.8571,
+  "kendall_mean": 0.7946,
+  "pooled_spearman": 0.9934,
+  "top1_slowdown_median": 0.0,
+  "top1_slowdown_p90": 0.0613,
+  "top1_slowdown_max": 0.36,
+  "recall1": 0.6675,
+  "top3_slowdown_median": 0.0,
+  "top3_slowdown_p90": 0.0,
+  "top3_slowdown_max": 0.1845,
+  "recall3": 0.9225,
+  "top5_slowdown_median": 0.0,
+  "top5_slowdown_p90": 0.0,
+  "top5_slowdown_max": 0.0963,
+  "recall5": 0.9775
+ },
+ "problem2": {
+  "n_rows": 4800,
+  "n_groups": 400,
+  "n_groups_rank": 388,
+  "spearman_median": 0.4555,
+  "spearman_mean": 0.4415,
+  "kendall_median": 0.3333,
+  "kendall_mean": 0.3833,
+  "pooled_spearman": 0.9734,
+  "top1_slowdown_median": 0.0306,
+  "top1_slowdown_p90": 0.6785,
+  "top1_slowdown_max": 2.3575,
+  "recall1": 0.345,
+  "top3_slowdown_median": 0.0,
+  "top3_slowdown_p90": 0.1978,
+  "top3_slowdown_max": 1.5051,
+  "recall3": 0.58,
+  "top5_slowdown_median": 0.0,
+  "top5_slowdown_p90": 0.0737,
+  "top5_slowdown_max": 1.5051,
+  "recall5": 0.8075
+ },
+ "problem3": {
+  "n_rows": 4800,
+  "n_groups": 400,
+  "n_groups_rank": 388,
+  "spearman_median": 0.4492,
+  "spearman_mean": 0.4296,
+  "kendall_median": 0.3333,
+  "kendall_mean": 0.3717,
+  "pooled_spearman": 0.9741,
+  "top1_slowdown_median": 0.0418,
+  "top1_slowdown_p90": 0.7744,
+  "top1_slowdown_max": 2.3653,
+  "recall1": 0.3275,
+  "top3_slowdown_median": 0.0,
+  "top3_slowdown_p90": 0.1981,
+  "top3_slowdown_max": 1.5051,
+  "recall3": 0.58,
+  "top5_slowdown_median": 0.0,
+  "top5_slowdown_p90": 0.0762,
+  "top5_slowdown_max": 1.5051,
+  "recall5": 0.8
+ },
+ "proxy": "legacy",
+ "cases": 100,
+ "cores": [
+  2,
+  3,
+  4,
+  5
+ ],
+ "coverage": 1.0
+}
+summary -> C:\Users\13985\Desktop\x\results\model_validation_summary_legacy.json

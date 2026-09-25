@@ -1,0 +1,82 @@
+25/400
+50/400
+75/400
+100/400
+125/400
+150/400
+175/400
+200/400
+225/400
+250/400
+275/400
+300/400
+325/400
+350/400
+375/400
+400/400
+{
+ "by_n": {
+  "2": {
+   "hit_input_reuse": 136404652,
+   "hit_spill_reload": 0,
+   "hit_cross_core_mid": 0,
+   "miss_first_miss": 233358056,
+   "miss_oversize": 0,
+   "miss_concurrent_first_read": 16406272,
+   "miss_fifo_evicted": 345314916,
+   "official_hit_bytes": 136404652,
+   "official_miss_bytes": 595079244,
+   "hit_sum_equals_official": true,
+   "miss_sum_equals_official": true,
+   "concurrent_first_read_share_of_miss": 0.0276,
+   "configs": 100
+  },
+  "3": {
+   "hit_input_reuse": 217436700,
+   "hit_spill_reload": 0,
+   "hit_cross_core_mid": 3795720,
+   "miss_first_miss": 256551672,
+   "miss_oversize": 0,
+   "miss_concurrent_first_read": 17959078,
+   "miss_fifo_evicted": 316765172,
+   "official_hit_bytes": 221232420,
+   "official_miss_bytes": 591275922,
+   "hit_sum_equals_official": true,
+   "miss_sum_equals_official": true,
+   "concurrent_first_read_share_of_miss": 0.0304,
+   "configs": 100
+  },
+  "4": {
+   "hit_input_reuse": 245436720,
+   "hit_spill_reload": 3840,
+   "hit_cross_core_mid": 10159426,
+   "miss_first_miss": 262427660,
+   "miss_oversize": 0,
+   "miss_concurrent_first_read": 60059496,
+   "miss_fifo_evicted": 328330518,
+   "official_hit_bytes": 255599986,
+   "official_miss_bytes": 650817674,
+   "hit_sum_equals_official": true,
+   "miss_sum_equals_official": true,
+   "concurrent_first_read_share_of_miss": 0.0923,
+   "configs": 100
+  },
+  "5": {
+   "hit_input_reuse": 266845066,
+   "hit_spill_reload": 3840,
+   "hit_cross_core_mid": 10850286,
+   "miss_first_miss": 264889354,
+   "miss_oversize": 0,
+   "miss_concurrent_first_read": 53714534,
+   "miss_fifo_evicted": 337709206,
+   "official_hit_bytes": 277699192,
+   "official_miss_bytes": 656313094,
+   "hit_sum_equals_official": true,
+   "miss_sum_equals_official": true,
+   "concurrent_first_read_share_of_miss": 0.0818,
+   "configs": 100
+  }
+ },
+ "hit_sum_equals_official": true,
+ "errors": 0
+}

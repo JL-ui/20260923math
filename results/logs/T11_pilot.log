@@ -1,0 +1,18 @@
+[main] 10/160 tasks  7.1s  rows=190
+[main] 20/160 tasks  9.6s  rows=380
+[main] 30/160 tasks  20.3s  rows=570
+[main] 40/160 tasks  31.6s  rows=760
+[main] 50/160 tasks  57.0s  rows=950
+[main] 60/160 tasks  84.4s  rows=1140
+[main] 70/160 tasks  99.4s  rows=1330
+[main] 80/160 tasks  107.1s  rows=1520
+[main] 90/160 tasks  112.8s  rows=1710
+[main] 100/160 tasks  120.2s  rows=1900
+[main] 110/160 tasks  138.0s  rows=2090
+[main] 120/160 tasks  153.1s  rows=2280
+[main] 130/160 tasks  211.1s  rows=2470
+[main] 140/160 tasks  216.5s  rows=2660
+[main] 150/160 tasks  224.6s  rows=2850
+[main] 160/160 tasks  298.2s  rows=3040
+wrote results\pilot_op.csv 3040 rows in 299.5s
+PILOT DONE

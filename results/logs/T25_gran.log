@@ -1,0 +1,10 @@
+[granularity] 10/87 tasks  1.0s  rows=70
+[granularity] 20/87 tasks  1.5s  rows=140
+[granularity] 30/87 tasks  3.1s  rows=210
+[granularity] 40/87 tasks  4.8s  rows=280
+[granularity] 50/87 tasks  8.9s  rows=350
+[granularity] 60/87 tasks  11.7s  rows=420
+[granularity] 70/87 tasks  13.9s  rows=490
+[granularity] 80/87 tasks  15.7s  rows=560
+[granularity] 87/87 tasks  26.1s  rows=609
+wrote results\granularity.csv 609 rows in 26.5s

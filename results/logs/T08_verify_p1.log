@@ -1,0 +1,11 @@
+[verify] 50/500 1218s mismatches=0
+[verify] 100/500 1688s mismatches=0
+[verify] 150/500 1733s mismatches=0
+[verify] 200/500 1762s mismatches=0
+[verify] 250/500 1774s mismatches=0
+[verify] 300/500 1784s mismatches=0
+[verify] 350/500 1787s mismatches=0
+[verify] 400/500 1789s mismatches=0
+[verify] 450/500 1791s mismatches=0
+[verify] 500/500 1868s mismatches=0
+checked=500 mismatches=0
