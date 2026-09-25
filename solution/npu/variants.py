@@ -9,6 +9,8 @@
     b_random …         基线算法 ALGORITHMS[name]
     a_full …           消融变体（构造逻辑与原 run_experiments.task_ablation 相同）
     g_<β>              粒度扫描 cap_ls(block_cap=β)
+    s1 … s16           仅问题 2/3：T13 优先级采样，参数 = 该配置最优 op 候选 + noise=0.05、
+                       seed=k；基础参数与被官方评估的标签存于 *_s_base.json
     sa1 … sa3          仅问题 1：代理驱动模拟退火（T14）得到的方案。退火方案无法由
                        参数重建，所以由 run_portfolio 存成
                        results/plans/<case>_p1_n<N>_sa<i>.json，这里直接读文件
@@ -33,6 +35,9 @@ ABLATIONS = {
     'no_level': dict(_no_level=True),
 }
 
+SAMPLE_K_MAX = 16          # T13 优先级采样的最大样本数
+SAMPLE_NOISE = 0.05
+
 GRANULARITY_BETAS = (0.03, 0.06, 0.12, 0.25, 0.5, 1.0, 2.0)
 
 
@@ -44,12 +49,23 @@ def LABELS(problem: int, num_cores: int) -> list:
     labels += [f'g_{beta}' for beta in GRANULARITY_BETAS]
     if problem == 1:
         labels += ['sa1', 'sa2', 'sa3']
+    else:
+        labels += [f's{k}' for k in range(1, SAMPLE_K_MAX + 1)]
     labels.append('single')
     return labels
 
 
 def is_saved_plan_label(label: str) -> bool:
     return label.startswith('sa') and label[2:].isdigit()
+
+
+def is_sample_label(label: str) -> bool:
+    return label.startswith('s') and label[1:].isdigit()
+
+
+def sample_base_path(case: str, problem: int, num_cores: int):
+    """T13：记录采样所用基础参数与被官方评估的样本标签。"""
+    return paths.PLAN_DIR / f'{case}_p{problem}_n{num_cores}_s_base.json'
 
 
 def saved_plan_path(case: str, problem: int, num_cores: int, label: str):
@@ -114,6 +130,15 @@ def build(g, label: str, problem: int, num_cores: int, seed: int = 0) -> dict:
         if not path.is_file():
             raise FileNotFoundError(f'no saved anneal plan: {path.name}')
         plan = json.loads(path.read_text(encoding='utf-8'))
+    elif is_sample_label(label):
+        path = sample_base_path(g.name, problem, num_cores)
+        if not path.is_file():
+            raise FileNotFoundError(f'no sampling base: {path.name}')
+        info = json.loads(path.read_text(encoding='utf-8'))
+        if label not in info['evaluated']:
+            raise FileNotFoundError(f'sample {label} not evaluated')
+        plan = algorithms.cap_ls(g, num_cores, problem, seed=int(label[1:]),
+                                 **dict(info['base'], noise=SAMPLE_NOISE))
     elif label == 'single':
         plan = algorithms.baseline_singlecore(g, num_cores, problem)
     else:

@@ -1,0 +1,1 @@
+{"base": {"alpha": 0.8, "block_cap": 0.15, "init": "rr", "mu": 1.0, "nu": 0.5, "subgraph_mode": "op"}, "evaluated": ["s4", "s11", "s13"]}

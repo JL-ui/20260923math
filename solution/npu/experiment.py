@@ -15,7 +15,7 @@ import time
 import traceback
 from pathlib import Path
 
-from . import algorithms, evaluate, graphlib, paths
+from . import algorithms, evaluate, graphlib, paths, variants
 
 _GRAPH = {}
 
@@ -297,6 +297,53 @@ def _fasteval_portfolio(case, problem, num_cores, grid, g, seed):
     return plans, fast_results, best_i, official
 
 
+def _sampling_k():
+    """K 与官方评估个数：simproxy 排序门通过时 K=16 取代理 top-3，否则 K=4 全评估。"""
+    gate = paths.RESULTS_DIR / 'simproxy_gate.json'
+    try:
+        ok = bool(json.loads(gate.read_text(encoding='utf-8')).get('pass_rank'))
+    except (OSError, ValueError):
+        ok = False
+    return (16, 3) if ok else (4, 4)
+
+
+def _run_sampling(case, problem, num_cores, g, grid, out):
+    """返回 (记录列表, 基础参数)；无可行 op 候选时返回 ([], None)。"""
+    op_recs = [r for r in out if r['feasible'] and r['variant'].startswith('c')
+               and grid[int(r['variant'][1:])].get('subgraph_mode') == 'op']
+    if not op_recs:
+        return [], None
+    base_rec = min(op_recs, key=lambda r: r['makespan'])
+    base = dict(grid[int(base_rec['variant'][1:])])
+    k_total, k_eval = _sampling_k()
+    plans = {}
+    for k in range(1, k_total + 1):
+        try:
+            plans[k] = evaluate.canonical_plan(algorithms.cap_ls(
+                g, num_cores, problem, seed=k, **dict(base, noise=variants.SAMPLE_NOISE)))
+        except Exception:                                      # noqa: BLE001
+            continue
+    if k_total > k_eval:
+        from . import simproxy
+        cfg = paths.official_config()
+        order = sorted(plans, key=lambda k: (simproxy.estimate(g, plans[k], problem, cfg), k))
+        chosen = sorted(order[:k_eval])
+    else:
+        chosen = sorted(plans)
+    variants.sample_base_path(case, problem, num_cores).write_text(
+        json.dumps({'base': base, 'evaluated': [f's{k}' for k in chosen]},
+                   sort_keys=True), encoding='utf-8')
+    recs = []
+    for k in chosen:
+        for rec in run_one(case, problem, num_cores, 'capls',
+                           dict(base, noise=variants.SAMPLE_NOISE), seed=k,
+                           variant=f's{k}', eval_problems=[problem]):
+            rec['params'] = json.dumps(dict(base, noise=variants.SAMPLE_NOISE,
+                                            seed=k), sort_keys=True)
+            recs.append(rec)
+    return recs, base
+
+
 def run_portfolio(case: str, problem: int, num_cores: int,
                   level: str = 'full', seed: int = 0,
                   save_plan: bool = True, eval_problems=None) -> list:
@@ -368,6 +415,20 @@ def run_portfolio(case: str, problem: int, num_cores: int,
         return out
     best = min(feasible, key=lambda r: r['makespan'])
     best_params = grid[int(best['variant'][1:])]
+    best_seed = seed
+
+    if problem in (2, 3):
+        # T13：以最优 op 候选为基础做优先级采样（noise=0.05，seed=1..K），
+        # s1..sK 参与冠军选择；基础参数与被官方评估的标签落盘，供 variants.build 重建。
+        srecs, sbase = _run_sampling(case, problem, num_cores, g, grid, out)
+        out.extend(srecs)
+        feasible = [r for r in out if r['feasible']]
+        best = min(feasible, key=lambda r: r['makespan'])
+        if best['variant'].startswith('s'):
+            best_params = dict(sbase, noise=variants.SAMPLE_NOISE)
+            best_seed = int(best['variant'][1:])
+        else:
+            best_params = grid[int(best['variant'][1:])]
 
     anneal_plan_by_variant = {}
     if problem == 1:
@@ -416,7 +477,7 @@ def run_portfolio(case: str, problem: int, num_cores: int,
                     r['plan_path'] = str(path.relative_to(paths.ROOT))
         else:
             extra = run_one(case, problem, num_cores, 'capls', best_params,
-                            seed=seed, save_plan=save_plan, variant='_best',
+                            seed=best_seed, save_plan=save_plan, variant='_best',
                             eval_problems=eval_problems or [problem])
             for r in extra:
                 r['params'] = json.dumps(best_params, sort_keys=True)
