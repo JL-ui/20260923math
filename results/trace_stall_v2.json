@@ -1,0 +1,113 @@
+{
+ "case": "case_003",
+ "problem": 2,
+ "num_cores": 4,
+ "不分层": {
+  "makespan": 237543,
+  "stall_by_core": {
+   "0": 67828,
+   "1": 60654,
+   "2": 54403,
+   "3": 71642
+  },
+  "stall_total": 254527,
+  "busy_by_core": {
+   "0": {
+    "PIPE_MTE2": 51858,
+    "PIPE_M": 109696,
+    "PIPE_V": 87732,
+    "PIPE_MTE3": 11731
+   },
+   "1": {
+    "PIPE_MTE2": 45237,
+    "PIPE_M": 109716,
+    "PIPE_V": 83129,
+    "PIPE_MTE3": 15459
+   },
+   "2": {
+    "PIPE_MTE2": 48031,
+    "PIPE_M": 109704,
+    "PIPE_V": 66618,
+    "PIPE_MTE3": 11194
+   },
+   "3": {
+    "PIPE_MTE2": 45311,
+    "PIPE_M": 109676,
+    "PIPE_V": 87710,
+    "PIPE_MTE3": 15231
+   }
+  }
+ },
+ "同步层次分层（分核与 (a) 相同）": {
+  "makespan": 202683,
+  "stall_by_core": {
+   "0": 43632,
+   "1": 32886,
+   "2": 40261,
+   "3": 35130
+  },
+  "stall_total": 151909,
+  "busy_by_core": {
+   "0": {
+    "PIPE_MTE2": 51898,
+    "PIPE_M": 109696,
+    "PIPE_V": 87732,
+    "PIPE_MTE3": 8253
+   },
+   "1": {
+    "PIPE_MTE2": 46854,
+    "PIPE_M": 109716,
+    "PIPE_V": 83129,
+    "PIPE_MTE3": 8300
+   },
+   "2": {
+    "PIPE_MTE2": 44395,
+    "PIPE_M": 109704,
+    "PIPE_V": 66618,
+    "PIPE_MTE3": 7658
+   },
+   "3": {
+    "PIPE_MTE2": 48517,
+    "PIPE_M": 109676,
+    "PIPE_V": 87710,
+    "PIPE_MTE3": 9143
+   }
+  }
+ },
+ "最终方案": {
+  "makespan": 182260,
+  "stall_by_core": {
+   "0": 23488,
+   "1": 19971,
+   "2": 24255,
+   "3": 24393
+  },
+  "stall_total": 92107,
+  "busy_by_core": {
+   "0": {
+    "PIPE_MTE2": 53870,
+    "PIPE_M": 109672,
+    "PIPE_V": 78736,
+    "PIPE_MTE3": 16616
+   },
+   "1": {
+    "PIPE_MTE2": 57564,
+    "PIPE_M": 109680,
+    "PIPE_V": 83645,
+    "PIPE_MTE3": 18231
+   },
+   "2": {
+    "PIPE_MTE2": 57858,
+    "PIPE_M": 109724,
+    "PIPE_V": 84567,
+    "PIPE_MTE3": 19628
+   },
+   "3": {
+    "PIPE_MTE2": 55983,
+    "PIPE_M": 109716,
+    "PIPE_V": 78241,
+    "PIPE_MTE3": 17257
+   }
+  }
+ }
+}

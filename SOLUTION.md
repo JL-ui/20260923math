@@ -7,6 +7,9 @@
 
 | 内容 | 位置 |
 |---|---|
+| **竞赛论文完善版（Word / PDF，草稿.docx 版式）** | `竞赛论文_完善版.docx`、`竞赛论文_完善版.pdf` |
+| 完善版论文源文件（分章 Markdown，数字用占位符） | `paper/v2/*.md` |
+| 完善版论文的数字、作图与排版脚本 | `solution/paper_v2/`（数字写入 `results/facts_v2.json`，图在 `figures/v2/`） |
 | **论文（完整版 Markdown）** | `paper/论文_完整.md` |
 | **论文（Word）** | `paper/论文.docx` |
 | 论文骨架（含占位符，便于二次编辑） | `paper/论文.md` |

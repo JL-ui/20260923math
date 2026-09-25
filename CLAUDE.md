@@ -107,6 +107,11 @@ npu/plots.py       全部论文图表，数据只来自 results/*.csv
 * 装配顺序：`paper/论文.md`（骨架，含 `@@EXPERIMENTS@@` 标记）
   + `paper/04_实验章节.md` + `paper/05_附录.md` → `assemble_paper.py`
   → `paper/论文_完整.md` → `fill_paper.py` → `md2docx.py` → `paper/论文.docx`。
+* **完善版论文（v2，当前提交用）**：源文件 `paper/v2/*.md`（按文件名顺序拼接），
+  数字占位符由 `solution/paper_v2/facts.py` 写入 `results/facts_v2.json`；
+  图由 `figs_diagrams.py`、`figs_data.py`、`trace_fig.py` 生成到 `figures/v2/`；
+  `python solution/paper_v2/build_docx.py` 以根目录《草稿.docx》为版式模板生成
+  `竞赛论文_完善版.docx`，并调用 Word 更新目录、导出同名 PDF（需要本机装有 Word）。
 * **用 Bash heredoc 批量改论文里的 LaTeX 时要当心**：非 raw Python 字符串会把
   `\b`（`\beta`）、`\t`（`\times`）、`\r`（`\rho`）、`\a`（`\approx`）
   变成控制字符，进而让 `md2docx.py` 抛 `All strings must be XML compatible`。
