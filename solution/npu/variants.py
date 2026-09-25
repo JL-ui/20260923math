@@ -38,6 +38,31 @@ ABLATIONS = {
 SAMPLE_K_MAX = 16          # T13 优先级采样的最大样本数
 SAMPLE_NOISE = 0.05
 
+# T16 消融体系：基准 = c2 的参数，逐项覆盖（op_* 仅问题 2/3）
+ABLATION2_BASE = dict(block_cap=0.35, init='rr')
+_OP = dict(subgraph_mode='op', alpha=0.8, mu=1.0, nu=0.5)
+ABLATION2 = {
+    'full_c2': dict(),
+    'no_comm': dict(use_affinity=False),
+    'no_sync': dict(sync_weight=0.0),
+    'no_localsearch': dict(local_search=False),
+    'no_level': dict(subgraph_mode='block'),
+    'no_level_no_comm': dict(subgraph_mode='block', use_affinity=False),
+    'max_ops500': dict(max_ops=500),
+    'op_full': dict(_OP),
+    'op_mu0': dict(_OP, mu=0.0),
+    'op_nu0': dict(_OP, nu=0.0),
+    'op_alpha1': dict(_OP, alpha=1.0),
+    'lvl_alap': dict(level_mode='alap_fill'),
+    'lvl_compress': dict(level_mode='alap_compress'),
+}
+ABLATION2_P23_ONLY = ('op_full', 'op_mu0', 'op_nu0', 'op_alpha1')
+
+
+def ablation2_params(name: str) -> dict:
+    return dict(ABLATION2_BASE, **ABLATION2[name])
+
+
 GRANULARITY_BETAS = (0.03, 0.06, 0.12, 0.25, 0.5, 1.0, 2.0)
 
 

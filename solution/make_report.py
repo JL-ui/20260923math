@@ -158,6 +158,56 @@ def appendix_tables(main_rows, n1_rows, p3_rows, cores=(1, 2, 3, 4, 5),
 # 正文数字
 # --------------------------------------------------------------------------
 
+def ablation2_summary():
+    """T16：results/ablation2.csv 的逐变体 describe，及相对 full_c2 的配对比较（Holm 校正）；
+    并带出 portfolio_analysis.json 的代理择优结果。文件不存在时返回空字典。"""
+    res = {}
+    f = paths.RESULTS_DIR / 'ablation2.csv'
+    if f.is_file():
+        by = defaultdict(lambda: defaultdict(dict))         # (p, n) -> variant -> case -> speedup
+        for r in plots.read_csv('ablation2.csv'):
+            if r['feasible'] and r['speedup']:
+                by[(int(r['problem']), int(r['num_cores']))][r['variant']][r['case']] = r['speedup']
+        abl2 = {}
+        for p in (1, 2, 3):
+            pv = defaultdict(lambda: defaultdict(list))     # variant -> N -> speedups
+            paired = {}
+            for (pp, n), vs in sorted(by.items()):
+                if pp != p:
+                    continue
+                for v, d in vs.items():
+                    pv[v][n] = list(d.values())
+                    if v != 'full_c2' and 'full_c2' in vs:
+                        paired.setdefault(v, {})[n] = stats.paired(
+                            {(c, n): x for c, x in d.items()},
+                            {(c, n): x for c, x in vs['full_c2'].items()})
+            entry = {}
+            for v in pv:
+                allv = [x for n in pv[v] for x in pv[v][n]]
+                entry[v] = {'describe': stats.describe(allv),
+                            'by_n': {str(n): round(stats.amean(xs), 4)
+                                     for n, xs in sorted(pv[v].items())}}
+            # 每个变体跨 N 的配对比较合并后做 Holm 校正
+            pvals = {}
+            for v, per_n in paired.items():
+                merged = stats.paired(
+                    {(c, n): x for n in per_n for c, x in by[(p, n)][v].items()},
+                    {(c, n): x for n in per_n for c, x in by[(p, n)]['full_c2'].items()})
+                entry[v]['paired'] = merged
+                pvals[v] = merged['p']
+            for v, adj in stats.holm(pvals).items():
+                entry[v]['paired']['p_holm'] = adj
+            abl2[f'problem{p}'] = entry
+        res['ablation2'] = abl2
+    pa = paths.RESULTS_DIR / 'portfolio_analysis.json'
+    if pa.is_file():
+        res['portfolio_analysis'] = json.loads(pa.read_text(encoding='utf-8'))
+    cv = paths.RESULTS_DIR / 'cv_select.json'
+    if cv.is_file():
+        res['cv_select'] = json.loads(cv.read_text(encoding='utf-8'))
+    return res
+
+
 def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows, run_rows=None):
     """``main_rows`` 为冠军记录（final.csv，存在时）；``run_rows`` 为原始 main.csv，
     只用于运行时间统计。"""
@@ -345,6 +395,7 @@ def summary(main_rows, n1_rows, base_rows, abl_rows, p3_rows, run_rows=None):
         for k, d in res.items():
             d['p_holm'] = adj[k]
         out['paired'][f'problem{problem}'] = res
+    out.update(ablation2_summary())
     return out
 
 

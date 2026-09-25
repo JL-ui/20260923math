@@ -168,6 +168,43 @@ def task_ablation(case, problem, ncores):
     return out
 
 
+def task_ablation2(case, problem, ncores):
+    """T16：以 c2 参数为基准的逐项消融（每个变体一个官方评估，走缓存）。"""
+    g = experiment.get_graph(case)
+    base = evaluate.singlecore_baseline(case)
+    out = []
+    for name in variants.ABLATION2:
+        if problem == 1 and name in variants.ABLATION2_P23_ONLY:
+            continue
+        t0 = time.perf_counter()
+        try:
+            plan = evaluate.canonical_plan(algorithms.cap_ls(
+                g, ncores, problem, **variants.ablation2_params(name)))
+            runtime = time.perf_counter() - t0
+            res = evaluate.default_cache().evaluate(problem, case, plan)
+        except Exception as exc:                                # noqa: BLE001
+            out.append({'case': case, 'problem': problem, 'num_cores': ncores,
+                        'algorithm': 'ablation2', 'variant': name,
+                        'feasible': False,
+                        'error': '{}: {}'.format(type(exc).__name__, str(exc)[:200])})
+            continue
+        rec = {'case': case, 'problem': problem, 'eval_problem': problem,
+               'num_cores': ncores, 'algorithm': 'ablation2', 'variant': name,
+               'runtime_s': round(runtime, 3), 'eval_s': res.get('eval_seconds'),
+               'feasible': bool(res.get('feasible')),
+               'makespan': res.get('makespan'),
+               'added_copy_bytes': res.get('added_copy_bytes'),
+               'cache_hit_rate': res.get('cache_hit_rate'),
+               'baseline_makespan': base.get('makespan'),
+               'n_subgraphs': len(set(plan['node_to_subgraph'].values())),
+               'error': res.get('error', '')}
+        rec['speedup'] = (base['makespan'] / rec['makespan']
+                          if rec['feasible'] and base.get('makespan') else None)
+        out.append(rec)
+    evaluate.default_cache().flush()
+    return out
+
+
 # --------------------------------------------------------------------------
 # 驱动
 # --------------------------------------------------------------------------
@@ -197,7 +234,7 @@ def drive(jobs, tasks, out_csv, label):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--stage', required=True,
-                    choices=['main', 'baseline', 'ablation', 'n1', 'p3',
+                    choices=['main', 'baseline', 'ablation', 'ablation2', 'n1', 'p3',
                              'granularity', 'sensitivity'])
     ap.add_argument('--jobs', type=int, default=14)
     ap.add_argument('--cases', nargs='*')
@@ -226,6 +263,11 @@ def main():
             for p in args.problems:
                 for n in args.cores:
                     tasks.append((task_ablation, (c, p, n)))
+    elif args.stage == 'ablation2':
+        for c in cases:
+            for p in args.problems:
+                for n in args.cores:
+                    tasks.append((task_ablation2, (c, p, n)))
     elif args.stage == 'n1':
         for c in cases:
             for p in args.problems:

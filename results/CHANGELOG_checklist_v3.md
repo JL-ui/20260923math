@@ -413,3 +413,12 @@ T06 提交后发现遗漏了 `run_experiments.py --stage main/p3` 重跑产生�
 - 验收：400 配置无错误，各 N 的命中字节之和与未命中字节之和均等于官方 `cache_hit_bytes` / `cache_miss_bytes`。
 - 0.3 回归：P2 58984、P1 116868、搬运量模型 90/90。
 - 未做：T17.3（l2study 扫描）、T17.4，按 B 档计划跳过。
+
+## T16: 消融体系重建 + 组合分析
+
+- `run_experiments.py` 新增 `ablation2` 阶段（13 个变体，基准 = c2 参数 `dict(block_cap=0.35, init='rr')`；op_* 仅 P2/P3），变体定义在 `variants.ABLATION2`。
+- 运行：P2/P3 全 100 case（10400 行，1004 s）；P1 排除 case_014/072/076/091（单次官方评估 >10 min），96 case（3456 行，1120 s）；合并为 `results/ablation2.csv`（13856 行）。论文须注明 P1 消融样本为 96 case。
+- `portfolio_analysis.py`（只读 pool.csv）：贪心前向选择曲线、留一消融、择优层（simproxy，`pass_rank=true`，N=4）。N=4 算术平均：代理择优 P1/P2/P3 = 3.066/3.343/3.422，官方在主候选内择优 3.141/3.577/3.654，池冠军 3.181/3.631/3.674；P2 N=4 代理损失 0.2332，已存入 `portfolio_analysis.json`。
+- `make_report.summary` 新增 `ablation2`（describe + 相对 full_c2 的 paired，Holm 校正）、并带出 `portfolio_analysis` 与 `cv_select`；`fill_paper` 新增 `TABLE_ABLATION2`、`TABLE_GREEDY`、`PROXY_ONLY_P2_N4`（及 `PROXY_LOSS_*`、`OFFICIAL_MAIN_P2_N4`、`CV_LOSS` 的读取钩子，后者随 T20 生效）。
+- 主要结论（相对 full_c2 的均值变化，P1/P2/P3）：去分层 −19.8%/−8.3%/−9.2%；去通信感知 −6.1%/−6.6%/−6.7%；去分层且去通信 −58.0%/−39.7%/−39.9%；去同步深度代价、去局部搜索不显著；lvl_alap 与 lvl_compress 结果一致（+0.6%/+2.5%/+2.4%）。
+- 0.3 回归：P2 58984、P1 116868、搬运量模型 90/90。

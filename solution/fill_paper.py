@@ -207,6 +207,70 @@ def _by_key(d, k):
     return d.get(str(k), d.get(k))
 
 
+ABL2_LABEL = {
+    'full_c2': '完整（c2 基准）', 'no_comm': '去通信感知切图', 'no_sync': '去同步深度代价',
+    'no_localsearch': '去局部搜索', 'no_level': '去同步层次分层（块即子图）',
+    'no_level_no_comm': '同时去分层与通信感知', 'max_ops500': '子图算子数上限 500',
+    'op_full': '单算子子图（α=0.8, μ=1, ν=0.5）', 'op_mu0': '单算子子图，μ=0',
+    'op_nu0': '单算子子图，ν=0', 'op_alpha1': '单算子子图，α=1',
+    'lvl_alap': '层次 ALAP 填充', 'lvl_compress': '层次 ALAP 压缩'}
+
+
+def _t16_values(s, v):
+    """T16：TABLE_ABLATION2、TABLE_GREEDY、PROXY_ONLY_P2_N4 及相关数字。"""
+    abl2 = s.get('ablation2', {})
+    lines = ['| 变体 | 问题 1 | 问题 2 | 问题 3 |', '|---|---|---|---|']
+    for name, lab in ABL2_LABEL.items():
+        cells = []
+        for p in (1, 2, 3):
+            e = abl2.get(f'problem{p}', {}).get(name)
+            base = abl2.get(f'problem{p}', {}).get('full_c2')
+            if not e:
+                cells.append('--')
+                continue
+            m = e['describe']['amean']
+            if name == 'full_c2' or not base:
+                cells.append('{:.3f}'.format(m))
+            else:
+                pr = e.get('paired', {})
+                cells.append('{:.3f}（{}，p_Holm={:.3g}）'.format(
+                    m, _sgn(m / base['describe']['amean'] - 1, '+.1%'),
+                    pr.get('p_holm', float('nan'))))
+        lines.append('| {} | {} |'.format(lab, ' | '.join(cells)))
+    v['TABLE_ABLATION2'] = chr(10).join(lines)
+
+    cv = s.get('cv_select', {})
+    if 'cv_loss_max' in cv:
+        v['CV_LOSS'] = '{:.1%}'.format(cv['cv_loss_max'])
+
+    pa = s.get('portfolio_analysis', {})
+    greedy = pa.get('greedy', {})
+    lines = ['| 已选候选数 k | 问题 1 | 问题 2 | 问题 3 |', '|---|---|---|---|']
+    kmax = max((len(c) for c in greedy.values()), default=0)
+    for k in list(range(1, min(kmax, 8) + 1)) + ([kmax] if kmax > 8 else []):
+        cells = []
+        for p in (1, 2, 3):
+            c = greedy.get(f'P{p}', [])
+            if not c:
+                cells.append('--')
+            else:
+                x = c[min(k, len(c)) - 1]
+                cells.append('{:.3f}（{}）'.format(x['amean'], x['label']))
+        lines.append('| {} | {} |'.format(k, ' | '.join(cells)))
+    v['TABLE_GREEDY'] = chr(10).join(lines)
+
+    ps = pa.get('proxy_selection', {})
+    if 'P2' in ps:
+        v['PROXY_ONLY_P2_N4'] = '{:.3f}'.format(ps['P2']['proxy_only_amean'])
+        v['PROXY_LOSS_P2_N4'] = '{:.3f}'.format(ps['P2']['proxy_loss_vs_official_main'])
+        v['OFFICIAL_MAIN_P2_N4'] = '{:.3f}'.format(ps['P2']['official_main_amean'])
+    for p in (1, 2, 3):
+        e = ps.get(f'P{p}')
+        if e:
+            v[f'PROXY_ONLY_P{p}_N4'] = '{:.3f}'.format(e['proxy_only_amean'])
+            v[f'PROXY_LOSS_P{p}_N4'] = '{:.3f}'.format(e['proxy_loss_vs_official_main'])
+
+
 def _extra_values(s, v):
     """T23 新增的占位符：数据来自 summary.json 之外的结果文件
     （final.csv、bounds.json、model_validation_summary_*.json、op_mode_report.json 等）。"""
@@ -305,6 +369,7 @@ def _extra_values(s, v):
                      'no_cache_aware', 'no_level'):
             if d.get('full') and d.get(name):
                 v[f'ABL_REL_{name}_P{p}'] = _sgn(d[name] / d['full'] - 1, '+.1%')
+    _t16_values(s, v)
     gain, hit = s.get('l2_gain', {}), s.get('l2_hit_rate', {})
     for n in (1, 2, 3, 4, 5):
         v[f'L2_GAIN_N{n}'] = '{:.3f}'.format(_by_key(gain, n) or 0)
