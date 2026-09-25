@@ -1,0 +1,168 @@
+{
+ "rule": "超参数过拟合检验：二折交叉验证（T20，只读 results/pool.csv，不评估）。",
+ "problems": {
+  "problem1": {
+   "train_A": {
+    "selected": [
+     "sa1",
+     "c1",
+     "c3",
+     "sa3"
+    ],
+    "selected_mean_test": 2.6266,
+    "all_labels_mean_test": 2.7066,
+    "out_of_fold_loss": 0.0296,
+    "block_cap_train_means": {
+     "g_0.03": 1.6054,
+     "g_0.06": 1.9685,
+     "g_0.12": 2.3785,
+     "g_0.25": 2.476,
+     "g_0.5": 2.5944,
+     "g_1.0": 2.447,
+     "g_2.0": 2.1442
+    },
+    "block_cap_selected": "g_0.5",
+    "block_cap_selected_mean_test": 2.338,
+    "block_cap_default_mean_test": 2.3999,
+    "block_cap_rel_vs_default": -0.0258,
+    "configs_train": 200,
+    "configs_test": 200
+   },
+   "train_B": {
+    "selected": [
+     "sa1",
+     "c12",
+     "c7",
+     "c3"
+    ],
+    "selected_mean_test": 2.8911,
+    "all_labels_mean_test": 2.9277,
+    "out_of_fold_loss": 0.0125,
+    "block_cap_train_means": {
+     "g_0.03": 1.471,
+     "g_0.06": 1.8199,
+     "g_0.12": 2.069,
+     "g_0.25": 2.1767,
+     "g_0.5": 2.338,
+     "g_1.0": 2.0452,
+     "g_2.0": 1.7729
+    },
+    "block_cap_selected": "g_0.5",
+    "block_cap_selected_mean_test": 2.5944,
+    "block_cap_default_mean_test": 2.6769,
+    "block_cap_rel_vs_default": -0.0308,
+    "configs_train": 200,
+    "configs_test": 200
+   }
+  },
+  "problem2": {
+   "train_A": {
+    "selected": [
+     "c12",
+     "c17",
+     "c15",
+     "c1"
+    ],
+    "selected_mean_test": 3.0109,
+    "all_labels_mean_test": 3.1352,
+    "out_of_fold_loss": 0.0397,
+    "block_cap_train_means": {
+     "g_0.03": 2.54,
+     "g_0.06": 2.6593,
+     "g_0.12": 2.7382,
+     "g_0.25": 2.754,
+     "g_0.5": 2.7462,
+     "g_1.0": 2.7295,
+     "g_2.0": 2.541
+    },
+    "block_cap_selected": "g_0.25",
+    "block_cap_selected_mean_test": 2.523,
+    "block_cap_default_mean_test": 2.5167,
+    "block_cap_rel_vs_default": 0.0025,
+    "configs_train": 200,
+    "configs_test": 200
+   },
+   "train_B": {
+    "selected": [
+     "c14",
+     "c12",
+     "c17",
+     "c7"
+    ],
+    "selected_mean_test": 3.2027,
+    "all_labels_mean_test": 3.2714,
+    "out_of_fold_loss": 0.021,
+    "block_cap_train_means": {
+     "g_0.03": 2.419,
+     "g_0.06": 2.4368,
+     "g_0.12": 2.4692,
+     "g_0.25": 2.523,
+     "g_0.5": 2.501,
+     "g_1.0": 2.4516,
+     "g_2.0": 2.3057
+    },
+    "block_cap_selected": "g_0.25",
+    "block_cap_selected_mean_test": 2.754,
+    "block_cap_default_mean_test": 2.7458,
+    "block_cap_rel_vs_default": 0.003,
+    "configs_train": 200,
+    "configs_test": 200
+   }
+  },
+  "problem3": {
+   "train_A": {
+    "selected": [
+     "c12",
+     "c17",
+     "c15",
+     "c7"
+    ],
+    "selected_mean_test": 3.0753,
+    "all_labels_mean_test": 3.1716,
+    "out_of_fold_loss": 0.0304,
+    "block_cap_train_means": {
+     "g_0.03": 2.6027,
+     "g_0.06": 2.6869,
+     "g_0.12": 2.7805,
+     "g_0.25": 2.8063,
+     "g_0.5": 2.7913,
+     "g_1.0": 2.7574,
+     "g_2.0": 2.5652
+    },
+    "block_cap_selected": "g_0.25",
+    "block_cap_selected_mean_test": 2.5898,
+    "block_cap_default_mean_test": 2.5832,
+    "block_cap_rel_vs_default": 0.0025,
+    "configs_train": 200,
+    "configs_test": 200
+   },
+   "train_B": {
+    "selected": [
+     "c12",
+     "c14",
+     "c17",
+     "c1"
+    ],
+    "selected_mean_test": 3.2344,
+    "all_labels_mean_test": 3.2977,
+    "out_of_fold_loss": 0.0192,
+    "block_cap_train_means": {
+     "g_0.03": 2.4819,
+     "g_0.06": 2.5101,
+     "g_0.12": 2.5326,
+     "g_0.25": 2.5898,
+     "g_0.5": 2.5586,
+     "g_1.0": 2.4977,
+     "g_2.0": 2.3471
+    },
+    "block_cap_selected": "g_0.25",
+    "block_cap_selected_mean_test": 2.8063,
+    "block_cap_default_mean_test": 2.7997,
+    "block_cap_rel_vs_default": 0.0024,
+    "configs_train": 200,
+    "configs_test": 200
+   }
+  }
+ },
+ "cv_loss_max": 0.0397
+}

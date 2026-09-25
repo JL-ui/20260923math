@@ -422,3 +422,10 @@ T06 提交后发现遗漏了 `run_experiments.py --stage main/p3` 重跑产生�
 - `make_report.summary` 新增 `ablation2`（describe + 相对 full_c2 的 paired，Holm 校正）、并带出 `portfolio_analysis` 与 `cv_select`；`fill_paper` 新增 `TABLE_ABLATION2`、`TABLE_GREEDY`、`PROXY_ONLY_P2_N4`（及 `PROXY_LOSS_*`、`OFFICIAL_MAIN_P2_N4`、`CV_LOSS` 的读取钩子，后者随 T20 生效）。
 - 主要结论（相对 full_c2 的均值变化，P1/P2/P3）：去分层 −19.8%/−8.3%/−9.2%；去通信感知 −6.1%/−6.6%/−6.7%；去分层且去通信 −58.0%/−39.7%/−39.9%；去同步深度代价、去局部搜索不显著；lvl_alap 与 lvl_compress 结果一致（+0.6%/+2.5%/+2.4%）。
 - 0.3 回归：P2 58984、P1 116868、搬运量模型 90/90。
+
+## T20: 超参数过拟合交叉验证
+
+- `cv_select.py`（只读 pool.csv）：用例按 `paths.all_cases()` 排序，偶数下标为折 A、奇数下标为折 B；在一折上对主候选（c*、s*、sa*）贪心选 4 个，另一折上取冠军，与"另一折用全部标签"比较得折外损失；同法选 block_cap（g_* 标签）与默认 0.35 比较。
+- 结果（相对折外损失）：P1 2.96%/1.25%，P2 3.97%/2.10%，P3 3.04%/1.92%；最大值 `cv_loss_max` = 3.97% → `CV_LOSS` = 4.0%。block_cap：P2/P3 折上选 β=0.25，折外相对默认 0.35 为 +0.25%~+0.30%；P1 选 β=0.5，折外比默认差 2.6%~3.1%，即默认值未见过拟合。
+- `CV_LOSS` 的读取钩子已随 T16 的 `make_report`/`fill_paper` 改动提交，本次只提交 `cv_select.py` 与 `cv_select.json`。
+- 0.3 回归：与 T16 相同（无运行代码改动），P2 58984、P1 116868、搬运量模型 90/90。
