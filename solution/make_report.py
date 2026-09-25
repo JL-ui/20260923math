@@ -452,6 +452,15 @@ def main():
         if main_rows:
             plots.fig_subgraph_count(main_csv=champ_csv)
             plots.fig_lower_bound(main_csv=champ_csv)
+        # T22 增补图（fig22/fig26/fig27 依赖 T17.3/T15/T17.4 的数据，本轮未做，不生成）
+        plots.fig_speedup_ci()
+        plots.fig_monotone_heatmap()
+        plots.fig_greedy_curve()
+        plots.fig_anytime()
+        plots.fig_p2_vs_p3()
+        plots.fig_traffic_split()
+        plots.fig_proxy_within()
+        plots.fig_bounds_cdf()
 
 
 if __name__ == '__main__':

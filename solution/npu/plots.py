@@ -848,3 +848,215 @@ def fig_lower_bound(main_csv='main.csv'):
     ax.set_title('CAP-LS 解与理论下界 max(M/N, V/N, B/bw, CP) 的距离',
                  fontsize=10)
     return save(fig, 'fig17_lower_bound.png')
+
+# --------------------------------------------------------------------------
+# T22 图表增补（数据只读 results/*.csv|json）
+# --------------------------------------------------------------------------
+
+def _read_json(name):
+    path = paths.RESULTS_DIR / name
+    if not path.is_file():
+        return {}
+    return json.loads(path.read_text(encoding='utf-8'))
+
+
+def fig_speedup_ci():
+    """算术平均加速比与 95% bootstrap 置信区间（summary.json）。"""
+    s = _read_json('summary.json')
+    fig, ax = plt.subplots(figsize=(6.4, 4.1))
+    width = 0.26
+    for i, problem in enumerate((1, 2, 3)):
+        d = s.get(f'problem{problem}', {})
+        ns = sorted(int(n) for n in d.get('speedup_mean', {}))
+        if not ns:
+            continue
+        xs = [n + (i - 1) * width for n in ns]
+        mean = [d['speedup_mean'][str(n)] for n in ns]
+        lo = [d['speedup_mean'][str(n)] - d['speedup_ci'][str(n)][0] for n in ns]
+        hi = [d['speedup_ci'][str(n)][1] - d['speedup_mean'][str(n)] for n in ns]
+        ax.errorbar(xs, mean, yerr=[lo, hi], fmt='o', capsize=3,
+                    color=CORE_COLORS[i], label=f'问题 {problem}')
+    ax.set_xlabel('核心数 N')
+    ax.set_ylabel('算术平均加速比（含 95% bootstrap 置信区间）')
+    ax.set_xticks([2, 3, 4, 5])
+    ax.legend(fontsize=8.5)
+    ax.set_title('各问题加速比的不确定度', fontsize=10)
+    return save(fig, 'fig05c_speedup_ci.png')
+
+
+def fig_monotone_heatmap():
+    """逐用例 MK(N)/MK(N-1)：保底池保证单调不降，故应全部 <= 1。"""
+    rows = read_csv('final.csv')
+    mk = {}
+    for r in rows:
+        if r['feasible'] and r['makespan']:
+            mk[(r['case'], int(r['problem']), r['num_cores'])] = r['makespan']
+    cases = sorted({k[0] for k in mk})
+    cols = [(p, n) for p in (1, 2, 3) for n in (3, 4, 5)]
+    data = []
+    for c in cases:
+        line = []
+        for p, n in cols:
+            a, b = mk.get((c, p, n)), mk.get((c, p, n - 1))
+            line.append(a / b if a and b else float('nan'))
+        data.append(line)
+    fig, ax = plt.subplots(figsize=(6.4, 7.2))
+    im = ax.imshow(data, aspect='auto', cmap='RdYlGn_r', vmin=0.4, vmax=1.05,
+                   interpolation='nearest')
+    ax.set_xticks(range(len(cols)))
+    ax.set_xticklabels([f'P{p} N{n}' for p, n in cols], fontsize=8, rotation=45)
+    ax.set_yticks(range(0, len(cases), 10))
+    ax.set_yticklabels(cases[::10], fontsize=7)
+    ax.grid(False)
+    fig.colorbar(im, ax=ax, label='MK(N) / MK(N−1)')
+    ax.set_title('逐用例 Makespan 随核数的变化（>1 即违反单调）', fontsize=10)
+    return save(fig, 'fig18_monotone.png')
+
+
+def fig_greedy_curve():
+    """贪心前向选择曲线，虚线为仅用代理择优的水平（离开评估器的代价）。"""
+    pa = _read_json('portfolio_analysis.json')
+    fig, ax = plt.subplots(figsize=(6.4, 4.1))
+    for i, problem in enumerate((1, 2, 3)):
+        c = pa.get('greedy', {}).get(f'P{problem}', [])
+        if not c:
+            continue
+        ax.plot([x['k'] for x in c], [x['amean'] for x in c], marker='o', ms=3,
+                color=CORE_COLORS[i], label=f'问题 {problem}')
+        ps = pa.get('proxy_selection', {}).get(f'P{problem}')
+        if ps:
+            ax.axhline(ps['proxy_only_amean'], ls=':', color=CORE_COLORS[i], lw=1.0)
+    ax.set_xlabel('已选主候选数 k')
+    ax.set_ylabel('N=4 算术平均加速比')
+    ax.set_title('贪心前向选择曲线（虚线：仅用事件模拟代理择优）', fontsize=10)
+    ax.legend(fontsize=8.5)
+    return save(fig, 'fig19_greedy.png')
+
+
+def fig_anytime():
+    """按标签顺序的累计最好值：候选越多，N=4 算术平均加速比的上升。"""
+    from . import evaluate, variants
+    base = {}
+    order = {p: {l: i for i, l in enumerate(variants.LABELS(p, 4))}
+             for p in (1, 2, 3)}
+    best = defaultdict(lambda: defaultdict(list))        # problem -> case -> [(idx, sp)]
+    for r in read_csv('pool.csv'):
+        if r['num_cores'] != 4 or not r['feasible'] or not r['makespan']:
+            continue
+        p = int(r['problem'])
+        c = r['case']
+        if c not in base:
+            base[c] = evaluate.singlecore_baseline(c)['makespan']
+        idx = order[p].get(r['label'], 10 ** 6)
+        best[p][c].append((idx, base[c] / r['makespan']))
+    fig, ax = plt.subplots(figsize=(6.4, 4.1))
+    for i, problem in enumerate((1, 2, 3)):
+        cases = best[problem]
+        if not cases:
+            continue
+        seqs = [sorted(v) for v in cases.values()]
+        maxlen = max(len(v) for v in seqs)
+        curve = []
+        for k in range(1, maxlen + 1):
+            curve.append(sum(max(x for _, x in sq[:min(k, len(sq))])
+                             for sq in seqs) / len(seqs))
+        ax.plot(range(1, maxlen + 1), curve, color=CORE_COLORS[i],
+                label=f'问题 {problem}')
+    ax.set_xscale('log')
+    ax.set_xlabel('已评估候选数（按标签顺序，对数轴）')
+    ax.set_ylabel('N=4 累计最好值的算术平均加速比')
+    ax.legend(fontsize=8.5)
+    ax.set_title('保底池的随时（anytime）性能', fontsize=10)
+    return save(fig, 'fig20_anytime.png')
+
+
+def fig_p2_vs_p3():
+    """逐用例 P2 与 P3 冠军加速比散点（N=4）。"""
+    rows = read_csv('final.csv')
+    sp = defaultdict(dict)
+    for r in rows:
+        if r['feasible'] and r['speedup'] and r['num_cores'] == 4 \
+                and int(r['problem']) in (2, 3):
+            sp[r['case']][int(r['problem'])] = r['speedup']
+    pts = [(v[2], v[3]) for v in sp.values() if 2 in v and 3 in v]
+    fig, ax = plt.subplots(figsize=(4.8, 4.6))
+    ax.scatter([a for a, _ in pts], [b for _, b in pts], s=14,
+               color=CORE_COLORS[0], alpha=0.8)
+    hi = max(max(a, b) for a, b in pts) * 1.05 if pts else 1
+    ax.plot([1, hi], [1, hi], ls='--', color='#999999', lw=1.0)
+    ax.set_xlabel('问题 2 冠军加速比（N=4）')
+    ax.set_ylabel('问题 3 冠军加速比（N=4）')
+    ax.set_title('L2 只读 Cache 的逐用例收益', fontsize=10)
+    return save(fig, 'fig21_p2p3.png')
+
+
+def fig_traffic_split():
+    """额外搬运量的构成：切图引入 vs Step2 换入换出（final.csv 冠军）。"""
+    rows = read_csv('final.csv')
+    agg = defaultdict(lambda: [0, 0])
+    for r in rows:
+        if not r['feasible']:
+            continue
+        k = (int(r['problem']), r['num_cores'])
+        agg[k][0] += r['partition_added_copy_bytes'] or 0
+        agg[k][1] += r['spill_added_copy_bytes'] or 0
+    keys = sorted(agg)
+    fig, ax = plt.subplots(figsize=(7.2, 4.1))
+    xs = list(range(len(keys)))
+    part = [agg[k][0] / 1e9 for k in keys]
+    spill = [agg[k][1] / 1e9 for k in keys]
+    ax.bar(xs, part, color=CORE_COLORS[0], label='切图引入')
+    ax.bar(xs, spill, bottom=part, color=CORE_COLORS[1],
+           label='Step2 换入换出（spill）')
+    ax.set_xticks(xs)
+    ax.set_xticklabels([f'P{p} N{n}' for p, n in keys], rotation=60, fontsize=8)
+    ax.set_ylabel('额外搬运量总和（GB）')
+    ax.legend(fontsize=8.5)
+    ax.set_title('额外搬运量的构成（全部用例冠军方案）', fontsize=10)
+    return save(fig, 'fig23_traffic_split.png')
+
+
+def fig_proxy_within():
+    """代理精度：旧解析代理 vs 事件模拟代理，用例内 Spearman 与 Recall@K。"""
+    leg = _read_json('model_validation_summary_legacy.json')
+    sim = _read_json('model_validation_summary_sim.json')
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(9.2, 4.0))
+    w = 0.36
+    series = (('旧解析代理', leg, '#999999'), ('事件模拟代理', sim, CORE_COLORS[0]))
+    for j, (name, d, col) in enumerate(series):
+        med = [d.get(f'problem{p}', {}).get('spearman_median') or 0
+               for p in (1, 2, 3)]
+        a1.bar([p + (j - 0.5) * w for p in (1, 2, 3)], med, width=w,
+               color=col, label=name)
+    a1.set_xticks([1, 2, 3])
+    a1.set_xticklabels(['问题 1', '问题 2', '问题 3'])
+    a1.set_ylabel('用例内 Spearman 秩相关（中位数）')
+    a1.legend(fontsize=8.5)
+    ks = (1, 3, 5)
+    for j, (name, d, col) in enumerate(series):
+        vals = [d.get('problem2', {}).get(f'recall{k}') or 0 for k in ks]
+        a2.bar([i + (j - 0.5) * w for i in range(3)], vals, width=w,
+               color=col, label=name)
+    a2.set_xticks(range(3))
+    a2.set_xticklabels([f'Recall@{k}' for k in ks])
+    a2.set_ylabel('真实最优落入代理前 K 名的比例（问题 2）')
+    a2.set_ylim(0, 1.0)
+    fig.suptitle('代理模型的用例内精度', fontsize=10)
+    return save(fig, 'fig24_proxy_within.png')
+
+
+def fig_bounds_cdf():
+    """Makespan / 理论下界 的经验分布（N=4）。"""
+    rows = read_csv('bounds_cdf.csv')
+    fig, ax = plt.subplots(figsize=(6.4, 4.1))
+    for i, problem in enumerate((1, 2, 3)):
+        pts = sorted((float(r['mk_over_lb']), float(r['cdf'])) for r in rows
+                     if int(r['problem']) == problem and int(r['num_cores']) == 4)
+        if pts:
+            ax.step([x for x, _ in pts], [y for _, y in pts], where='post',
+                    color=CORE_COLORS[i], label=f'问题 {problem}')
+    ax.set_xlabel('Makespan / 理论下界（N=4）')
+    ax.set_ylabel('累计比例')
+    ax.legend(fontsize=8.5)
+    ax.set_title('与理论下界之比的累计分布', fontsize=10)
+    return save(fig, 'fig25_bounds_cdf.png')

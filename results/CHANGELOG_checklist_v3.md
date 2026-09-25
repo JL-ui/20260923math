@@ -429,3 +429,10 @@ T06 提交后发现遗漏了 `run_experiments.py --stage main/p3` 重跑产生�
 - 结果（相对折外损失）：P1 2.96%/1.25%，P2 3.97%/2.10%，P3 3.04%/1.92%；最大值 `cv_loss_max` = 3.97% → `CV_LOSS` = 4.0%。block_cap：P2/P3 折上选 β=0.25，折外相对默认 0.35 为 +0.25%~+0.30%；P1 选 β=0.5，折外比默认差 2.6%~3.1%，即默认值未见过拟合。
 - `CV_LOSS` 的读取钩子已随 T16 的 `make_report`/`fill_paper` 改动提交，本次只提交 `cv_select.py` 与 `cv_select.json`。
 - 0.3 回归：与 T16 相同（无运行代码改动），P2 58984、P1 116868、搬运量模型 90/90。
+
+## T22: 图表增补
+
+- `plots.py` 新增 8 个函数并在 `make_report.py --figures` 末尾调用：`fig_speedup_ci`（fig05c）、`fig_monotone_heatmap`（fig18，逐用例 MK(N)/MK(N−1) 无 >1 单元格）、`fig_greedy_curve`（fig19，虚线为代理择优水平）、`fig_anytime`（fig20）、`fig_p2_vs_p3`（fig21）、`fig_traffic_split`（fig23）、`fig_proxy_within`（fig24）、`fig_bounds_cdf`（fig25）。`make_report.py --figures` 退出码 0。
+- 未生成（缺数据，对应任务按 B 档计划跳过）：`fig_l2_strata`（fig22，需 T17.3 的 `l2study.csv`）、`fig_baseline_wtl`（fig26，需 T15 的 `baseline2`）、`fig_l2_pred`（fig27，需 T17.4 的 `l2_pred_vs_official.csv`）。论文引用这三张图的位置在 T23 中相应处理。
+- trace 甘特图（E4，`trace_gantt.py`，fig28、`trace_stall.json`）未做，同样不在 B 档计划内。
+- 0.3 回归：P2 58984、P1 116868、搬运量模型 90/90。
