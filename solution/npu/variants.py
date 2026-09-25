@@ -9,10 +9,15 @@
     b_random …         基线算法 ALGORITHMS[name]
     a_full …           消融变体（构造逻辑与原 run_experiments.task_ablation 相同）
     g_<β>              粒度扫描 cap_ls(block_cap=β)
+    sa1 … sa3          仅问题 1：代理驱动模拟退火（T14）得到的方案。退火方案无法由
+                       参数重建，所以由 run_portfolio 存成
+                       results/plans/<case>_p1_n<N>_sa<i>.json，这里直接读文件
     single             整图一个子图放 0 号核，其余核空
 """
 
 from __future__ import annotations
+
+import json
 
 from . import algorithms, assign, evaluate, partition, paths
 
@@ -37,8 +42,18 @@ def LABELS(problem: int, num_cores: int) -> list:
     labels += [f'b_{name}' for name in BASELINES]
     labels += [f'a_{name}' for name in ABLATIONS]
     labels += [f'g_{beta}' for beta in GRANULARITY_BETAS]
+    if problem == 1:
+        labels += ['sa1', 'sa2', 'sa3']
     labels.append('single')
     return labels
+
+
+def is_saved_plan_label(label: str) -> bool:
+    return label.startswith('sa') and label[2:].isdigit()
+
+
+def saved_plan_path(case: str, problem: int, num_cores: int, label: str):
+    return paths.PLAN_DIR / f'{case}_p{problem}_n{num_cores}_{label}.json'
 
 
 def label_params(label: str, problem: int, num_cores: int):
@@ -94,6 +109,11 @@ def build(g, label: str, problem: int, num_cores: int, seed: int = 0) -> dict:
         plan = ablation_plan(g, label[2:], problem, num_cores)
     elif label.startswith('g_'):
         plan = algorithms.cap_ls(g, num_cores, problem, block_cap=float(label[2:]))
+    elif is_saved_plan_label(label):
+        path = saved_plan_path(g.name, problem, num_cores, label)
+        if not path.is_file():
+            raise FileNotFoundError(f'no saved anneal plan: {path.name}')
+        plan = json.loads(path.read_text(encoding='utf-8'))
     elif label == 'single':
         plan = algorithms.baseline_singlecore(g, num_cores, problem)
     else:

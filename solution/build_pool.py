@@ -40,7 +40,9 @@ _RECORDS = None
 def _label_of(stage, r):
     if stage == 'main':
         v = r.get('variant') or ''
-        return v if v.startswith('c') and v[1:].isdigit() else None
+        if v.startswith('c') and v[1:].isdigit():
+            return v
+        return v if variants.is_saved_plan_label(v) else None      # T14 退火 sa1..sa3
     if stage == 'baseline':
         return 'b_' + r['algorithm']
     if stage == 'ablation':
@@ -126,6 +128,9 @@ def task_case(case):
                 try:
                     plan = build_label(g, label, problem, n)
                 except Exception as exc:                        # noqa: BLE001
+                    if (isinstance(exc, FileNotFoundError)
+                            and variants.is_saved_plan_label(label)):
+                        continue        # 该配置没有这个退火方案（大图只保留 top-1）
                     pool_rows.append({'case': case, 'problem': problem,
                                       'num_cores': n, 'label': label,
                                       'feasible': False,

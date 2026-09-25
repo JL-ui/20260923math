@@ -131,6 +131,7 @@ def _proxy_fallback_portfolio(case, problem, num_cores, grid, g, seed, save_plan
     仅用于 ``_large_p1_cases()`` 命中的用例；正式成绩仍来自这一次官方评估。
     """
     best = None
+    build_t0 = time.perf_counter()
     for i, params in enumerate(grid):
         try:
             plan, cost = algorithms.cap_ls(g, num_cores, problem, seed=seed,
@@ -139,6 +140,8 @@ def _proxy_fallback_portfolio(case, problem, num_cores, grid, g, seed, save_plan
             continue
         if best is None or cost < best[0]:
             best = (cost, i, plan)
+    # runtime_s 的口径是"单候选构造时间"：这里取每个候选的平均构造时间。
+    build_per_candidate = (time.perf_counter() - build_t0) / max(1, len(grid))
     base = evaluate.singlecore_baseline(case)
     if best is None:
         return [{'case': case, 'problem': problem, 'eval_problem': problem,
@@ -149,14 +152,13 @@ def _proxy_fallback_portfolio(case, problem, num_cores, grid, g, seed, save_plan
                 'params': json.dumps({'proxy_fallback': True})}]
     cost, i, plan = best
     plan = evaluate.canonical_plan(plan)
-    t0 = time.perf_counter()
     res = evaluate.default_cache().evaluate(problem, case, plan)
     n_sub = len(set(plan['node_to_subgraph'].values()))
     params = dict(grid[i])
     params['proxy_fallback'] = True
     rec = {'case': case, 'problem': problem, 'eval_problem': problem,
           'num_cores': num_cores, 'algorithm': 'capls', 'variant': f'c{i}',
-          'seed': seed, 'runtime_s': round(time.perf_counter() - t0, 3),
+          'seed': seed, 'runtime_s': round(build_per_candidate, 3),
           'eval_s': res.get('eval_seconds'),
           'feasible': bool(res.get('feasible')), 'makespan': res.get('makespan'),
           'added_copy_bytes': res.get('added_copy_bytes'),
@@ -168,12 +170,75 @@ def _proxy_fallback_portfolio(case, problem, num_cores, grid, g, seed, save_plan
           'is_best': True, 'params': json.dumps(params, sort_keys=True)}
     rec['speedup'] = (base['makespan'] / rec['makespan']
                       if rec['feasible'] and base.get('makespan') else None)
+
+    # T14：大图 P1 只取退火代理 top-1 做 1 次官方评估（不像常规路径评估 3 个）。
+    anneal_pairs = _run_anneal_candidates(case, problem, num_cores, seed, plan,
+                                          top_k=1, save_plan=save_plan)
+    out = [rec]
+    for arec, aplan in anneal_pairs:
+        out.append(arec)
+    feasible = [r for r in out if r['feasible']]
+    winner = min(feasible, key=lambda r: r['makespan']) if feasible else rec
+    winner_plan = plan
+    for arec, aplan in anneal_pairs:
+        if arec is winner:
+            winner_plan = aplan
+    for r in out:
+        r['is_best'] = (r is winner)
     if save_plan:
         path = (paths.PLAN_DIR /
                f'{case}_p{problem}_n{num_cores}_capls_best.json')
-        path.write_text(json.dumps(plan, ensure_ascii=False), encoding='utf-8')
-        rec['plan_path'] = str(path.relative_to(paths.ROOT))
-    return [rec]
+        path.write_text(json.dumps(winner_plan, ensure_ascii=False),
+                        encoding='utf-8')
+        winner['plan_path'] = str(path.relative_to(paths.ROOT))
+    return out
+
+
+def _run_anneal_candidates(case, problem, num_cores, seed, champion_plan, top_k=3,
+                           save_plan=True):
+    """T14：从当前冠军方案出发做代理驱动模拟退火，返回 [(record, plan), ...]
+    （最多 ``top_k`` 个，variant 为 sa1..saK）。仅用于 ``problem == 1``。
+
+    退火种子固定为 ``p1_anneal.SEED``（20260924），不随实验 ``seed`` 变化，保证
+    同一起点方案总得到同一组 sa 方案。``save_plan`` 为真时把每个 sa 方案存到
+    ``results/plans/<case>_p1_n<N>_sa<i>.json``：退火方案无法由参数重建，保底池
+    （``variants.build`` 的 ``sa*`` 标签）从这些文件读取。
+    """
+    from . import p1_anneal
+    cfg = paths.official_config()
+    g = get_graph(case)
+    anneal_t0 = time.perf_counter()
+    plans = p1_anneal.anneal(g, champion_plan, cfg)
+    anneal_secs = time.perf_counter() - anneal_t0
+    if save_plan:
+        for i, plan in enumerate(plans[:top_k], start=1):
+            (paths.PLAN_DIR / f'{case}_p{problem}_n{num_cores}_sa{i}.json'
+             ).write_text(json.dumps(plan, ensure_ascii=False), encoding='utf-8')
+    base = evaluate.singlecore_baseline(case)
+    cache = evaluate.default_cache()
+    out = []
+    for i, plan in enumerate(plans[:top_k], start=1):
+        res = cache.evaluate(problem, case, plan)
+        n_sub = len(set(plan['node_to_subgraph'].values()))
+        rec = {'case': case, 'problem': problem, 'eval_problem': problem,
+              'num_cores': num_cores, 'algorithm': 'capls', 'variant': f'sa{i}',
+              # 退火是独立阶段：runtime_s 记这一配置的退火总耗时（sa1..sa3 共享），
+              # 官方评估耗时在 eval_s。统计"单候选算法时间"时应排除 sa* 行。
+              'seed': seed, 'runtime_s': round(anneal_secs, 3),
+              'eval_s': res.get('eval_seconds'),
+              'feasible': bool(res.get('feasible')), 'makespan': res.get('makespan'),
+              'added_copy_bytes': res.get('added_copy_bytes'),
+              'partition_added_copy_bytes': res.get('partition_added_copy_bytes'),
+              'spill_added_copy_bytes': res.get('spill_added_copy_bytes'),
+              'scheduled_copy_bytes': res.get('scheduled_copy_bytes'),
+              'cache_hit_rate': res.get('cache_hit_rate'), 'n_subgraphs': n_sub,
+              'baseline_makespan': base.get('makespan'), 'error': res.get('error', ''),
+              'params': json.dumps({'anneal': True, 'anneal_seconds':
+                                    round(anneal_secs, 3)})}
+        rec['speedup'] = (base['makespan'] / rec['makespan']
+                          if rec['feasible'] and base.get('makespan') else None)
+        out.append((rec, plan))
+    return out
 
 
 def _fasteval_portfolio(case, problem, num_cores, grid, g, seed):
@@ -303,15 +368,59 @@ def run_portfolio(case: str, problem: int, num_cores: int,
         return out
     best = min(feasible, key=lambda r: r['makespan'])
     best_params = grid[int(best['variant'][1:])]
+
+    anneal_plan_by_variant = {}
+    if problem == 1:
+        # T14：从当前冠军出发做代理驱动模拟退火，sa1..sa3 参与冠军选择。
+        champion_plan = evaluate.canonical_plan(
+            algorithms.cap_ls(g, num_cores, problem, seed=seed, **best_params))
+        anneal_pairs = _run_anneal_candidates(case, problem, num_cores, seed,
+                                              champion_plan, save_plan=save_plan)
+        for arec, aplan in anneal_pairs:
+            out.append(arec)
+            anneal_plan_by_variant[arec['variant']] = aplan
+        feasible = [r for r in out if r['feasible']]
+        best = min(feasible, key=lambda r: r['makespan'])
+
     for r in out:
         r['is_best'] = (r is best)
     if save_plan or (eval_problems and len(eval_problems) > 1):
-        extra = run_one(case, problem, num_cores, 'capls', best_params,
-                        seed=seed, save_plan=save_plan, variant='_best',
-                        eval_problems=eval_problems or [problem])
-        for r in extra:
-            r['params'] = json.dumps(best_params, sort_keys=True)
-            r['is_best'] = True
+        if best['variant'] in anneal_plan_by_variant:
+            # 冠军来自退火：直接评估/保存该方案（不经 run_one 的候选重建路径）。
+            best_plan = anneal_plan_by_variant[best['variant']]
+            base = evaluate.singlecore_baseline(case)
+            extra = []
+            for ep in (eval_problems or [problem]):
+                res = evaluate.default_cache().evaluate(ep, case, best_plan)
+                n_sub = len(set(best_plan['node_to_subgraph'].values()))
+                erec = {'case': case, 'problem': problem, 'eval_problem': ep,
+                        'num_cores': num_cores, 'algorithm': 'capls',
+                        'variant': '_best', 'seed': seed,
+                        'eval_s': res.get('eval_seconds'),
+                        'feasible': bool(res.get('feasible')),
+                        'makespan': res.get('makespan'),
+                        'added_copy_bytes': res.get('added_copy_bytes'),
+                        'cache_hit_rate': res.get('cache_hit_rate'),
+                        'n_subgraphs': n_sub, 'baseline_makespan': base.get('makespan'),
+                        'error': res.get('error', ''), 'is_best': True,
+                        'params': json.dumps({'anneal': True}, sort_keys=True)}
+                erec['speedup'] = (base['makespan'] / erec['makespan']
+                                   if erec['feasible'] and base.get('makespan') else None)
+                extra.append(erec)
+            if save_plan:
+                path = (paths.PLAN_DIR /
+                       f'{case}_p{problem}_n{num_cores}_capls_best.json')
+                path.write_text(json.dumps(best_plan, ensure_ascii=False),
+                               encoding='utf-8')
+                for r in extra:
+                    r['plan_path'] = str(path.relative_to(paths.ROOT))
+        else:
+            extra = run_one(case, problem, num_cores, 'capls', best_params,
+                            seed=seed, save_plan=save_plan, variant='_best',
+                            eval_problems=eval_problems or [problem])
+            for r in extra:
+                r['params'] = json.dumps(best_params, sort_keys=True)
+                r['is_best'] = True
         out.extend(extra)
     return out
 

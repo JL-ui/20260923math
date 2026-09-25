@@ -2,8 +2,8 @@
  "mechanism": "问题 3 的只读 L2 为 FIFO，淘汰顺序取决于 COPY_IN 完成时刻顺序；命中比未命中更快（250 对 60 B/cycle）且不占 DDR 带宽池，会提前部分算子完成时刻，从而改变后续 COPY_IN 的相对完成顺序——个别情况下让某个本可复用张量被提前淘汰，把一次命中变成未命中；若该算子在关键路径上，问题 3 Makespan 会略高于同一方案在问题 2（无 Cache）下的结果。已用 evaluate_plan(2,...) 与 evaluate_plan(3,...)直接复核同一方案确认，非 cross_from_p2 互投构造或本项目代码的缺陷。",
  "max_allowed": 7,
  "max_rel_allowed": 0.01,
- "count": 7,
- "max_rel_observed": 0.003136,
+ "count": 4,
+ "max_rel_observed": 0.001501,
  "exceptions": [
   {
    "case": "case_002",
@@ -22,44 +22,20 @@
    "rel": 1.2e-05
   },
   {
-   "case": "case_067",
-   "num_cores": 2,
-   "p3_makespan": 33251136,
-   "p2_makespan": 33161675,
-   "diff": 89461,
-   "rel": 0.002698
-  },
-  {
-   "case": "case_067",
-   "num_cores": 4,
-   "p3_makespan": 18293984,
-   "p2_makespan": 18288706,
-   "diff": 5278,
-   "rel": 0.000289
-  },
-  {
-   "case": "case_073",
+   "case": "case_048",
    "num_cores": 3,
-   "p3_makespan": 4489150,
-   "p2_makespan": 4475115,
-   "diff": 14035,
-   "rel": 0.003136
-  },
-  {
-   "case": "case_086",
-   "num_cores": 2,
-   "p3_makespan": 77857,
-   "p2_makespan": 77848,
-   "diff": 9,
-   "rel": 0.000116
+   "p3_makespan": 149071,
+   "p2_makespan": 149061,
+   "diff": 10,
+   "rel": 6.7e-05
   },
   {
    "case": "case_092",
-   "num_cores": 2,
-   "p3_makespan": 1963003,
-   "p2_makespan": 1962822,
-   "diff": 181,
-   "rel": 9.2e-05
+   "num_cores": 5,
+   "p3_makespan": 786053,
+   "p2_makespan": 784875,
+   "diff": 1178,
+   "rel": 0.001501
   }
  ]
 }

@@ -1,0 +1,85 @@
+{
+ "anneal_iters": 1500,
+ "anneal_seed": 20260924,
+ "configs_with_sa_rows": 400,
+ "sa_champion_configs_main": 137,
+ "sa_champion_configs_pool": 87,
+ "new_official_evals_per_config": {
+  "1": 16,
+  "3": 384
+ },
+ "anneal_seconds": {
+  "n": 400,
+  "median": 4.92,
+  "max": 2015.12,
+  "limit": 60.0,
+  "configs_over_limit": 42,
+  "worst": [
+   {
+    "case": "case_014",
+    "num_cores": 3,
+    "seconds": 2015.1
+   },
+   {
+    "case": "case_014",
+    "num_cores": 2,
+    "seconds": 2014.6
+   },
+   {
+    "case": "case_076",
+    "num_cores": 3,
+    "seconds": 1874.8
+   },
+   {
+    "case": "case_076",
+    "num_cores": 2,
+    "seconds": 1865.3
+   },
+   {
+    "case": "case_091",
+    "num_cores": 3,
+    "seconds": 1688.0
+   },
+   {
+    "case": "case_091",
+    "num_cores": 2,
+    "seconds": 1685.7
+   },
+   {
+    "case": "case_079",
+    "num_cores": 2,
+    "seconds": 383.6
+   },
+   {
+    "case": "case_041",
+    "num_cores": 2,
+    "seconds": 279.6
+   },
+   {
+    "case": "case_076",
+    "num_cores": 4,
+    "seconds": 221.1
+   },
+   {
+    "case": "case_072",
+    "num_cores": 2,
+    "seconds": 210.7
+   }
+  ]
+ },
+ "p1_speedup_mean": {
+  "before": {
+   "2": 1.7578,
+   "3": 2.461,
+   "4": 3.1008,
+   "5": 3.5931
+  },
+  "after": {
+   "2": 1.761,
+   "3": 2.4499,
+   "4": 3.1375,
+   "5": 3.6354
+  }
+ },
+ "no_regression": false
+}

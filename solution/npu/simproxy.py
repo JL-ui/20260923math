@@ -42,7 +42,7 @@ def estimate(g, plan, problem, cfg) -> float:
     mapping = {int(k): int(v) for k, v in plan['node_to_subgraph'].items()}
     schedules = [list(order) for order in plan['core_schedules']]
     if problem == 1:
-        from validate_model import estimate_scene_a_from_plan
+        from .proxy_a import estimate_scene_a_from_plan
         return estimate_scene_a_from_plan(g, mapping, schedules, cfg)
     return _scene_b(g, mapping, schedules, cfg, use_cache=(problem == 3))
 
