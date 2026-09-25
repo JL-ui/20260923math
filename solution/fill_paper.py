@@ -216,6 +216,77 @@ ABL2_LABEL = {
     'lvl_alap': '层次 ALAP 填充', 'lvl_compress': '层次 ALAP 压缩'}
 
 
+def _rj(name):
+    f = paths.RESULTS_DIR / name
+    return json.loads(f.read_text(encoding='utf-8')) if f.is_file() else {}
+
+
+def _t23_values(s, v):
+    """T23.6：T11–T20 各任务结果段落所用的占位符（数据源见各 results/*.json）。"""
+    op = _rj('op_mode_report.json')
+    if op:
+        v['OP_CHAMP_CFGS'] = op['op_champion_configs']
+        v['OP_FEAS'] = '{}/{}'.format(op['op_candidates_feasible'], op['op_candidates_total'])
+        v['SPILL_BEFORE_T11'] = '{:.0f}'.format(op['p2_n4_spill_champions_before_T11'] / 1e6)
+        v['SPILL_AFTER_T11'] = '{:.0f}'.format(op['p2_n4_spill_champions_after_T11'] / 1e6)
+    sm = _rj('sampling_report.json')
+    if sm:
+        v['SAMP_EVALS'] = sm['new_official_evals']
+        v['SAMP_CHAMP'] = sm['champion_s_configs']
+        v['SAMP_CONFIGS'] = sm['configs']
+        k = sm['by_K']
+        for p in (2, 3):
+            for K in (0, 1, 4, 16):
+                v[f'SAMP_K{K}_P{p}_N4'] = '{:.3f}'.format(k[str(K)][f'P{p}_N4'])
+            v[f'SAMP_GAIN_P{p}_N4'] = _sgn(k['16'][f'P{p}_N4'] / k['0'][f'P{p}_N4'] - 1, '+.1%')
+    an = _rj('p1_anneal_report.json')
+    if an:
+        v['SA_CHAMP_MAIN'] = an['sa_champion_configs_main']
+        v['SA_CHAMP_POOL'] = an['sa_champion_configs_pool']
+        v['SA_ITERS'] = an['anneal_iters']
+        v['SA_MED_S'] = '{:.1f}'.format(an['anneal_seconds']['median'])
+        v['SA_MAX_S'] = '{:.0f}'.format(an['anneal_seconds']['max'])
+        v['SA_OVER'] = an['anneal_seconds']['configs_over_limit']
+    l2 = _rj('l2_sources.json').get('by_n', {}).get('4')
+    if l2:
+        hit = l2['official_hit_bytes']
+        miss = l2['official_miss_bytes']
+        for key, name in (('input_reuse', 'INPUT'), ('cross_core_mid', 'CROSS'),
+                          ('spill_reload', 'SPILL')):
+            v[f'L2SRC_{name}'] = '{:.1%}'.format(l2[f'hit_{key}'] / hit)
+        for key, name in (('first_miss', 'FIRST'), ('concurrent_first_read', 'CONC'),
+                          ('fifo_evicted', 'FIFO')):
+            v[f'L2SRC_{name}'] = '{:.1%}'.format(l2[f'miss_{key}'] / miss)
+    sp = defaultdict(dict)
+    for r in plots.read_csv('final.csv'):
+        if r['feasible'] and r['speedup'] and r['num_cores'] == 4 and int(r['problem']) in (2, 3):
+            sp[r['case']][int(r['problem'])] = r['speedup']
+    both = [x for x in sp.values() if 2 in x and 3 in x]
+    v['P2P3_EQUAL'] = sum(1 for x in both if abs(x[3] - x[2]) <= 1e-9)
+    v['P2P3_ABOVE'] = sum(1 for x in both if x[3] > x[2] + 1e-9)
+    v['P2P3_BELOW'] = sum(1 for x in both if x[3] < x[2] - 1e-9)
+    abl2 = s.get('ablation2', {})
+    for p in (1, 2, 3):
+        for name, e in abl2.get(f'problem{p}', {}).items():
+            pr = e.get('paired')
+            if pr:
+                v[f'ABL2_REL_{name}_P{p}'] = _sgn(pr['rel'], '+.1%')
+                v[f'ABL2_P_{name}_P{p}'] = '{:.2g}'.format(pr['p_holm'])
+    pa = s.get('portfolio_analysis', {})
+    for p in (1, 2, 3):
+        c = pa.get('greedy', {}).get(f'P{p}', [])
+        if c:
+            v[f'GREEDY_FIRST_P{p}'] = c[0]['label']
+            v[f'GREEDY_K1_P{p}'] = '{:.3f}'.format(c[0]['amean'])
+            v[f'GREEDY_K4_P{p}'] = '{:.3f}'.format(c[min(3, len(c) - 1)]['amean'])
+            v[f'GREEDY_ALL_P{p}'] = '{:.3f}'.format(c[-1]['amean'])
+            v[f'GREEDY_STEPS_P{p}'] = len(c)
+        ps = pa.get('proxy_selection', {}).get(f'P{p}')
+        if ps:
+            v[f'CHAMP_P{p}_N4'] = '{:.3f}'.format(ps['champion_amean'])
+            v[f'PROXY_CHAMP_LOSS_P{p}_N4'] = '{:.3f}'.format(ps['proxy_loss_vs_champion'])
+
+
 def _t16_values(s, v):
     """T16：TABLE_ABLATION2、TABLE_GREEDY、PROXY_ONLY_P2_N4 及相关数字。"""
     abl2 = s.get('ablation2', {})
@@ -370,6 +441,7 @@ def _extra_values(s, v):
             if d.get('full') and d.get(name):
                 v[f'ABL_REL_{name}_P{p}'] = _sgn(d[name] / d['full'] - 1, '+.1%')
     _t16_values(s, v)
+    _t23_values(s, v)
     gain, hit = s.get('l2_gain', {}), s.get('l2_hit_rate', {})
     for n in (1, 2, 3, 4, 5):
         v[f'L2_GAIN_N{n}'] = '{:.3f}'.format(_by_key(gain, n) or 0)
@@ -448,6 +520,46 @@ def _extra_values(s, v):
     v['GRAN_LOSS_BIG'] = ' / '.join(big)
     v['GRAN_LOSS_SMALL'] = ' / '.join(small)
     v['GRAN_PLATEAU'] = '{:.1%}'.format(plateau)
+    _sens_table(v)
+
+
+SENS_ROWS = (('bandwidth', 'DDR 总带宽 (B/cycle)', 1),
+             ('L1', 'L1 容量 (KB)', 1024),
+             ('UB', 'UB 容量 (KB)', 1024),
+             ('cache_capacity_bytes', 'L2 容量 (KB)', 1024),
+             ('cache_bandwidth_bytes_per_cycle', 'L2 带宽 (B/cycle)', 1),
+             ('cross_core_copy_delay_cycles', '跨核同步延迟 (cycle，问题 2)', 1),
+             ('task_cross_core_wait_cycles', '场景 A 跨核等待 (cycle，问题 1)', 1))
+
+
+def _sens_table(v):
+    """TABLE_SENS：Makespan 相对同一用例默认配置的倍数（几何平均，比值型指标）。"""
+    from npu import plots
+    rows = plots.read_csv('sensitivity.csv')
+    mk, default = defaultdict(dict), {}
+    for r in rows:
+        if not r['feasible'] or not r['makespan']:
+            continue
+        mk[(r['knob'], r['case'])][int(float(r['value']))] = r['makespan']
+        if str(r['is_default']).lower() == 'true':
+            default[(r['knob'], r['case'])] = r['makespan']
+    lines = ['| 参数 | 取值 → Makespan 相对倍数 |', '|---|---|']
+    for knob, label, unit in SENS_ROWS:
+        cases = [c for (k, c) in default if k == knob]
+        vals = sorted({x for (k, c), d in mk.items() if k == knob for x in d})
+        cells = []
+        for x in vals:
+            ratios = [default[(knob, c)] / mk[(knob, c)][x]
+                      for c in cases if x in mk[(knob, c)]]
+            if not ratios:
+                continue
+            gm = math.exp(sum(math.log(t) for t in ratios) / len(ratios))
+            is_def = all(mk[(knob, c)].get(x) == default[(knob, c)] for c in cases
+                         if x in mk[(knob, c)])
+            txt = '{}: {:.3f}'.format(int(x / unit) if x % unit == 0 else x / unit, gm)
+            cells.append('**{}**'.format(txt) if is_def else txt)
+        lines.append('| {} | {} |'.format(label, ' 　'.join(cells)))
+    v['TABLE_SENS'] = chr(10).join(lines)
 
 
 def main():
