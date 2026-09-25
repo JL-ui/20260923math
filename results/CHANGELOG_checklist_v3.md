@@ -405,3 +405,11 @@ T06 提交后发现遗漏了 `run_experiments.py --stage main/p3` 重跑产生�
 - 结果（final.csv 算术平均）：P2 2.0563/2.8696/3.6086/4.2127 → 2.0608/2.8809/3.6309/4.2405；P3 2.0581/2.8768/3.6523/4.2785 → 2.0626/2.8897/3.6741/4.3122。
 - `sampling_report.json`：新增官方评估 2400 次；165/800 个配置冠军来自 `s*`；主阶段口径 P2 N=4 均值 K=0/1/4/16 = 3.5359/3.5400/3.5558/3.5766。
 - 0.3 回归：P2 58984、P1 116868、搬运量模型 90/90。
+
+## T17: L2 分层样本 + 命中来源拆分
+
+- T17.1：`sample_cases.py` 新增 `l2_gain_n4` / `l2_strata`，用 `p3_compare.csv` 的 N=4 `_best` 方案在 P2/P3 评估下的 makespan 之比作 L2 收益。分层大小：>1.05 共 16 个（全取），1.01–1.05 共 16 个（`Random(20260926)` 抽 10），≤1.01 共 68 个（`Random(20260927)` 抽 10），`l2_strata` 共 36 个；`pilot20`/`study30` 不变，连续运行 md5 一致。
+- T17.2：`l2_sources.py --jobs 16`，对 400 个 P3 冠军用 `evaluate_plan(3, ..., full=True)` 重跑事件流（0.1 第 4 条第二个例外）；命中拆为 input_reuse / spill_reload / cross_core_mid，未命中拆为 first_miss / oversize / concurrent_first_read / fifo_evicted。输出 `l2_sources.csv`、`l2_sources.json`。
+- 验收：400 配置无错误，各 N 的命中字节之和与未命中字节之和均等于官方 `cache_hit_bytes` / `cache_miss_bytes`。
+- 0.3 回归：P2 58984、P1 116868、搬运量模型 90/90。
+- 未做：T17.3（l2study 扫描）、T17.4，按 B 档计划跳过。

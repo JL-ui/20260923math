@@ -73,6 +73,33 @@ def force_largest(sample, all_cases, feats, count=3):
     return sample
 
 
+def l2_gain_n4():
+    """{case: P2 makespan / P3 makespan}：p3_compare.csv 中 N=4 的 _best 方案在
+    两种评估下的 Makespan 之比（同一方案，纯 L2 收益）。"""
+    import csv
+    ms = {}
+    with open(paths.RESULTS_DIR / 'p3_compare.csv', encoding='utf-8') as f:
+        for r in csv.DictReader(f):
+            if (r['num_cores'] == '4' and r['variant'] == '_best'
+                    and r['feasible'] == 'True' and r['makespan']):
+                ms[(r['case'], r['eval_problem'])] = float(r['makespan'])
+    return {c: ms[(c, '2')] / ms[(c, '3')]
+            for c, ep in list(ms) if ep == '2' and (c, '3') in ms}
+
+
+def l2_strata():
+    """>1.05 全取；1.01–1.05 抽 10（种子 20260926）；<=1.01 抽 10（种子 20260927）。"""
+    gain = l2_gain_n4()
+    hi = sorted(c for c, x in gain.items() if x > 1.05)
+    mid = sorted(c for c, x in gain.items() if 1.01 < x <= 1.05)
+    lo = sorted(c for c, x in gain.items() if x <= 1.01)
+    pick_mid = random.Random(20260926).sample(mid, min(10, len(mid)))
+    pick_lo = random.Random(20260927).sample(lo, min(10, len(lo)))
+    print('l2 gain strata sizes: >1.05={} 1.01-1.05={} <=1.01={}'.format(
+        len(hi), len(mid), len(lo)))
+    return sorted(hi + pick_mid + pick_lo)
+
+
 def main():
     feats = {f['case']: f for f in json.loads(
         (paths.RESULTS_DIR / 'features.json').read_text(encoding='utf-8'))}
@@ -89,7 +116,7 @@ def main():
         if force:
             sample = force_largest(sample, cases, feats)
         out[key] = sorted(sample)
-    out['l2_strata'] = []                  # T17.1 负责填充
+    out['l2_strata'] = l2_strata()         # T17.1：按 N=4 同方案 L2 收益分层
     out['rule'] = RULE
     # 纯 ASCII 输出：Windows 下不指定编码的 open() 也能读取
     path.write_text(json.dumps(out, ensure_ascii=True, indent=1) + '\n',
