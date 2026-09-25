@@ -1,0 +1,4682 @@
+{
+ "SU_P1_N2": {
+  "raw": 1.8140686806055255,
+  "v": "1.81",
+  "src": "results/final.csv（problem=1, num_cores=2 的 speedup 列算术平均；与 summary.json problem1.speedup_mean 一致）"
+ },
+ "SU4_P1_N2": {
+  "raw": 1.8140686806055255,
+  "v": "1.8141",
+  "src": "results/final.csv（problem=1, num_cores=2 的 speedup 列算术平均；与 summary.json problem1.speedup_mean 一致）"
+ },
+ "MED_P1_N2": {
+  "raw": 1.982548378695729,
+  "v": "1.98",
+  "src": "results/final.csv speedup 中位数（P1, N=2）"
+ },
+ "MIN_P1_N2": {
+  "raw": 1.0,
+  "v": "1.00",
+  "src": "results/final.csv speedup 最小值（P1, N=2）"
+ },
+ "MAX_P1_N2": {
+  "raw": 2.3092119577041905,
+  "v": "2.31",
+  "src": "results/final.csv speedup 最大值（P1, N=2）"
+ },
+ "GEO_P1_N2": {
+  "raw": 1.775610681949457,
+  "v": "1.78",
+  "src": "results/final.csv speedup 几何平均（P1, N=2，补充指标）"
+ },
+ "CI_P1_N2": {
+  "raw": [
+   1.7458,
+   1.8785
+  ],
+  "v": "[1.75, 1.88]",
+  "src": "results/summary.json problem1.speedup_ci[\"2\"]（bootstrap 10000 次，算术平均的 95% 百分位区间）"
+ },
+ "SUPER_P1_N2": {
+  "raw": 31,
+  "v": "31",
+  "src": "results/final.csv：P1, N=2 中 speedup>2 的用例数"
+ },
+ "EFF_P1_N2": {
+  "raw": 0.9070343403027628,
+  "v": "91%",
+  "src": "SU_P1_N2/2"
+ },
+ "EFFMED_P1_N2": {
+  "raw": 0.9912741893478645,
+  "v": "99%",
+  "src": "MED_P1_N2/2"
+ },
+ "SU_P1_N3": {
+  "raw": 2.547774778105015,
+  "v": "2.55",
+  "src": "results/final.csv（problem=1, num_cores=3 的 speedup 列算术平均；与 summary.json problem1.speedup_mean 一致）"
+ },
+ "SU4_P1_N3": {
+  "raw": 2.547774778105015,
+  "v": "2.5478",
+  "src": "results/final.csv（problem=1, num_cores=3 的 speedup 列算术平均；与 summary.json problem1.speedup_mean 一致）"
+ },
+ "MED_P1_N3": {
+  "raw": 2.843979004223082,
+  "v": "2.84",
+  "src": "results/final.csv speedup 中位数（P1, N=3）"
+ },
+ "MIN_P1_N3": {
+  "raw": 1.0,
+  "v": "1.00",
+  "src": "results/final.csv speedup 最小值（P1, N=3）"
+ },
+ "MAX_P1_N3": {
+  "raw": 3.3409820776123995,
+  "v": "3.34",
+  "src": "results/final.csv speedup 最大值（P1, N=3）"
+ },
+ "GEO_P1_N3": {
+  "raw": 2.4599907464236614,
+  "v": "2.46",
+  "src": "results/final.csv speedup 几何平均（P1, N=3，补充指标）"
+ },
+ "CI_P1_N3": {
+  "raw": [
+   2.4259,
+   2.6585
+  ],
+  "v": "[2.43, 2.66]",
+  "src": "results/summary.json problem1.speedup_ci[\"3\"]（bootstrap 10000 次，算术平均的 95% 百分位区间）"
+ },
+ "SUPER_P1_N3": {
+  "raw": 13,
+  "v": "13",
+  "src": "results/final.csv：P1, N=3 中 speedup>3 的用例数"
+ },
+ "EFF_P1_N3": {
+  "raw": 0.8492582593683383,
+  "v": "85%",
+  "src": "SU_P1_N3/3"
+ },
+ "EFFMED_P1_N3": {
+  "raw": 0.9479930014076939,
+  "v": "95%",
+  "src": "MED_P1_N3/3"
+ },
+ "SU_P1_N4": {
+  "raw": 3.186321142457042,
+  "v": "3.19",
+  "src": "results/final.csv（problem=1, num_cores=4 的 speedup 列算术平均；与 summary.json problem1.speedup_mean 一致）"
+ },
+ "SU4_P1_N4": {
+  "raw": 3.186321142457042,
+  "v": "3.1863",
+  "src": "results/final.csv（problem=1, num_cores=4 的 speedup 列算术平均；与 summary.json problem1.speedup_mean 一致）"
+ },
+ "MED_P1_N4": {
+  "raw": 3.597650690789586,
+  "v": "3.60",
+  "src": "results/final.csv speedup 中位数（P1, N=4）"
+ },
+ "MIN_P1_N4": {
+  "raw": 1.082859178129096,
+  "v": "1.08",
+  "src": "results/final.csv speedup 最小值（P1, N=4）"
+ },
+ "MAX_P1_N4": {
+  "raw": 4.478408992743607,
+  "v": "4.48",
+  "src": "results/final.csv speedup 最大值（P1, N=4）"
+ },
+ "GEO_P1_N4": {
+  "raw": 3.0176402093436394,
+  "v": "3.02",
+  "src": "results/final.csv speedup 几何平均（P1, N=4，补充指标）"
+ },
+ "CI_P1_N4": {
+  "raw": [
+   2.9976,
+   3.3602
+  ],
+  "v": "[3.00, 3.36]",
+  "src": "results/summary.json problem1.speedup_ci[\"4\"]（bootstrap 10000 次，算术平均的 95% 百分位区间）"
+ },
+ "SUPER_P1_N4": {
+  "raw": 11,
+  "v": "11",
+  "src": "results/final.csv：P1, N=4 中 speedup>4 的用例数"
+ },
+ "EFF_P1_N4": {
+  "raw": 0.7965802856142605,
+  "v": "80%",
+  "src": "SU_P1_N4/4"
+ },
+ "EFFMED_P1_N4": {
+  "raw": 0.8994126726973966,
+  "v": "90%",
+  "src": "MED_P1_N4/4"
+ },
+ "SU_P1_N5": {
+  "raw": 3.7352804490224254,
+  "v": "3.74",
+  "src": "results/final.csv（problem=1, num_cores=5 的 speedup 列算术平均；与 summary.json problem1.speedup_mean 一致）"
+ },
+ "SU4_P1_N5": {
+  "raw": 3.7352804490224254,
+  "v": "3.7353",
+  "src": "results/final.csv（problem=1, num_cores=5 的 speedup 列算术平均；与 summary.json problem1.speedup_mean 一致）"
+ },
+ "MED_P1_N5": {
+  "raw": 3.975454408455632,
+  "v": "3.98",
+  "src": "results/final.csv speedup 中位数（P1, N=5）"
+ },
+ "MIN_P1_N5": {
+  "raw": 1.0959052733845236,
+  "v": "1.10",
+  "src": "results/final.csv speedup 最小值（P1, N=5）"
+ },
+ "MAX_P1_N5": {
+  "raw": 5.501140719714555,
+  "v": "5.50",
+  "src": "results/final.csv speedup 最大值（P1, N=5）"
+ },
+ "GEO_P1_N5": {
+  "raw": 3.478437584375129,
+  "v": "3.48",
+  "src": "results/final.csv speedup 几何平均（P1, N=5，补充指标）"
+ },
+ "CI_P1_N5": {
+  "raw": [
+   3.4836,
+   3.9726
+  ],
+  "v": "[3.48, 3.97]",
+  "src": "results/summary.json problem1.speedup_ci[\"5\"]（bootstrap 10000 次，算术平均的 95% 百分位区间）"
+ },
+ "SUPER_P1_N5": {
+  "raw": 7,
+  "v": "7",
+  "src": "results/final.csv：P1, N=5 中 speedup>5 的用例数"
+ },
+ "EFF_P1_N5": {
+  "raw": 0.7470560898044851,
+  "v": "75%",
+  "src": "SU_P1_N5/5"
+ },
+ "EFFMED_P1_N5": {
+  "raw": 0.7950908816911264,
+  "v": "80%",
+  "src": "MED_P1_N5/5"
+ },
+ "SU_P2_N2": {
+  "raw": 2.0608068265110626,
+  "v": "2.06",
+  "src": "results/final.csv（problem=2, num_cores=2 的 speedup 列算术平均；与 summary.json problem2.speedup_mean 一致）"
+ },
+ "SU4_P2_N2": {
+  "raw": 2.0608068265110626,
+  "v": "2.0608",
+  "src": "results/final.csv（problem=2, num_cores=2 的 speedup 列算术平均；与 summary.json problem2.speedup_mean 一致）"
+ },
+ "MED_P2_N2": {
+  "raw": 2.0057153447313416,
+  "v": "2.01",
+  "src": "results/final.csv speedup 中位数（P2, N=2）"
+ },
+ "MIN_P2_N2": {
+  "raw": 1.0,
+  "v": "1.00",
+  "src": "results/final.csv speedup 最小值（P2, N=2）"
+ },
+ "MAX_P2_N2": {
+  "raw": 3.5125230328260426,
+  "v": "3.51",
+  "src": "results/final.csv speedup 最大值（P2, N=2）"
+ },
+ "GEO_P2_N2": {
+  "raw": 2.0299079220249663,
+  "v": "2.03",
+  "src": "results/final.csv speedup 几何平均（P2, N=2，补充指标）"
+ },
+ "CI_P2_N2": {
+  "raw": [
+   1.9936,
+   2.129
+  ],
+  "v": "[1.99, 2.13]",
+  "src": "results/summary.json problem2.speedup_ci[\"2\"]（bootstrap 10000 次，算术平均的 95% 百分位区间）"
+ },
+ "SUPER_P2_N2": {
+  "raw": 56,
+  "v": "56",
+  "src": "results/final.csv：P2, N=2 中 speedup>2 的用例数"
+ },
+ "EFF_P2_N2": {
+  "raw": 1.0304034132555313,
+  "v": "103%",
+  "src": "SU_P2_N2/2"
+ },
+ "EFFMED_P2_N2": {
+  "raw": 1.0028576723656708,
+  "v": "100%",
+  "src": "MED_P2_N2/2"
+ },
+ "SU_P2_N3": {
+  "raw": 2.880865969287876,
+  "v": "2.88",
+  "src": "results/final.csv（problem=2, num_cores=3 的 speedup 列算术平均；与 summary.json problem2.speedup_mean 一致）"
+ },
+ "SU4_P2_N3": {
+  "raw": 2.880865969287876,
+  "v": "2.8809",
+  "src": "results/final.csv（problem=2, num_cores=3 的 speedup 列算术平均；与 summary.json problem2.speedup_mean 一致）"
+ },
+ "MED_P2_N3": {
+  "raw": 2.9757013490734363,
+  "v": "2.98",
+  "src": "results/final.csv speedup 中位数（P2, N=3）"
+ },
+ "MIN_P2_N3": {
+  "raw": 1.0,
+  "v": "1.00",
+  "src": "results/final.csv speedup 最小值（P2, N=3）"
+ },
+ "MAX_P2_N3": {
+  "raw": 4.3969971594751796,
+  "v": "4.40",
+  "src": "results/final.csv speedup 最大值（P2, N=3）"
+ },
+ "GEO_P2_N3": {
+  "raw": 2.816064935419176,
+  "v": "2.82",
+  "src": "results/final.csv speedup 几何平均（P2, N=3，补充指标）"
+ },
+ "CI_P2_N3": {
+  "raw": [
+   2.7698,
+   2.9831
+  ],
+  "v": "[2.77, 2.98]",
+  "src": "results/summary.json problem2.speedup_ci[\"3\"]（bootstrap 10000 次，算术平均的 95% 百分位区间）"
+ },
+ "SUPER_P2_N3": {
+  "raw": 38,
+  "v": "38",
+  "src": "results/final.csv：P2, N=3 中 speedup>3 的用例数"
+ },
+ "EFF_P2_N3": {
+  "raw": 0.9602886564292921,
+  "v": "96%",
+  "src": "SU_P2_N3/3"
+ },
+ "EFFMED_P2_N3": {
+  "raw": 0.9919004496911454,
+  "v": "99%",
+  "src": "MED_P2_N3/3"
+ },
+ "SU_P2_N4": {
+  "raw": 3.6309427641691956,
+  "v": "3.63",
+  "src": "results/final.csv（problem=2, num_cores=4 的 speedup 列算术平均；与 summary.json problem2.speedup_mean 一致）"
+ },
+ "SU4_P2_N4": {
+  "raw": 3.6309427641691956,
+  "v": "3.6309",
+  "src": "results/final.csv（problem=2, num_cores=4 的 speedup 列算术平均；与 summary.json problem2.speedup_mean 一致）"
+ },
+ "MED_P2_N4": {
+  "raw": 3.911814779328529,
+  "v": "3.91",
+  "src": "results/final.csv speedup 中位数（P2, N=4）"
+ },
+ "MIN_P2_N4": {
+  "raw": 1.2639318771335084,
+  "v": "1.26",
+  "src": "results/final.csv speedup 最小值（P2, N=4）"
+ },
+ "MAX_P2_N4": {
+  "raw": 5.509661016949153,
+  "v": "5.51",
+  "src": "results/final.csv speedup 最大值（P2, N=4）"
+ },
+ "GEO_P2_N4": {
+  "raw": 3.5193606589527437,
+  "v": "3.52",
+  "src": "results/final.csv speedup 几何平均（P2, N=4，补充指标）"
+ },
+ "CI_P2_N4": {
+  "raw": [
+   3.4688,
+   3.7804
+  ],
+  "v": "[3.47, 3.78]",
+  "src": "results/summary.json problem2.speedup_ci[\"4\"]（bootstrap 10000 次，算术平均的 95% 百分位区间）"
+ },
+ "SUPER_P2_N4": {
+  "raw": 29,
+  "v": "29",
+  "src": "results/final.csv：P2, N=4 中 speedup>4 的用例数"
+ },
+ "EFF_P2_N4": {
+  "raw": 0.9077356910422989,
+  "v": "91%",
+  "src": "SU_P2_N4/4"
+ },
+ "EFFMED_P2_N4": {
+  "raw": 0.9779536948321322,
+  "v": "98%",
+  "src": "MED_P2_N4/4"
+ },
+ "SU_P2_N5": {
+  "raw": 4.240506188793426,
+  "v": "4.24",
+  "src": "results/final.csv（problem=2, num_cores=5 的 speedup 列算术平均；与 summary.json problem2.speedup_mean 一致）"
+ },
+ "SU4_P2_N5": {
+  "raw": 4.240506188793426,
+  "v": "4.2405",
+  "src": "results/final.csv（problem=2, num_cores=5 的 speedup 列算术平均；与 summary.json problem2.speedup_mean 一致）"
+ },
+ "MED_P2_N5": {
+  "raw": 4.638474768857522,
+  "v": "4.64",
+  "src": "results/final.csv speedup 中位数（P2, N=5）"
+ },
+ "MIN_P2_N5": {
+  "raw": 1.2639318771335084,
+  "v": "1.26",
+  "src": "results/final.csv speedup 最小值（P2, N=5）"
+ },
+ "MAX_P2_N5": {
+  "raw": 6.788036139378837,
+  "v": "6.79",
+  "src": "results/final.csv speedup 最大值（P2, N=5）"
+ },
+ "GEO_P2_N5": {
+  "raw": 4.056918696872981,
+  "v": "4.06",
+  "src": "results/final.csv speedup 几何平均（P2, N=5，补充指标）"
+ },
+ "CI_P2_N5": {
+  "raw": [
+   4.015,
+   4.4504
+  ],
+  "v": "[4.01, 4.45]",
+  "src": "results/summary.json problem2.speedup_ci[\"5\"]（bootstrap 10000 次，算术平均的 95% 百分位区间）"
+ },
+ "SUPER_P2_N5": {
+  "raw": 20,
+  "v": "20",
+  "src": "results/final.csv：P2, N=5 中 speedup>5 的用例数"
+ },
+ "EFF_P2_N5": {
+  "raw": 0.8481012377586852,
+  "v": "85%",
+  "src": "SU_P2_N5/5"
+ },
+ "EFFMED_P2_N5": {
+  "raw": 0.9276949537715045,
+  "v": "93%",
+  "src": "MED_P2_N5/5"
+ },
+ "SU_P3_N2": {
+  "raw": 2.0625743951589914,
+  "v": "2.06",
+  "src": "results/final.csv（problem=3, num_cores=2 的 speedup 列算术平均；与 summary.json problem3.speedup_mean 一致）"
+ },
+ "SU4_P3_N2": {
+  "raw": 2.0625743951589914,
+  "v": "2.0626",
+  "src": "results/final.csv（problem=3, num_cores=2 的 speedup 列算术平均；与 summary.json problem3.speedup_mean 一致）"
+ },
+ "MED_P3_N2": {
+  "raw": 2.008503339489618,
+  "v": "2.01",
+  "src": "results/final.csv speedup 中位数（P3, N=2）"
+ },
+ "MIN_P3_N2": {
+  "raw": 1.0,
+  "v": "1.00",
+  "src": "results/final.csv speedup 最小值（P3, N=2）"
+ },
+ "MAX_P3_N2": {
+  "raw": 3.5164427237531313,
+  "v": "3.52",
+  "src": "results/final.csv speedup 最大值（P3, N=2）"
+ },
+ "GEO_P3_N2": {
+  "raw": 2.031732074910066,
+  "v": "2.03",
+  "src": "results/final.csv speedup 几何平均（P3, N=2，补充指标）"
+ },
+ "CI_P3_N2": {
+  "raw": [
+   1.9954,
+   2.1308
+  ],
+  "v": "[2.00, 2.13]",
+  "src": "results/summary.json problem3.speedup_ci[\"2\"]（bootstrap 10000 次，算术平均的 95% 百分位区间）"
+ },
+ "SUPER_P3_N2": {
+  "raw": 56,
+  "v": "56",
+  "src": "results/final.csv：P3, N=2 中 speedup>2 的用例数"
+ },
+ "EFF_P3_N2": {
+  "raw": 1.0312871975794957,
+  "v": "103%",
+  "src": "SU_P3_N2/2"
+ },
+ "EFFMED_P3_N2": {
+  "raw": 1.004251669744809,
+  "v": "100%",
+  "src": "MED_P3_N2/2"
+ },
+ "SU_P3_N3": {
+  "raw": 2.8897427519343584,
+  "v": "2.89",
+  "src": "results/final.csv（problem=3, num_cores=3 的 speedup 列算术平均；与 summary.json problem3.speedup_mean 一致）"
+ },
+ "SU4_P3_N3": {
+  "raw": 2.8897427519343584,
+  "v": "2.8897",
+  "src": "results/final.csv（problem=3, num_cores=3 的 speedup 列算术平均；与 summary.json problem3.speedup_mean 一致）"
+ },
+ "MED_P3_N3": {
+  "raw": 2.9847692861401,
+  "v": "2.98",
+  "src": "results/final.csv speedup 中位数（P3, N=3）"
+ },
+ "MIN_P3_N3": {
+  "raw": 1.0,
+  "v": "1.00",
+  "src": "results/final.csv speedup 最小值（P3, N=3）"
+ },
+ "MAX_P3_N3": {
+  "raw": 4.3969971594751796,
+  "v": "4.40",
+  "src": "results/final.csv speedup 最大值（P3, N=3）"
+ },
+ "GEO_P3_N3": {
+  "raw": 2.825027471360325,
+  "v": "2.83",
+  "src": "results/final.csv speedup 几何平均（P3, N=3，补充指标）"
+ },
+ "CI_P3_N3": {
+  "raw": [
+   2.7792,
+   2.9922
+  ],
+  "v": "[2.78, 2.99]",
+  "src": "results/summary.json problem3.speedup_ci[\"3\"]（bootstrap 10000 次，算术平均的 95% 百分位区间）"
+ },
+ "SUPER_P3_N3": {
+  "raw": 40,
+  "v": "40",
+  "src": "results/final.csv：P3, N=3 中 speedup>3 的用例数"
+ },
+ "EFF_P3_N3": {
+  "raw": 0.9632475839781195,
+  "v": "96%",
+  "src": "SU_P3_N3/3"
+ },
+ "EFFMED_P3_N3": {
+  "raw": 0.9949230953800333,
+  "v": "99%",
+  "src": "MED_P3_N3/3"
+ },
+ "SU_P3_N4": {
+  "raw": 3.674079331363757,
+  "v": "3.67",
+  "src": "results/final.csv（problem=3, num_cores=4 的 speedup 列算术平均；与 summary.json problem3.speedup_mean 一致）"
+ },
+ "SU4_P3_N4": {
+  "raw": 3.674079331363757,
+  "v": "3.6741",
+  "src": "results/final.csv（problem=3, num_cores=4 的 speedup 列算术平均；与 summary.json problem3.speedup_mean 一致）"
+ },
+ "MED_P3_N4": {
+  "raw": 3.939142899526076,
+  "v": "3.94",
+  "src": "results/final.csv speedup 中位数（P3, N=4）"
+ },
+ "MIN_P3_N4": {
+  "raw": 1.264017810056968,
+  "v": "1.26",
+  "src": "results/final.csv speedup 最小值（P3, N=4）"
+ },
+ "MAX_P3_N4": {
+  "raw": 5.509661016949153,
+  "v": "5.51",
+  "src": "results/final.csv speedup 最大值（P3, N=4）"
+ },
+ "GEO_P3_N4": {
+  "raw": 3.5639813940086262,
+  "v": "3.56",
+  "src": "results/final.csv speedup 几何平均（P3, N=4，补充指标）"
+ },
+ "CI_P3_N4": {
+  "raw": [
+   3.5143,
+   3.8236
+  ],
+  "v": "[3.51, 3.82]",
+  "src": "results/summary.json problem3.speedup_ci[\"4\"]（bootstrap 10000 次，算术平均的 95% 百分位区间）"
+ },
+ "SUPER_P3_N4": {
+  "raw": 32,
+  "v": "32",
+  "src": "results/final.csv：P3, N=4 中 speedup>4 的用例数"
+ },
+ "EFF_P3_N4": {
+  "raw": 0.9185198328409393,
+  "v": "92%",
+  "src": "SU_P3_N4/4"
+ },
+ "EFFMED_P3_N4": {
+  "raw": 0.984785724881519,
+  "v": "98%",
+  "src": "MED_P3_N4/4"
+ },
+ "SU_P3_N5": {
+  "raw": 4.312183179353479,
+  "v": "4.31",
+  "src": "results/final.csv（problem=3, num_cores=5 的 speedup 列算术平均；与 summary.json problem3.speedup_mean 一致）"
+ },
+ "SU4_P3_N5": {
+  "raw": 4.312183179353479,
+  "v": "4.3122",
+  "src": "results/final.csv（problem=3, num_cores=5 的 speedup 列算术平均；与 summary.json problem3.speedup_mean 一致）"
+ },
+ "MED_P3_N5": {
+  "raw": 4.728081364760422,
+  "v": "4.73",
+  "src": "results/final.csv speedup 中位数（P3, N=5）"
+ },
+ "MIN_P3_N5": {
+  "raw": 1.264017810056968,
+  "v": "1.26",
+  "src": "results/final.csv speedup 最小值（P3, N=5）"
+ },
+ "MAX_P3_N5": {
+  "raw": 6.788036139378837,
+  "v": "6.79",
+  "src": "results/final.csv speedup 最大值（P3, N=5）"
+ },
+ "GEO_P3_N5": {
+  "raw": 4.13661621693839,
+  "v": "4.14",
+  "src": "results/final.csv speedup 几何平均（P3, N=5，补充指标）"
+ },
+ "CI_P3_N5": {
+  "raw": [
+   4.0904,
+   4.5175
+  ],
+  "v": "[4.09, 4.52]",
+  "src": "results/summary.json problem3.speedup_ci[\"5\"]（bootstrap 10000 次，算术平均的 95% 百分位区间）"
+ },
+ "SUPER_P3_N5": {
+  "raw": 25,
+  "v": "25",
+  "src": "results/final.csv：P3, N=5 中 speedup>5 的用例数"
+ },
+ "EFF_P3_N5": {
+  "raw": 0.8624366358706957,
+  "v": "86%",
+  "src": "SU_P3_N5/5"
+ },
+ "EFFMED_P3_N5": {
+  "raw": 0.9456162729520845,
+  "v": "95%",
+  "src": "MED_P3_N5/5"
+ },
+ "MIN_ALL": {
+  "raw": 1.0,
+  "v": "1.00",
+  "src": "results/final.csv 全部 1200 行 speedup 最小值"
+ },
+ "N_FINAL_ROWS": {
+  "raw": 1200,
+  "v": "1200",
+  "src": "results/final.csv 行数"
+ },
+ "MONO_VIOL": {
+  "raw": 0,
+  "v": "0",
+  "src": "results/final.csv + singlecore_baseline.json：逐用例 MK(N)>MK(N−1) 的次数"
+ },
+ "WORST_P2N4": {
+  "raw": [
+   [
+    "case_016",
+    1.2639318771335084
+   ],
+   [
+    "case_024",
+    1.2735071316794084
+   ],
+   [
+    "case_048",
+    1.5489384244350577
+   ],
+   [
+    "case_064",
+    1.6985960547360939
+   ],
+   [
+    "case_051",
+    1.7591907400651994
+   ],
+   [
+    "case_071",
+    2.0916528468767273
+   ]
+  ],
+  "v": "case_016（1.26）、case_024（1.27）、case_048（1.55）、case_064（1.70）、case_051（1.76）、case_071（2.09）",
+  "src": "results/final.csv P2 N=4 speedup 最小的 6 个用例"
+ },
+ "WORST_P1N4": {
+  "raw": [
+   [
+    "case_024",
+    1.082859178129096
+   ],
+   [
+    "case_064",
+    1.083304998299898
+   ],
+   [
+    "case_048",
+    1.0959052733845236
+   ],
+   [
+    "case_016",
+    1.1150273239048254
+   ]
+  ],
+  "v": "case_024（1.08）、case_064（1.08）、case_048（1.10）、case_016（1.12）",
+  "src": "results/final.csv P1 N=4 speedup 最小的 4 个用例"
+ },
+ "BEST_P2N5_CASE": {
+  "raw": "case_008",
+  "v": "case_008",
+  "src": "results/final.csv P2 N=5 speedup 最大用例"
+ },
+ "SUPER_P2N4_SPILL": {
+  "raw": 21,
+  "v": "21",
+  "src": "P2 N=4 超线性用例中，单核基准 spill_added_copy_bytes>0 的个数（singlecore_baseline.json）"
+ },
+ "SC_SPILL_CASES": {
+  "raw": 40,
+  "v": "40",
+  "src": "results/singlecore_baseline.json：spill_added_copy_bytes>0 的用例数"
+ },
+ "SC_SPILL_MAX": {
+  "raw": 277412256,
+  "v": "$2.77\\times10^{8}$",
+  "src": "singlecore_baseline.json spill_added_copy_bytes 最大值（字节）"
+ },
+ "SC_SPILL_TOTAL": {
+  "raw": 1241686120,
+  "v": "$1.24\\times10^{9}$",
+  "src": "singlecore_baseline.json spill_added_copy_bytes 总和（字节）"
+ },
+ "ADD_P1_N2": {
+  "raw": 1362674056,
+  "v": "$1.36\\times10^{9}$",
+  "src": "summary.json problem1.added_copy_total[\"2\"]（= final.csv added_copy_bytes 求和）"
+ },
+ "ADD_P1_N3": {
+  "raw": 1491408456,
+  "v": "$1.49\\times10^{9}$",
+  "src": "summary.json problem1.added_copy_total[\"3\"]（= final.csv added_copy_bytes 求和）"
+ },
+ "ADD_P1_N4": {
+  "raw": 1702854408,
+  "v": "$1.70\\times10^{9}$",
+  "src": "summary.json problem1.added_copy_total[\"4\"]（= final.csv added_copy_bytes 求和）"
+ },
+ "ADD_P1_N5": {
+  "raw": 1716021420,
+  "v": "$1.72\\times10^{9}$",
+  "src": "summary.json problem1.added_copy_total[\"5\"]（= final.csv added_copy_bytes 求和）"
+ },
+ "ADDPART_P1": {
+  "raw": 0.586517439957204,
+  "v": "58.7%",
+  "src": "summary.json problem1.partition_added_total[\"4\"]/added_copy_total[\"4\"]"
+ },
+ "ADDSPILL_P1": {
+  "raw": 0.4134825600427961,
+  "v": "41.3%",
+  "src": "summary.json problem1.spill_added_total[\"4\"]/added_copy_total[\"4\"]"
+ },
+ "ZEROADD_P1": {
+  "raw": 10,
+  "v": "10",
+  "src": "final.csv P1 N=4 added_copy_bytes=0 的用例数"
+ },
+ "ADD_P2_N2": {
+  "raw": 553342620,
+  "v": "$5.53\\times10^{8}$",
+  "src": "summary.json problem2.added_copy_total[\"2\"]（= final.csv added_copy_bytes 求和）"
+ },
+ "ADD_P2_N3": {
+  "raw": 655781010,
+  "v": "$6.56\\times10^{8}$",
+  "src": "summary.json problem2.added_copy_total[\"3\"]（= final.csv added_copy_bytes 求和）"
+ },
+ "ADD_P2_N4": {
+  "raw": 740273116,
+  "v": "$7.40\\times10^{8}$",
+  "src": "summary.json problem2.added_copy_total[\"4\"]（= final.csv added_copy_bytes 求和）"
+ },
+ "ADD_P2_N5": {
+  "raw": 783774778,
+  "v": "$7.84\\times10^{8}$",
+  "src": "summary.json problem2.added_copy_total[\"5\"]（= final.csv added_copy_bytes 求和）"
+ },
+ "ADDPART_P2": {
+  "raw": 0.5386253902539397,
+  "v": "53.9%",
+  "src": "summary.json problem2.partition_added_total[\"4\"]/added_copy_total[\"4\"]"
+ },
+ "ADDSPILL_P2": {
+  "raw": 0.46137460974606026,
+  "v": "46.1%",
+  "src": "summary.json problem2.spill_added_total[\"4\"]/added_copy_total[\"4\"]"
+ },
+ "ZEROADD_P2": {
+  "raw": 10,
+  "v": "10",
+  "src": "final.csv P2 N=4 added_copy_bytes=0 的用例数"
+ },
+ "ADD_P3_N2": {
+  "raw": 548225356,
+  "v": "$5.48\\times10^{8}$",
+  "src": "summary.json problem3.added_copy_total[\"2\"]（= final.csv added_copy_bytes 求和）"
+ },
+ "ADD_P3_N3": {
+  "raw": 657121284,
+  "v": "$6.57\\times10^{8}$",
+  "src": "summary.json problem3.added_copy_total[\"3\"]（= final.csv added_copy_bytes 求和）"
+ },
+ "ADD_P3_N4": {
+  "raw": 763783726,
+  "v": "$7.64\\times10^{8}$",
+  "src": "summary.json problem3.added_copy_total[\"4\"]（= final.csv added_copy_bytes 求和）"
+ },
+ "ADD_P3_N5": {
+  "raw": 794561366,
+  "v": "$7.95\\times10^{8}$",
+  "src": "summary.json problem3.added_copy_total[\"5\"]（= final.csv added_copy_bytes 求和）"
+ },
+ "ADDPART_P3": {
+  "raw": 0.5514123797919203,
+  "v": "55.1%",
+  "src": "summary.json problem3.partition_added_total[\"4\"]/added_copy_total[\"4\"]"
+ },
+ "ADDSPILL_P3": {
+  "raw": 0.4485876202080797,
+  "v": "44.9%",
+  "src": "summary.json problem3.spill_added_total[\"4\"]/added_copy_total[\"4\"]"
+ },
+ "ZEROADD_P3": {
+  "raw": 9,
+  "v": "9",
+  "src": "final.csv P3 N=4 added_copy_bytes=0 的用例数"
+ },
+ "ADD_VS_SC_P2N4": {
+  "raw": -0.4038162269221468,
+  "v": "−40%",
+  "src": "ADD_P2_N4 / SC_SPILL_TOTAL − 1"
+ },
+ "NSUB_MED_P1": {
+  "raw": 6.0,
+  "v": "6",
+  "src": "final.csv P1 N=4 n_subgraphs 中位数"
+ },
+ "NSUB_MED_P2": {
+  "raw": 672.5,
+  "v": "672.5",
+  "src": "final.csv P2 N=4 n_subgraphs 中位数"
+ },
+ "NSUB_MED_P3": {
+  "raw": 672.5,
+  "v": "672.5",
+  "src": "final.csv P3 N=4 n_subgraphs 中位数"
+ },
+ "ORIG_P1_grid": {
+  "raw": 89,
+  "v": "89",
+  "src": "final.csv P1 的 variant 前缀计数（grid）；400 个配置"
+ },
+ "ORIG_P1_alap": {
+  "raw": 44,
+  "v": "44",
+  "src": "final.csv P1 的 variant 前缀计数（alap）；400 个配置"
+ },
+ "ORIG_P1_op": {
+  "raw": 0,
+  "v": "0",
+  "src": "final.csv P1 的 variant 前缀计数（op）；400 个配置"
+ },
+ "ORIG_P1_sample": {
+  "raw": 0,
+  "v": "0",
+  "src": "final.csv P1 的 variant 前缀计数（sample）；400 个配置"
+ },
+ "ORIG_P1_anneal": {
+  "raw": 81,
+  "v": "81",
+  "src": "final.csv P1 的 variant 前缀计数（anneal）；400 个配置"
+ },
+ "ORIG_P1_ablation": {
+  "raw": 151,
+  "v": "151",
+  "src": "final.csv P1 的 variant 前缀计数（ablation）；400 个配置"
+ },
+ "ORIG_P1_baseline": {
+  "raw": 6,
+  "v": "6",
+  "src": "final.csv P1 的 variant 前缀计数（baseline）；400 个配置"
+ },
+ "ORIG_P1_granularity": {
+  "raw": 7,
+  "v": "7",
+  "src": "final.csv P1 的 variant 前缀计数（granularity）；400 个配置"
+ },
+ "ORIG_P1_embed": {
+  "raw": 22,
+  "v": "22",
+  "src": "final.csv P1 的 variant 前缀计数（embed）；400 个配置"
+ },
+ "ORIG_P1_cross": {
+  "raw": 0,
+  "v": "0",
+  "src": "final.csv P1 的 variant 前缀计数（cross）；400 个配置"
+ },
+ "ORIG_P1_single": {
+  "raw": 0,
+  "v": "0",
+  "src": "final.csv P1 的 variant 前缀计数（single）；400 个配置"
+ },
+ "ORIG_P2_grid": {
+  "raw": 54,
+  "v": "54",
+  "src": "final.csv P2 的 variant 前缀计数（grid）；400 个配置"
+ },
+ "ORIG_P2_alap": {
+  "raw": 20,
+  "v": "20",
+  "src": "final.csv P2 的 variant 前缀计数（alap）；400 个配置"
+ },
+ "ORIG_P2_op": {
+  "raw": 110,
+  "v": "110",
+  "src": "final.csv P2 的 variant 前缀计数（op）；400 个配置"
+ },
+ "ORIG_P2_sample": {
+  "raw": 28,
+  "v": "28",
+  "src": "final.csv P2 的 variant 前缀计数（sample）；400 个配置"
+ },
+ "ORIG_P2_anneal": {
+  "raw": 0,
+  "v": "0",
+  "src": "final.csv P2 的 variant 前缀计数（anneal）；400 个配置"
+ },
+ "ORIG_P2_ablation": {
+  "raw": 93,
+  "v": "93",
+  "src": "final.csv P2 的 variant 前缀计数（ablation）；400 个配置"
+ },
+ "ORIG_P2_baseline": {
+  "raw": 3,
+  "v": "3",
+  "src": "final.csv P2 的 variant 前缀计数（baseline）；400 个配置"
+ },
+ "ORIG_P2_granularity": {
+  "raw": 3,
+  "v": "3",
+  "src": "final.csv P2 的 variant 前缀计数（granularity）；400 个配置"
+ },
+ "ORIG_P2_embed": {
+  "raw": 7,
+  "v": "7",
+  "src": "final.csv P2 的 variant 前缀计数（embed）；400 个配置"
+ },
+ "ORIG_P2_cross": {
+  "raw": 82,
+  "v": "82",
+  "src": "final.csv P2 的 variant 前缀计数（cross）；400 个配置"
+ },
+ "ORIG_P2_single": {
+  "raw": 0,
+  "v": "0",
+  "src": "final.csv P2 的 variant 前缀计数（single）；400 个配置"
+ },
+ "ORIG_P3_grid": {
+  "raw": 49,
+  "v": "49",
+  "src": "final.csv P3 的 variant 前缀计数（grid）；400 个配置"
+ },
+ "ORIG_P3_alap": {
+  "raw": 22,
+  "v": "22",
+  "src": "final.csv P3 的 variant 前缀计数（alap）；400 个配置"
+ },
+ "ORIG_P3_op": {
+  "raw": 119,
+  "v": "119",
+  "src": "final.csv P3 的 variant 前缀计数（op）；400 个配置"
+ },
+ "ORIG_P3_sample": {
+  "raw": 28,
+  "v": "28",
+  "src": "final.csv P3 的 variant 前缀计数（sample）；400 个配置"
+ },
+ "ORIG_P3_anneal": {
+  "raw": 0,
+  "v": "0",
+  "src": "final.csv P3 的 variant 前缀计数（anneal）；400 个配置"
+ },
+ "ORIG_P3_ablation": {
+  "raw": 93,
+  "v": "93",
+  "src": "final.csv P3 的 variant 前缀计数（ablation）；400 个配置"
+ },
+ "ORIG_P3_baseline": {
+  "raw": 2,
+  "v": "2",
+  "src": "final.csv P3 的 variant 前缀计数（baseline）；400 个配置"
+ },
+ "ORIG_P3_granularity": {
+  "raw": 5,
+  "v": "5",
+  "src": "final.csv P3 的 variant 前缀计数（granularity）；400 个配置"
+ },
+ "ORIG_P3_embed": {
+  "raw": 2,
+  "v": "2",
+  "src": "final.csv P3 的 variant 前缀计数（embed）；400 个配置"
+ },
+ "ORIG_P3_cross": {
+  "raw": 80,
+  "v": "80",
+  "src": "final.csv P3 的 variant 前缀计数（cross）；400 个配置"
+ },
+ "ORIG_P3_single": {
+  "raw": 0,
+  "v": "0",
+  "src": "final.csv P3 的 variant 前缀计数（single）；400 个配置"
+ },
+ "POOL_ROWS": {
+  "raw": 51379,
+  "v": "51,379",
+  "src": "results/pool.csv 行数（保底池内全部经官方评估的候选）"
+ },
+ "COND4_COUNT": {
+  "raw": 2,
+  "v": "2",
+  "src": "pool_condition4_exceptions.json count"
+ },
+ "COND4_MAXREL": {
+  "raw": 6.7e-05,
+  "v": "0.0067%",
+  "src": "pool_condition4_exceptions.json max_rel_observed"
+ },
+ "COND4_LIST": {
+  "raw": [
+   {
+    "case": "case_030",
+    "num_cores": 3,
+    "p3_makespan": 931340,
+    "p2_makespan": 931329,
+    "diff": 11,
+    "rel": 1.2e-05
+   },
+   {
+    "case": "case_048",
+    "num_cores": 3,
+    "p3_makespan": 149071,
+    "p2_makespan": 149061,
+    "diff": 10,
+    "rel": 6.7e-05
+   }
+  ],
+  "v": "case_030（$N=3$，931340 对 931329）、case_048（$N=3$，149071 对 149061）",
+  "src": "pool_condition4_exceptions.json exceptions"
+ },
+ "P2P3_EQ": {
+  "raw": 32,
+  "v": "32",
+  "src": "final.csv N=4：P3 冠军 makespan == P2 冠军的用例数"
+ },
+ "P2P3_HI": {
+  "raw": 68,
+  "v": "68",
+  "src": "final.csv N=4：P3 冠军更快的用例数"
+ },
+ "P2P3_LO": {
+  "raw": 0,
+  "v": "0",
+  "src": "final.csv N=4：P3 冠军更慢的用例数"
+ },
+ "VERIFY_N": {
+  "raw": 1500,
+  "v": "1,500",
+  "src": "results/verify_final.csv 行数（官方 CLI 复核的方案数，N=1..5）"
+ },
+ "VERIFY_MISMATCH": {
+  "raw": 0,
+  "v": "0",
+  "src": "verify_final.csv match≠True 的行数"
+ },
+ "TRAFFIC_N": {
+  "raw": 90,
+  "v": "90",
+  "src": "results/traffic_model_check.csv 行数"
+ },
+ "TOTAL_EVALS": {
+  "raw": 31833,
+  "v": "31,833",
+  "src": "results/cache/p{1,2,3}/*.json 条目总数（固定配置下去重的官方评估次数）"
+ },
+ "FEAT_NOPS_MIN": {
+  "raw": 552,
+  "v": "552",
+  "src": "results/features.json 最小值（NOPS）"
+ },
+ "FEAT_NOPS_MED": {
+  "raw": 3720.5,
+  "v": "3,720",
+  "src": "results/features.json 中位数（NOPS）"
+ },
+ "FEAT_NOPS_MAX": {
+  "raw": 35705,
+  "v": "35,705",
+  "src": "results/features.json 最大值（NOPS）"
+ },
+ "FEAT_DEPTH_MIN": {
+  "raw": 3,
+  "v": "3",
+  "src": "results/features.json 最小值（DEPTH）"
+ },
+ "FEAT_DEPTH_MED": {
+  "raw": 47.5,
+  "v": "47.5",
+  "src": "results/features.json 中位数（DEPTH）"
+ },
+ "FEAT_DEPTH_MAX": {
+  "raw": 2440,
+  "v": "2440",
+  "src": "results/features.json 最大值（DEPTH）"
+ },
+ "FEAT_WIDTH_MIN": {
+  "raw": 4.682926829268292,
+  "v": "4.7",
+  "src": "results/features.json 最小值（WIDTH）"
+ },
+ "FEAT_WIDTH_MED": {
+  "raw": 44.31860371267151,
+  "v": "44.3",
+  "src": "results/features.json 中位数（WIDTH）"
+ },
+ "FEAT_WIDTH_MAX": {
+  "raw": 3110.3333333333335,
+  "v": "3110.3",
+  "src": "results/features.json 最大值（WIDTH）"
+ },
+ "FEAT_NCOMP_MIN": {
+  "raw": 1,
+  "v": "1",
+  "src": "results/features.json 最小值（NCOMP）"
+ },
+ "FEAT_NCOMP_MED": {
+  "raw": 39.5,
+  "v": "39.5",
+  "src": "results/features.json 中位数（NCOMP）"
+ },
+ "FEAT_NCOMP_MAX": {
+  "raw": 2666,
+  "v": "2666",
+  "src": "results/features.json 最大值（NCOMP）"
+ },
+ "FEAT_RHO_MIN": {
+  "raw": 0.00037509377344336085,
+  "v": "0.000",
+  "src": "results/features.json 最小值（RHO）"
+ },
+ "FEAT_RHO_MED": {
+  "raw": 0.12202380952380952,
+  "v": "0.122",
+  "src": "results/features.json 中位数（RHO）"
+ },
+ "FEAT_RHO_MAX": {
+  "raw": 1.0,
+  "v": "1.000",
+  "src": "results/features.json 最大值（RHO）"
+ },
+ "FEAT_CP_MIN": {
+  "raw": 0.00015977554320472046,
+  "v": "0.0002",
+  "src": "results/features.json 最小值（CP）"
+ },
+ "FEAT_CP_MED": {
+  "raw": 0.023188527027082254,
+  "v": "0.0232",
+  "src": "results/features.json 中位数（CP）"
+ },
+ "FEAT_CP_MAX": {
+  "raw": 0.29260851476910277,
+  "v": "0.2926",
+  "src": "results/features.json 最大值（CP）"
+ },
+ "FEAT_CDDR_MIN": {
+  "raw": 3.8463285144296795,
+  "v": "3.8",
+  "src": "results/features.json 最小值（CDDR）"
+ },
+ "FEAT_CDDR_MED": {
+  "raw": 19.94774644614197,
+  "v": "19.9",
+  "src": "results/features.json 中位数（CDDR）"
+ },
+ "FEAT_CDDR_MAX": {
+  "raw": 1177.2057738964138,
+  "v": "1177.2",
+  "src": "results/features.json 最大值（CDDR）"
+ },
+ "FEAT_UBP_MIN": {
+  "raw": 0.0,
+  "v": "0.0",
+  "src": "results/features.json 最小值（UBP）"
+ },
+ "FEAT_UBP_MED": {
+  "raw": 14.649307250976562,
+  "v": "14.6",
+  "src": "results/features.json 中位数（UBP）"
+ },
+ "FEAT_UBP_MAX": {
+  "raw": 2745.1070404052734,
+  "v": "2745.1",
+  "src": "results/features.json 最大值（UBP）"
+ },
+ "N_ONECOMP": {
+  "raw": 16,
+  "v": "16",
+  "src": "features.json n_components==1 的用例数"
+ },
+ "N_RHO05": {
+  "raw": 29,
+  "v": "29",
+  "src": "features.json largest_component_frac≥0.5 的用例数"
+ },
+ "N_COMP40": {
+  "raw": 50,
+  "v": "50",
+  "src": "features.json n_components≥40 的用例数"
+ },
+ "C016_NOPS": {
+  "raw": 17995,
+  "v": "17,995",
+  "src": "features.json case_016 n_ops"
+ },
+ "C016_DEPTH": {
+  "raw": 2440,
+  "v": "2440",
+  "src": "features.json case_016 depth"
+ },
+ "C016_WIDTH": {
+  "raw": 7.375,
+  "v": "7.4",
+  "src": "features.json case_016 avg_width"
+ },
+ "C016_PAR": {
+  "raw": 11.77607076350093,
+  "v": "11.8",
+  "src": "features.json case_016 total_cycles/critical_path_cycles"
+ },
+ "C016_SU4": {
+  "raw": 1.2639318771335084,
+  "v": "1.26",
+  "src": "final.csv case_016 P2 N=4 speedup"
+ },
+ "C016_SU4_P1": {
+  "raw": 1.1150273239048254,
+  "v": "1.12",
+  "src": "final.csv case_016 P1 N=4 speedup"
+ },
+ "STRAT_P1_A_N": {
+  "raw": 59,
+  "v": "59",
+  "src": "summary.json problem1.speedup_by_strata[\"4\"][\"rho<0.2\"].n"
+ },
+ "STRAT_P1_A_MEAN": {
+  "raw": 3.6707,
+  "v": "3.67",
+  "src": "…[\"rho<0.2\"].amean"
+ },
+ "STRAT_P1_A_MED": {
+  "raw": 3.8955,
+  "v": "3.90",
+  "src": "…[\"rho<0.2\"].median"
+ },
+ "STRAT_P1_A_MIN": {
+  "raw": 1.6017,
+  "v": "1.60",
+  "src": "…[\"rho<0.2\"].min"
+ },
+ "STRAT_P1_B_N": {
+  "raw": 12,
+  "v": "12",
+  "src": "summary.json problem1.speedup_by_strata[\"4\"][\"0.2<=rho<0.5\"].n"
+ },
+ "STRAT_P1_B_MEAN": {
+  "raw": 2.9907,
+  "v": "2.99",
+  "src": "…[\"0.2<=rho<0.5\"].amean"
+ },
+ "STRAT_P1_B_MED": {
+  "raw": 2.9323,
+  "v": "2.93",
+  "src": "…[\"0.2<=rho<0.5\"].median"
+ },
+ "STRAT_P1_B_MIN": {
+  "raw": 2.1414,
+  "v": "2.14",
+  "src": "…[\"0.2<=rho<0.5\"].min"
+ },
+ "STRAT_P1_C_N": {
+  "raw": 29,
+  "v": "29",
+  "src": "summary.json problem1.speedup_by_strata[\"4\"][\"rho>=0.5\"].n"
+ },
+ "STRAT_P1_C_MEAN": {
+  "raw": 2.2817,
+  "v": "2.28",
+  "src": "…[\"rho>=0.5\"].amean"
+ },
+ "STRAT_P1_C_MED": {
+  "raw": 2.2716,
+  "v": "2.27",
+  "src": "…[\"rho>=0.5\"].median"
+ },
+ "STRAT_P1_C_MIN": {
+  "raw": 1.0829,
+  "v": "1.08",
+  "src": "…[\"rho>=0.5\"].min"
+ },
+ "STRAT_P2_A_N": {
+  "raw": 59,
+  "v": "59",
+  "src": "summary.json problem2.speedup_by_strata[\"4\"][\"rho<0.2\"].n"
+ },
+ "STRAT_P2_A_MEAN": {
+  "raw": 4.0657,
+  "v": "4.07",
+  "src": "…[\"rho<0.2\"].amean"
+ },
+ "STRAT_P2_A_MED": {
+  "raw": 3.9862,
+  "v": "3.99",
+  "src": "…[\"rho<0.2\"].median"
+ },
+ "STRAT_P2_A_MIN": {
+  "raw": 3.0048,
+  "v": "3.00",
+  "src": "…[\"rho<0.2\"].min"
+ },
+ "STRAT_P2_B_N": {
+  "raw": 12,
+  "v": "12",
+  "src": "summary.json problem2.speedup_by_strata[\"4\"][\"0.2<=rho<0.5\"].n"
+ },
+ "STRAT_P2_B_MEAN": {
+  "raw": 3.4829,
+  "v": "3.48",
+  "src": "…[\"0.2<=rho<0.5\"].amean"
+ },
+ "STRAT_P2_B_MED": {
+  "raw": 3.5793,
+  "v": "3.58",
+  "src": "…[\"0.2<=rho<0.5\"].median"
+ },
+ "STRAT_P2_B_MIN": {
+  "raw": 2.5818,
+  "v": "2.58",
+  "src": "…[\"0.2<=rho<0.5\"].min"
+ },
+ "STRAT_P2_C_N": {
+  "raw": 29,
+  "v": "29",
+  "src": "summary.json problem2.speedup_by_strata[\"4\"][\"rho>=0.5\"].n"
+ },
+ "STRAT_P2_C_MEAN": {
+  "raw": 2.8077,
+  "v": "2.81",
+  "src": "…[\"rho>=0.5\"].amean"
+ },
+ "STRAT_P2_C_MED": {
+  "raw": 2.9013,
+  "v": "2.90",
+  "src": "…[\"rho>=0.5\"].median"
+ },
+ "STRAT_P2_C_MIN": {
+  "raw": 1.2639,
+  "v": "1.26",
+  "src": "…[\"rho>=0.5\"].min"
+ },
+ "STRAT_P3_A_N": {
+  "raw": 59,
+  "v": "59",
+  "src": "summary.json problem3.speedup_by_strata[\"4\"][\"rho<0.2\"].n"
+ },
+ "STRAT_P3_A_MEAN": {
+  "raw": 4.1156,
+  "v": "4.12",
+  "src": "…[\"rho<0.2\"].amean"
+ },
+ "STRAT_P3_A_MED": {
+  "raw": 3.9945,
+  "v": "3.99",
+  "src": "…[\"rho<0.2\"].median"
+ },
+ "STRAT_P3_A_MIN": {
+  "raw": 3.0793,
+  "v": "3.08",
+  "src": "…[\"rho<0.2\"].min"
+ },
+ "STRAT_P3_B_N": {
+  "raw": 12,
+  "v": "12",
+  "src": "summary.json problem3.speedup_by_strata[\"4\"][\"0.2<=rho<0.5\"].n"
+ },
+ "STRAT_P3_B_MEAN": {
+  "raw": 3.4982,
+  "v": "3.50",
+  "src": "…[\"0.2<=rho<0.5\"].amean"
+ },
+ "STRAT_P3_B_MED": {
+  "raw": 3.5876,
+  "v": "3.59",
+  "src": "…[\"0.2<=rho<0.5\"].median"
+ },
+ "STRAT_P3_B_MIN": {
+  "raw": 2.5819,
+  "v": "2.58",
+  "src": "…[\"0.2<=rho<0.5\"].min"
+ },
+ "STRAT_P3_C_N": {
+  "raw": 29,
+  "v": "29",
+  "src": "summary.json problem3.speedup_by_strata[\"4\"][\"rho>=0.5\"].n"
+ },
+ "STRAT_P3_C_MEAN": {
+  "raw": 2.8486,
+  "v": "2.85",
+  "src": "…[\"rho>=0.5\"].amean"
+ },
+ "STRAT_P3_C_MED": {
+  "raw": 2.999,
+  "v": "3.00",
+  "src": "…[\"rho>=0.5\"].median"
+ },
+ "STRAT_P3_C_MIN": {
+  "raw": 1.264,
+  "v": "1.26",
+  "src": "…[\"rho>=0.5\"].min"
+ },
+ "CORR_RHO": {
+  "raw": -0.6897693407134591,
+  "v": "−0.69",
+  "src": "features.json × final.csv(P2,N=4) Pearson r（RHO）"
+ },
+ "SCORR_RHO": {
+  "raw": -0.6496434504452747,
+  "v": "−0.65",
+  "src": "features.json × final.csv(P2,N=4) Spearman ρ（RHO）"
+ },
+ "CORR_CP": {
+  "raw": -0.6073471564446685,
+  "v": "−0.61",
+  "src": "features.json × final.csv(P2,N=4) Pearson r（CP）"
+ },
+ "SCORR_CP": {
+  "raw": -0.5968868513703341,
+  "v": "−0.60",
+  "src": "features.json × final.csv(P2,N=4) Spearman ρ（CP）"
+ },
+ "CORR_LWIDTH": {
+  "raw": 0.510148096203254,
+  "v": "+0.51",
+  "src": "features.json × final.csv(P2,N=4) Pearson r（LWIDTH）"
+ },
+ "SCORR_LWIDTH": {
+  "raw": 0.5501858738065417,
+  "v": "+0.55",
+  "src": "features.json × final.csv(P2,N=4) Spearman ρ（LWIDTH）"
+ },
+ "CORR_LCDDR": {
+  "raw": -0.02219103167220637,
+  "v": "−0.02",
+  "src": "features.json × final.csv(P2,N=4) Pearson r（LCDDR）"
+ },
+ "SCORR_LCDDR": {
+  "raw": 0.1881559445335077,
+  "v": "+0.19",
+  "src": "features.json × final.csv(P2,N=4) Spearman ρ（LCDDR）"
+ },
+ "CORR_LNOPS": {
+  "raw": 0.041937005114126694,
+  "v": "+0.04",
+  "src": "features.json × final.csv(P2,N=4) Pearson r（LNOPS）"
+ },
+ "SCORR_LNOPS": {
+  "raw": 0.07920239545534406,
+  "v": "+0.08",
+  "src": "features.json × final.csv(P2,N=4) Spearman ρ（LNOPS）"
+ },
+ "BL_B1_P1_N2": {
+  "raw": 0.9659,
+  "v": "0.97",
+  "src": "summary.json baseline_speedup[\"p1_n2\"][\"random\"]（算术平均）"
+ },
+ "BL_B2_P1_N2": {
+  "raw": 1.0931,
+  "v": "1.09",
+  "src": "summary.json baseline_speedup[\"p1_n2\"][\"topo\"]（算术平均）"
+ },
+ "BL_B3_P1_N2": {
+  "raw": 1.1073,
+  "v": "1.11",
+  "src": "summary.json baseline_speedup[\"p1_n2\"][\"balance\"]（算术平均）"
+ },
+ "BL_B4_P1_N2": {
+  "raw": 1.4894,
+  "v": "1.49",
+  "src": "summary.json baseline_speedup[\"p1_n2\"][\"comm\"]（算术平均）"
+ },
+ "BL_B1_P1_N3": {
+  "raw": 0.9426,
+  "v": "0.94",
+  "src": "summary.json baseline_speedup[\"p1_n3\"][\"random\"]（算术平均）"
+ },
+ "BL_B2_P1_N3": {
+  "raw": 1.0171,
+  "v": "1.02",
+  "src": "summary.json baseline_speedup[\"p1_n3\"][\"topo\"]（算术平均）"
+ },
+ "BL_B3_P1_N3": {
+  "raw": 1.0179,
+  "v": "1.02",
+  "src": "summary.json baseline_speedup[\"p1_n3\"][\"balance\"]（算术平均）"
+ },
+ "BL_B4_P1_N3": {
+  "raw": 1.9297,
+  "v": "1.93",
+  "src": "summary.json baseline_speedup[\"p1_n3\"][\"comm\"]（算术平均）"
+ },
+ "BL_B1_P1_N4": {
+  "raw": 0.9186,
+  "v": "0.92",
+  "src": "summary.json baseline_speedup[\"p1_n4\"][\"random\"]（算术平均）"
+ },
+ "BL_B2_P1_N4": {
+  "raw": 1.223,
+  "v": "1.22",
+  "src": "summary.json baseline_speedup[\"p1_n4\"][\"topo\"]（算术平均）"
+ },
+ "BL_B3_P1_N4": {
+  "raw": 1.2267,
+  "v": "1.23",
+  "src": "summary.json baseline_speedup[\"p1_n4\"][\"balance\"]（算术平均）"
+ },
+ "BL_B4_P1_N4": {
+  "raw": 2.3485,
+  "v": "2.35",
+  "src": "summary.json baseline_speedup[\"p1_n4\"][\"comm\"]（算术平均）"
+ },
+ "BL_B1_P1_N5": {
+  "raw": 0.9112,
+  "v": "0.91",
+  "src": "summary.json baseline_speedup[\"p1_n5\"][\"random\"]（算术平均）"
+ },
+ "BL_B2_P1_N5": {
+  "raw": 1.1899,
+  "v": "1.19",
+  "src": "summary.json baseline_speedup[\"p1_n5\"][\"topo\"]（算术平均）"
+ },
+ "BL_B3_P1_N5": {
+  "raw": 1.1599,
+  "v": "1.16",
+  "src": "summary.json baseline_speedup[\"p1_n5\"][\"balance\"]（算术平均）"
+ },
+ "BL_B4_P1_N5": {
+  "raw": 2.6012,
+  "v": "2.60",
+  "src": "summary.json baseline_speedup[\"p1_n5\"][\"comm\"]（算术平均）"
+ },
+ "IMP_B1_P1": {
+  "raw": 2.468647942521228,
+  "v": "+247%",
+  "src": "baseline_speedup p1_n4: capls/random − 1"
+ },
+ "WTL_B1_P1": {
+  "raw": [
+   100,
+   0,
+   0
+  ],
+  "v": "100/0/0",
+  "src": "summary.json paired.problem1.capls_vs_random win/tie/loss"
+ },
+ "PH_B1_P1": {
+  "raw": 3.896559845095909e-17,
+  "v": "$p=3.9\\times10^{-17}$",
+  "src": "summary.json paired.problem1.capls_vs_random.p_holm（Wilcoxon，Holm 校正）"
+ },
+ "IMP_B2_P1": {
+  "raw": 1.6053147996729353,
+  "v": "+161%",
+  "src": "baseline_speedup p1_n4: capls/topo − 1"
+ },
+ "WTL_B2_P1": {
+  "raw": [
+   99,
+   1,
+   0
+  ],
+  "v": "99/1/0",
+  "src": "summary.json paired.problem1.capls_vs_topo win/tie/loss"
+ },
+ "PH_B2_P1": {
+  "raw": 5.127498853852442e-17,
+  "v": "$p=5.1\\times10^{-17}$",
+  "src": "summary.json paired.problem1.capls_vs_topo.p_holm（Wilcoxon，Holm 校正）"
+ },
+ "IMP_B3_P1": {
+  "raw": 1.5974565908535099,
+  "v": "+160%",
+  "src": "baseline_speedup p1_n4: capls/balance − 1"
+ },
+ "WTL_B3_P1": {
+  "raw": [
+   99,
+   1,
+   0
+  ],
+  "v": "99/1/0",
+  "src": "summary.json paired.problem1.capls_vs_balance win/tie/loss"
+ },
+ "PH_B3_P1": {
+  "raw": 5.127498853852442e-17,
+  "v": "$p=5.1\\times10^{-17}$",
+  "src": "summary.json paired.problem1.capls_vs_balance.p_holm（Wilcoxon，Holm 校正）"
+ },
+ "IMP_B4_P1": {
+  "raw": 0.3567383436235896,
+  "v": "+36%",
+  "src": "baseline_speedup p1_n4: capls/comm − 1"
+ },
+ "WTL_B4_P1": {
+  "raw": [
+   99,
+   1,
+   0
+  ],
+  "v": "99/1/0",
+  "src": "summary.json paired.problem1.capls_vs_comm win/tie/loss"
+ },
+ "PH_B4_P1": {
+  "raw": 5.127498853852442e-17,
+  "v": "$p=5.1\\times10^{-17}$",
+  "src": "summary.json paired.problem1.capls_vs_comm.p_holm（Wilcoxon，Holm 校正）"
+ },
+ "BLFAIL_B1_P1": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "summary.json baseline_failrate p1_random"
+ },
+ "BLFAIL_B2_P1": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "summary.json baseline_failrate p1_topo"
+ },
+ "BLFAIL_B3_P1": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "summary.json baseline_failrate p1_balance"
+ },
+ "BLFAIL_B4_P1": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "summary.json baseline_failrate p1_comm"
+ },
+ "BLADD_B3_P1": {
+  "raw": 1475109154,
+  "v": "$1.48\\times10^{9}$",
+  "src": "summary.json baseline_added_total p1_n4 balance"
+ },
+ "BLADD_B4_P1": {
+  "raw": 2253360374,
+  "v": "$2.25\\times10^{9}$",
+  "src": "summary.json baseline_added_total p1_n4 comm"
+ },
+ "BL_B1_P2_N2": {
+  "raw": 1.036,
+  "v": "1.04",
+  "src": "summary.json baseline_speedup[\"p2_n2\"][\"random\"]（算术平均）"
+ },
+ "BL_B2_P2_N2": {
+  "raw": 1.452,
+  "v": "1.45",
+  "src": "summary.json baseline_speedup[\"p2_n2\"][\"topo\"]（算术平均）"
+ },
+ "BL_B3_P2_N2": {
+  "raw": 1.3479,
+  "v": "1.35",
+  "src": "summary.json baseline_speedup[\"p2_n2\"][\"balance\"]（算术平均）"
+ },
+ "BL_B4_P2_N2": {
+  "raw": 1.6476,
+  "v": "1.65",
+  "src": "summary.json baseline_speedup[\"p2_n2\"][\"comm\"]（算术平均）"
+ },
+ "BL_B1_P2_N3": {
+  "raw": 1.0667,
+  "v": "1.07",
+  "src": "summary.json baseline_speedup[\"p2_n3\"][\"random\"]（算术平均）"
+ },
+ "BL_B2_P2_N3": {
+  "raw": 1.6005,
+  "v": "1.60",
+  "src": "summary.json baseline_speedup[\"p2_n3\"][\"topo\"]（算术平均）"
+ },
+ "BL_B3_P2_N3": {
+  "raw": 1.4337,
+  "v": "1.43",
+  "src": "summary.json baseline_speedup[\"p2_n3\"][\"balance\"]（算术平均）"
+ },
+ "BL_B4_P2_N3": {
+  "raw": 2.2477,
+  "v": "2.25",
+  "src": "summary.json baseline_speedup[\"p2_n3\"][\"comm\"]（算术平均）"
+ },
+ "BL_B1_P2_N4": {
+  "raw": 1.0983,
+  "v": "1.10",
+  "src": "summary.json baseline_speedup[\"p2_n4\"][\"random\"]（算术平均）"
+ },
+ "BL_B2_P2_N4": {
+  "raw": 1.8742,
+  "v": "1.87",
+  "src": "summary.json baseline_speedup[\"p2_n4\"][\"topo\"]（算术平均）"
+ },
+ "BL_B3_P2_N4": {
+  "raw": 1.6716,
+  "v": "1.67",
+  "src": "summary.json baseline_speedup[\"p2_n4\"][\"balance\"]（算术平均）"
+ },
+ "BL_B4_P2_N4": {
+  "raw": 2.7837,
+  "v": "2.78",
+  "src": "summary.json baseline_speedup[\"p2_n4\"][\"comm\"]（算术平均）"
+ },
+ "BL_B1_P2_N5": {
+  "raw": 1.1365,
+  "v": "1.14",
+  "src": "summary.json baseline_speedup[\"p2_n5\"][\"random\"]（算术平均）"
+ },
+ "BL_B2_P2_N5": {
+  "raw": 1.8806,
+  "v": "1.88",
+  "src": "summary.json baseline_speedup[\"p2_n5\"][\"topo\"]（算术平均）"
+ },
+ "BL_B3_P2_N5": {
+  "raw": 1.6511,
+  "v": "1.65",
+  "src": "summary.json baseline_speedup[\"p2_n5\"][\"balance\"]（算术平均）"
+ },
+ "BL_B4_P2_N5": {
+  "raw": 3.1648,
+  "v": "3.16",
+  "src": "summary.json baseline_speedup[\"p2_n5\"][\"comm\"]（算术平均）"
+ },
+ "IMP_B1_P2": {
+  "raw": 2.305927342256214,
+  "v": "+231%",
+  "src": "baseline_speedup p2_n4: capls/random − 1"
+ },
+ "WTL_B1_P2": {
+  "raw": [
+   100,
+   0,
+   0
+  ],
+  "v": "100/0/0",
+  "src": "summary.json paired.problem2.capls_vs_random win/tie/loss"
+ },
+ "PH_B1_P2": {
+  "raw": 3.896559845095909e-17,
+  "v": "$p=3.9\\times10^{-17}$",
+  "src": "summary.json paired.problem2.capls_vs_random.p_holm（Wilcoxon，Holm 校正）"
+ },
+ "IMP_B2_P2": {
+  "raw": 0.9373065841425674,
+  "v": "+94%",
+  "src": "baseline_speedup p2_n4: capls/topo − 1"
+ },
+ "WTL_B2_P2": {
+  "raw": [
+   95,
+   5,
+   0
+  ],
+  "v": "95/5/0",
+  "src": "summary.json paired.problem2.capls_vs_topo win/tie/loss"
+ },
+ "PH_B2_P2": {
+  "raw": 1.6031645074998503e-16,
+  "v": "$p=1.6\\times10^{-16}$",
+  "src": "summary.json paired.problem2.capls_vs_topo.p_holm（Wilcoxon，Holm 校正）"
+ },
+ "IMP_B3_P2": {
+  "raw": 1.1721105527638191,
+  "v": "+117%",
+  "src": "baseline_speedup p2_n4: capls/balance − 1"
+ },
+ "WTL_B3_P2": {
+  "raw": [
+   95,
+   5,
+   0
+  ],
+  "v": "95/5/0",
+  "src": "summary.json paired.problem2.capls_vs_balance win/tie/loss"
+ },
+ "PH_B3_P2": {
+  "raw": 1.6031645074998503e-16,
+  "v": "$p=1.6\\times10^{-16}$",
+  "src": "summary.json paired.problem2.capls_vs_balance.p_holm（Wilcoxon，Holm 校正）"
+ },
+ "IMP_B4_P2": {
+  "raw": 0.30434314042461463,
+  "v": "+30%",
+  "src": "baseline_speedup p2_n4: capls/comm − 1"
+ },
+ "WTL_B4_P2": {
+  "raw": [
+   81,
+   19,
+   0
+  ],
+  "v": "81/19/0",
+  "src": "summary.json paired.problem2.capls_vs_comm win/tie/loss"
+ },
+ "PH_B4_P2": {
+  "raw": 3.7538383855790784e-14,
+  "v": "$p=3.8\\times10^{-14}$",
+  "src": "summary.json paired.problem2.capls_vs_comm.p_holm（Wilcoxon，Holm 校正）"
+ },
+ "BLFAIL_B1_P2": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "summary.json baseline_failrate p2_random"
+ },
+ "BLFAIL_B2_P2": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "summary.json baseline_failrate p2_topo"
+ },
+ "BLFAIL_B3_P2": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "summary.json baseline_failrate p2_balance"
+ },
+ "BLFAIL_B4_P2": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "summary.json baseline_failrate p2_comm"
+ },
+ "BLADD_B3_P2": {
+  "raw": 1421541170,
+  "v": "$1.42\\times10^{9}$",
+  "src": "summary.json baseline_added_total p2_n4 balance"
+ },
+ "BLADD_B4_P2": {
+  "raw": 1421858688,
+  "v": "$1.42\\times10^{9}$",
+  "src": "summary.json baseline_added_total p2_n4 comm"
+ },
+ "BL_B1_P3_N2": {
+  "raw": 1.0435,
+  "v": "1.04",
+  "src": "summary.json baseline_speedup[\"p3_n2\"][\"random\"]（算术平均）"
+ },
+ "BL_B2_P3_N2": {
+  "raw": 1.4706,
+  "v": "1.47",
+  "src": "summary.json baseline_speedup[\"p3_n2\"][\"topo\"]（算术平均）"
+ },
+ "BL_B3_P3_N2": {
+  "raw": 1.3617,
+  "v": "1.36",
+  "src": "summary.json baseline_speedup[\"p3_n2\"][\"balance\"]（算术平均）"
+ },
+ "BL_B4_P3_N2": {
+  "raw": 1.666,
+  "v": "1.67",
+  "src": "summary.json baseline_speedup[\"p3_n2\"][\"comm\"]（算术平均）"
+ },
+ "BL_B1_P3_N3": {
+  "raw": 1.0752,
+  "v": "1.08",
+  "src": "summary.json baseline_speedup[\"p3_n3\"][\"random\"]（算术平均）"
+ },
+ "BL_B2_P3_N3": {
+  "raw": 1.6193,
+  "v": "1.62",
+  "src": "summary.json baseline_speedup[\"p3_n3\"][\"topo\"]（算术平均）"
+ },
+ "BL_B3_P3_N3": {
+  "raw": 1.4474,
+  "v": "1.45",
+  "src": "summary.json baseline_speedup[\"p3_n3\"][\"balance\"]（算术平均）"
+ },
+ "BL_B4_P3_N3": {
+  "raw": 2.2716,
+  "v": "2.27",
+  "src": "summary.json baseline_speedup[\"p3_n3\"][\"comm\"]（算术平均）"
+ },
+ "BL_B1_P3_N4": {
+  "raw": 1.1115,
+  "v": "1.11",
+  "src": "summary.json baseline_speedup[\"p3_n4\"][\"random\"]（算术平均）"
+ },
+ "BL_B2_P3_N4": {
+  "raw": 1.9006,
+  "v": "1.90",
+  "src": "summary.json baseline_speedup[\"p3_n4\"][\"topo\"]（算术平均）"
+ },
+ "BL_B3_P3_N4": {
+  "raw": 1.6884,
+  "v": "1.69",
+  "src": "summary.json baseline_speedup[\"p3_n4\"][\"balance\"]（算术平均）"
+ },
+ "BL_B4_P3_N4": {
+  "raw": 2.8305,
+  "v": "2.83",
+  "src": "summary.json baseline_speedup[\"p3_n4\"][\"comm\"]（算术平均）"
+ },
+ "BL_B1_P3_N5": {
+  "raw": 1.1537,
+  "v": "1.15",
+  "src": "summary.json baseline_speedup[\"p3_n5\"][\"random\"]（算术平均）"
+ },
+ "BL_B2_P3_N5": {
+  "raw": 1.9159,
+  "v": "1.92",
+  "src": "summary.json baseline_speedup[\"p3_n5\"][\"topo\"]（算术平均）"
+ },
+ "BL_B3_P3_N5": {
+  "raw": 1.6741,
+  "v": "1.67",
+  "src": "summary.json baseline_speedup[\"p3_n5\"][\"balance\"]（算术平均）"
+ },
+ "BL_B4_P3_N5": {
+  "raw": 3.235,
+  "v": "3.23",
+  "src": "summary.json baseline_speedup[\"p3_n5\"][\"comm\"]（算术平均）"
+ },
+ "IMP_B1_P3": {
+  "raw": 2.3055330634278004,
+  "v": "+231%",
+  "src": "baseline_speedup p3_n4: capls/random − 1"
+ },
+ "WTL_B1_P3": {
+  "raw": [
+   100,
+   0,
+   0
+  ],
+  "v": "100/0/0",
+  "src": "summary.json paired.problem3.capls_vs_random win/tie/loss"
+ },
+ "PH_B1_P3": {
+  "raw": 3.896559845095909e-17,
+  "v": "$p=3.9\\times10^{-17}$",
+  "src": "summary.json paired.problem3.capls_vs_random.p_holm（Wilcoxon，Holm 校正）"
+ },
+ "IMP_B2_P3": {
+  "raw": 0.933126381142797,
+  "v": "+93%",
+  "src": "baseline_speedup p3_n4: capls/topo − 1"
+ },
+ "WTL_B2_P3": {
+  "raw": [
+   95,
+   5,
+   0
+  ],
+  "v": "95/5/0",
+  "src": "summary.json paired.problem3.capls_vs_topo win/tie/loss"
+ },
+ "PH_B2_P3": {
+  "raw": 1.6031645074998503e-16,
+  "v": "$p=1.6\\times10^{-16}$",
+  "src": "summary.json paired.problem3.capls_vs_topo.p_holm（Wilcoxon，Holm 校正）"
+ },
+ "IMP_B3_P3": {
+  "raw": 1.176083866382374,
+  "v": "+118%",
+  "src": "baseline_speedup p3_n4: capls/balance − 1"
+ },
+ "WTL_B3_P3": {
+  "raw": [
+   95,
+   5,
+   0
+  ],
+  "v": "95/5/0",
+  "src": "summary.json paired.problem3.capls_vs_balance win/tie/loss"
+ },
+ "PH_B3_P3": {
+  "raw": 1.6031645074998503e-16,
+  "v": "$p=1.6\\times10^{-16}$",
+  "src": "summary.json paired.problem3.capls_vs_balance.p_holm（Wilcoxon，Holm 校正）"
+ },
+ "IMP_B4_P3": {
+  "raw": 0.29803921568627456,
+  "v": "+30%",
+  "src": "baseline_speedup p3_n4: capls/comm − 1"
+ },
+ "WTL_B4_P3": {
+  "raw": [
+   82,
+   18,
+   0
+  ],
+  "v": "82/18/0",
+  "src": "summary.json paired.problem3.capls_vs_comm win/tie/loss"
+ },
+ "PH_B4_P3": {
+  "raw": 2.5647236598748247e-14,
+  "v": "$p=2.6\\times10^{-14}$",
+  "src": "summary.json paired.problem3.capls_vs_comm.p_holm（Wilcoxon，Holm 校正）"
+ },
+ "BLFAIL_B1_P3": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "summary.json baseline_failrate p3_random"
+ },
+ "BLFAIL_B2_P3": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "summary.json baseline_failrate p3_topo"
+ },
+ "BLFAIL_B3_P3": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "summary.json baseline_failrate p3_balance"
+ },
+ "BLFAIL_B4_P3": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "summary.json baseline_failrate p3_comm"
+ },
+ "BLADD_B3_P3": {
+  "raw": 1421541170,
+  "v": "$1.42\\times10^{9}$",
+  "src": "summary.json baseline_added_total p3_n4 balance"
+ },
+ "BLADD_B4_P3": {
+  "raw": 1421858688,
+  "v": "$1.42\\times10^{9}$",
+  "src": "summary.json baseline_added_total p3_n4 comm"
+ },
+ "SC_C2_P1": {
+  "raw": 2.9052271296434076,
+  "v": "2.91",
+  "src": "ablation2.csv full_c2 P1 N=4 speedup 算术平均（n=96）"
+ },
+ "SC_B4_P1": {
+  "raw": 2.2918560098634226,
+  "v": "2.29",
+  "src": "baseline.csv comm P1 N=4 同一批用例的算术平均（n=96）"
+ },
+ "SC_REL_P1": {
+  "raw": 0.26763073995060327,
+  "v": "+26.8%",
+  "src": "SC_C2/SC_B4 − 1"
+ },
+ "SC_P_P1": {
+  "raw": 2.1522182901481587e-15,
+  "v": "$p=2.2\\times10^{-15}$",
+  "src": "scipy.stats.wilcoxon(full_c2, comm) P1 N=4"
+ },
+ "SC_N_P1": {
+  "raw": 96,
+  "v": "96",
+  "src": "配对用例数"
+ },
+ "SC_C2_P2": {
+  "raw": 3.0732174707072226,
+  "v": "3.07",
+  "src": "ablation2.csv full_c2 P2 N=4 speedup 算术平均（n=100）"
+ },
+ "SC_B4_P2": {
+  "raw": 2.7836520069484516,
+  "v": "2.78",
+  "src": "baseline.csv comm P2 N=4 同一批用例的算术平均（n=100）"
+ },
+ "SC_REL_P2": {
+  "raw": 0.10402358593529937,
+  "v": "+10.4%",
+  "src": "SC_C2/SC_B4 − 1"
+ },
+ "SC_P_P2": {
+  "raw": 3.0397197910649366e-07,
+  "v": "$p=3.0\\times10^{-7}$",
+  "src": "scipy.stats.wilcoxon(full_c2, comm) P2 N=4"
+ },
+ "SC_N_P2": {
+  "raw": 100,
+  "v": "100",
+  "src": "配对用例数"
+ },
+ "SC_C2_P3": {
+  "raw": 3.1747063958551394,
+  "v": "3.17",
+  "src": "ablation2.csv full_c2 P3 N=4 speedup 算术平均（n=100）"
+ },
+ "SC_B4_P3": {
+  "raw": 2.83049222403737,
+  "v": "2.83",
+  "src": "baseline.csv comm P3 N=4 同一批用例的算术平均（n=100）"
+ },
+ "SC_REL_P3": {
+  "raw": 0.12160929780855834,
+  "v": "+12.2%",
+  "src": "SC_C2/SC_B4 − 1"
+ },
+ "SC_P_P3": {
+  "raw": 5.77428457755792e-09,
+  "v": "$p=5.8\\times10^{-9}$",
+  "src": "scipy.stats.wilcoxon(full_c2, comm) P3 N=4"
+ },
+ "SC_N_P3": {
+  "raw": 100,
+  "v": "100",
+  "src": "配对用例数"
+ },
+ "AB_P1_full_c2": {
+  "raw": 2.5541,
+  "v": "2.554",
+  "src": "summary.json ablation2.problem1.full_c2.describe.amean"
+ },
+ "AB_P1_n": {
+  "raw": 96,
+  "v": "96",
+  "src": "summary.json ablation2.problem1.full_c2.describe.n / 4（用例数）"
+ },
+ "AB_P1_no_comm": {
+  "raw": 2.3993,
+  "v": "2.399",
+  "src": "summary.json ablation2.problem1.no_comm.describe.amean"
+ },
+ "ABR_P1_no_comm": {
+  "raw": -0.0606,
+  "v": "−6.1%",
+  "src": "summary.json ablation2.problem1.no_comm.paired.rel"
+ },
+ "ABP_P1_no_comm": {
+  "raw": 1.1948088363246466e-09,
+  "v": "$p=1.2\\times10^{-9}$",
+  "src": "summary.json ablation2.problem1.no_comm.paired.p_holm"
+ },
+ "AB_P1_no_sync": {
+  "raw": 2.5402,
+  "v": "2.540",
+  "src": "summary.json ablation2.problem1.no_sync.describe.amean"
+ },
+ "ABR_P1_no_sync": {
+  "raw": -0.0054,
+  "v": "−0.5%",
+  "src": "summary.json ablation2.problem1.no_sync.paired.rel"
+ },
+ "ABP_P1_no_sync": {
+  "raw": 0.0012842757314091083,
+  "v": "$p=0.001$",
+  "src": "summary.json ablation2.problem1.no_sync.paired.p_holm"
+ },
+ "AB_P1_no_localsearch": {
+  "raw": 2.5505,
+  "v": "2.550",
+  "src": "summary.json ablation2.problem1.no_localsearch.describe.amean"
+ },
+ "ABR_P1_no_localsearch": {
+  "raw": -0.0014,
+  "v": "−0.1%",
+  "src": "summary.json ablation2.problem1.no_localsearch.paired.rel"
+ },
+ "ABP_P1_no_localsearch": {
+  "raw": 0.15961275879821635,
+  "v": "$p=0.160$",
+  "src": "summary.json ablation2.problem1.no_localsearch.paired.p_holm"
+ },
+ "AB_P1_no_level": {
+  "raw": 2.0489,
+  "v": "2.049",
+  "src": "summary.json ablation2.problem1.no_level.describe.amean"
+ },
+ "ABR_P1_no_level": {
+  "raw": -0.1978,
+  "v": "−19.8%",
+  "src": "summary.json ablation2.problem1.no_level.paired.rel"
+ },
+ "ABP_P1_no_level": {
+  "raw": 1.184817396648822e-50,
+  "v": "$p=1.2\\times10^{-50}$",
+  "src": "summary.json ablation2.problem1.no_level.paired.p_holm"
+ },
+ "AB_P1_no_level_no_comm": {
+  "raw": 1.0737,
+  "v": "1.074",
+  "src": "summary.json ablation2.problem1.no_level_no_comm.describe.amean"
+ },
+ "ABR_P1_no_level_no_comm": {
+  "raw": -0.5796,
+  "v": "−58.0%",
+  "src": "summary.json ablation2.problem1.no_level_no_comm.paired.rel"
+ },
+ "ABP_P1_no_level_no_comm": {
+  "raw": 5.325174145616333e-62,
+  "v": "$p=5.3\\times10^{-62}$",
+  "src": "summary.json ablation2.problem1.no_level_no_comm.paired.p_holm"
+ },
+ "AB_P1_max_ops500": {
+  "raw": 2.5492,
+  "v": "2.549",
+  "src": "summary.json ablation2.problem1.max_ops500.describe.amean"
+ },
+ "ABR_P1_max_ops500": {
+  "raw": -0.0019,
+  "v": "−0.2%",
+  "src": "summary.json ablation2.problem1.max_ops500.paired.rel"
+ },
+ "ABP_P1_max_ops500": {
+  "raw": 0.027014574852828058,
+  "v": "$p=0.027$",
+  "src": "summary.json ablation2.problem1.max_ops500.paired.p_holm"
+ },
+ "AB_P1_lvl_alap": {
+  "raw": 2.5688,
+  "v": "2.569",
+  "src": "summary.json ablation2.problem1.lvl_alap.describe.amean"
+ },
+ "ABR_P1_lvl_alap": {
+  "raw": 0.0058,
+  "v": "+0.6%",
+  "src": "summary.json ablation2.problem1.lvl_alap.paired.rel"
+ },
+ "ABP_P1_lvl_alap": {
+  "raw": 0.0009233897092498038,
+  "v": "$p=9.2\\times10^{-4}$",
+  "src": "summary.json ablation2.problem1.lvl_alap.paired.p_holm"
+ },
+ "AB_P1_lvl_compress": {
+  "raw": 2.5688,
+  "v": "2.569",
+  "src": "summary.json ablation2.problem1.lvl_compress.describe.amean"
+ },
+ "ABR_P1_lvl_compress": {
+  "raw": 0.0058,
+  "v": "+0.6%",
+  "src": "summary.json ablation2.problem1.lvl_compress.paired.rel"
+ },
+ "ABP_P1_lvl_compress": {
+  "raw": 0.0009233897092498038,
+  "v": "$p=9.2\\times10^{-4}$",
+  "src": "summary.json ablation2.problem1.lvl_compress.paired.p_holm"
+ },
+ "AB_P2_full_c2": {
+  "raw": 2.6961,
+  "v": "2.696",
+  "src": "summary.json ablation2.problem2.full_c2.describe.amean"
+ },
+ "AB_P2_n": {
+  "raw": 100,
+  "v": "100",
+  "src": "summary.json ablation2.problem2.full_c2.describe.n / 4（用例数）"
+ },
+ "AB_P2_no_comm": {
+  "raw": 2.5185,
+  "v": "2.518",
+  "src": "summary.json ablation2.problem2.no_comm.describe.amean"
+ },
+ "ABR_P2_no_comm": {
+  "raw": -0.0659,
+  "v": "−6.6%",
+  "src": "summary.json ablation2.problem2.no_comm.paired.rel"
+ },
+ "ABP_P2_no_comm": {
+  "raw": 1.4749865584775858e-11,
+  "v": "$p=1.5\\times10^{-11}$",
+  "src": "summary.json ablation2.problem2.no_comm.paired.p_holm"
+ },
+ "AB_P2_no_sync": {
+  "raw": 2.6899,
+  "v": "2.690",
+  "src": "summary.json ablation2.problem2.no_sync.describe.amean"
+ },
+ "ABR_P2_no_sync": {
+  "raw": -0.0023,
+  "v": "−0.2%",
+  "src": "summary.json ablation2.problem2.no_sync.paired.rel"
+ },
+ "ABP_P2_no_sync": {
+  "raw": 0.20608509551648016,
+  "v": "$p=0.206$",
+  "src": "summary.json ablation2.problem2.no_sync.paired.p_holm"
+ },
+ "AB_P2_no_localsearch": {
+  "raw": 2.7045,
+  "v": "2.704",
+  "src": "summary.json ablation2.problem2.no_localsearch.describe.amean"
+ },
+ "ABR_P2_no_localsearch": {
+  "raw": 0.0031,
+  "v": "+0.3%",
+  "src": "summary.json ablation2.problem2.no_localsearch.paired.rel"
+ },
+ "ABP_P2_no_localsearch": {
+  "raw": 0.6204514631096623,
+  "v": "$p=0.620$",
+  "src": "summary.json ablation2.problem2.no_localsearch.paired.p_holm"
+ },
+ "AB_P2_no_level": {
+  "raw": 2.4713,
+  "v": "2.471",
+  "src": "summary.json ablation2.problem2.no_level.describe.amean"
+ },
+ "ABR_P2_no_level": {
+  "raw": -0.0834,
+  "v": "−8.3%",
+  "src": "summary.json ablation2.problem2.no_level.paired.rel"
+ },
+ "ABP_P2_no_level": {
+  "raw": 6.599226525319513e-25,
+  "v": "$p=6.6\\times10^{-25}$",
+  "src": "summary.json ablation2.problem2.no_level.paired.p_holm"
+ },
+ "AB_P2_no_level_no_comm": {
+  "raw": 1.6246,
+  "v": "1.625",
+  "src": "summary.json ablation2.problem2.no_level_no_comm.describe.amean"
+ },
+ "ABR_P2_no_level_no_comm": {
+  "raw": -0.3974,
+  "v": "−39.7%",
+  "src": "summary.json ablation2.problem2.no_level_no_comm.paired.rel"
+ },
+ "ABP_P2_no_level_no_comm": {
+  "raw": 2.6890917908647577e-57,
+  "v": "$p=2.7\\times10^{-57}$",
+  "src": "summary.json ablation2.problem2.no_level_no_comm.paired.p_holm"
+ },
+ "AB_P2_max_ops500": {
+  "raw": 2.7009,
+  "v": "2.701",
+  "src": "summary.json ablation2.problem2.max_ops500.describe.amean"
+ },
+ "ABR_P2_max_ops500": {
+  "raw": 0.0018,
+  "v": "+0.2%",
+  "src": "summary.json ablation2.problem2.max_ops500.paired.rel"
+ },
+ "ABP_P2_max_ops500": {
+  "raw": 0.01594960739991344,
+  "v": "$p=0.016$",
+  "src": "summary.json ablation2.problem2.max_ops500.paired.p_holm"
+ },
+ "AB_P2_op_full": {
+  "raw": 2.744,
+  "v": "2.744",
+  "src": "summary.json ablation2.problem2.op_full.describe.amean"
+ },
+ "ABR_P2_op_full": {
+  "raw": 0.0178,
+  "v": "+1.8%",
+  "src": "summary.json ablation2.problem2.op_full.paired.rel"
+ },
+ "ABP_P2_op_full": {
+  "raw": 0.019758002360854253,
+  "v": "$p=0.020$",
+  "src": "summary.json ablation2.problem2.op_full.paired.p_holm"
+ },
+ "AB_P2_op_mu0": {
+  "raw": 2.713,
+  "v": "2.713",
+  "src": "summary.json ablation2.problem2.op_mu0.describe.amean"
+ },
+ "ABR_P2_op_mu0": {
+  "raw": 0.0063,
+  "v": "+0.6%",
+  "src": "summary.json ablation2.problem2.op_mu0.paired.rel"
+ },
+ "ABP_P2_op_mu0": {
+  "raw": 0.20608509551648016,
+  "v": "$p=0.206$",
+  "src": "summary.json ablation2.problem2.op_mu0.paired.p_holm"
+ },
+ "AB_P2_op_nu0": {
+  "raw": 2.6755,
+  "v": "2.675",
+  "src": "summary.json ablation2.problem2.op_nu0.describe.amean"
+ },
+ "ABR_P2_op_nu0": {
+  "raw": -0.0076,
+  "v": "−0.8%",
+  "src": "summary.json ablation2.problem2.op_nu0.paired.rel"
+ },
+ "ABP_P2_op_nu0": {
+  "raw": 0.2479556624670956,
+  "v": "$p=0.248$",
+  "src": "summary.json ablation2.problem2.op_nu0.paired.p_holm"
+ },
+ "AB_P2_op_alpha1": {
+  "raw": 2.7257,
+  "v": "2.726",
+  "src": "summary.json ablation2.problem2.op_alpha1.describe.amean"
+ },
+ "ABR_P2_op_alpha1": {
+  "raw": 0.011,
+  "v": "+1.1%",
+  "src": "summary.json ablation2.problem2.op_alpha1.paired.rel"
+ },
+ "ABP_P2_op_alpha1": {
+  "raw": 0.05606069680737884,
+  "v": "$p=0.056$",
+  "src": "summary.json ablation2.problem2.op_alpha1.paired.p_holm"
+ },
+ "AB_P2_lvl_alap": {
+  "raw": 2.7627,
+  "v": "2.763",
+  "src": "summary.json ablation2.problem2.lvl_alap.describe.amean"
+ },
+ "ABR_P2_lvl_alap": {
+  "raw": 0.0247,
+  "v": "+2.5%",
+  "src": "summary.json ablation2.problem2.lvl_alap.paired.rel"
+ },
+ "ABP_P2_lvl_alap": {
+  "raw": 6.559519916738625e-13,
+  "v": "$p=6.6\\times10^{-13}$",
+  "src": "summary.json ablation2.problem2.lvl_alap.paired.p_holm"
+ },
+ "AB_P2_lvl_compress": {
+  "raw": 2.7627,
+  "v": "2.763",
+  "src": "summary.json ablation2.problem2.lvl_compress.describe.amean"
+ },
+ "ABR_P2_lvl_compress": {
+  "raw": 0.0247,
+  "v": "+2.5%",
+  "src": "summary.json ablation2.problem2.lvl_compress.paired.rel"
+ },
+ "ABP_P2_lvl_compress": {
+  "raw": 6.559519916738625e-13,
+  "v": "$p=6.6\\times10^{-13}$",
+  "src": "summary.json ablation2.problem2.lvl_compress.paired.p_holm"
+ },
+ "AB_P3_full_c2": {
+  "raw": 2.7587,
+  "v": "2.759",
+  "src": "summary.json ablation2.problem3.full_c2.describe.amean"
+ },
+ "AB_P3_n": {
+  "raw": 100,
+  "v": "100",
+  "src": "summary.json ablation2.problem3.full_c2.describe.n / 4（用例数）"
+ },
+ "AB_P3_no_comm": {
+  "raw": 2.5732,
+  "v": "2.573",
+  "src": "summary.json ablation2.problem3.no_comm.describe.amean"
+ },
+ "ABR_P3_no_comm": {
+  "raw": -0.0673,
+  "v": "−6.7%",
+  "src": "summary.json ablation2.problem3.no_comm.paired.rel"
+ },
+ "ABP_P3_no_comm": {
+  "raw": 4.160583596200647e-11,
+  "v": "$p=4.2\\times10^{-11}$",
+  "src": "summary.json ablation2.problem3.no_comm.paired.p_holm"
+ },
+ "AB_P3_no_sync": {
+  "raw": 2.7537,
+  "v": "2.754",
+  "src": "summary.json ablation2.problem3.no_sync.describe.amean"
+ },
+ "ABR_P3_no_sync": {
+  "raw": -0.0018,
+  "v": "−0.2%",
+  "src": "summary.json ablation2.problem3.no_sync.paired.rel"
+ },
+ "ABP_P3_no_sync": {
+  "raw": 0.08638200471434934,
+  "v": "$p=0.086$",
+  "src": "summary.json ablation2.problem3.no_sync.paired.p_holm"
+ },
+ "AB_P3_no_localsearch": {
+  "raw": 2.7555,
+  "v": "2.756",
+  "src": "summary.json ablation2.problem3.no_localsearch.describe.amean"
+ },
+ "ABR_P3_no_localsearch": {
+  "raw": -0.0012,
+  "v": "−0.1%",
+  "src": "summary.json ablation2.problem3.no_localsearch.paired.rel"
+ },
+ "ABP_P3_no_localsearch": {
+  "raw": 0.37750413925158266,
+  "v": "$p=0.378$",
+  "src": "summary.json ablation2.problem3.no_localsearch.paired.p_holm"
+ },
+ "AB_P3_no_level": {
+  "raw": 2.5057,
+  "v": "2.506",
+  "src": "summary.json ablation2.problem3.no_level.describe.amean"
+ },
+ "ABR_P3_no_level": {
+  "raw": -0.0917,
+  "v": "−9.2%",
+  "src": "summary.json ablation2.problem3.no_level.paired.rel"
+ },
+ "ABP_P3_no_level": {
+  "raw": 1.5982719604193705e-24,
+  "v": "$p=1.6\\times10^{-24}$",
+  "src": "summary.json ablation2.problem3.no_level.paired.p_holm"
+ },
+ "AB_P3_no_level_no_comm": {
+  "raw": 1.6574,
+  "v": "1.657",
+  "src": "summary.json ablation2.problem3.no_level_no_comm.describe.amean"
+ },
+ "ABR_P3_no_level_no_comm": {
+  "raw": -0.3992,
+  "v": "−39.9%",
+  "src": "summary.json ablation2.problem3.no_level_no_comm.paired.rel"
+ },
+ "ABP_P3_no_level_no_comm": {
+  "raw": 3.223953963319181e-57,
+  "v": "$p=3.2\\times10^{-57}$",
+  "src": "summary.json ablation2.problem3.no_level_no_comm.paired.p_holm"
+ },
+ "AB_P3_max_ops500": {
+  "raw": 2.7636,
+  "v": "2.764",
+  "src": "summary.json ablation2.problem3.max_ops500.describe.amean"
+ },
+ "ABR_P3_max_ops500": {
+  "raw": 0.0018,
+  "v": "+0.2%",
+  "src": "summary.json ablation2.problem3.max_ops500.paired.rel"
+ },
+ "ABP_P3_max_ops500": {
+  "raw": 0.007153933953696574,
+  "v": "$p=0.007$",
+  "src": "summary.json ablation2.problem3.max_ops500.paired.p_holm"
+ },
+ "AB_P3_op_full": {
+  "raw": 2.7857,
+  "v": "2.786",
+  "src": "summary.json ablation2.problem3.op_full.describe.amean"
+ },
+ "ABR_P3_op_full": {
+  "raw": 0.0098,
+  "v": "+1.0%",
+  "src": "summary.json ablation2.problem3.op_full.paired.rel"
+ },
+ "ABP_P3_op_full": {
+  "raw": 0.05637803253578935,
+  "v": "$p=0.056$",
+  "src": "summary.json ablation2.problem3.op_full.paired.p_holm"
+ },
+ "AB_P3_op_mu0": {
+  "raw": 2.754,
+  "v": "2.754",
+  "src": "summary.json ablation2.problem3.op_mu0.describe.amean"
+ },
+ "ABR_P3_op_mu0": {
+  "raw": -0.0017,
+  "v": "−0.2%",
+  "src": "summary.json ablation2.problem3.op_mu0.paired.rel"
+ },
+ "ABP_P3_op_mu0": {
+  "raw": 0.37750413925158266,
+  "v": "$p=0.378$",
+  "src": "summary.json ablation2.problem3.op_mu0.paired.p_holm"
+ },
+ "AB_P3_op_nu0": {
+  "raw": 2.7136,
+  "v": "2.714",
+  "src": "summary.json ablation2.problem3.op_nu0.describe.amean"
+ },
+ "ABR_P3_op_nu0": {
+  "raw": -0.0164,
+  "v": "−1.6%",
+  "src": "summary.json ablation2.problem3.op_nu0.paired.rel"
+ },
+ "ABP_P3_op_nu0": {
+  "raw": 0.37750413925158266,
+  "v": "$p=0.378$",
+  "src": "summary.json ablation2.problem3.op_nu0.paired.p_holm"
+ },
+ "AB_P3_op_alpha1": {
+  "raw": 2.768,
+  "v": "2.768",
+  "src": "summary.json ablation2.problem3.op_alpha1.describe.amean"
+ },
+ "ABR_P3_op_alpha1": {
+  "raw": 0.0034,
+  "v": "+0.3%",
+  "src": "summary.json ablation2.problem3.op_alpha1.paired.rel"
+ },
+ "ABP_P3_op_alpha1": {
+  "raw": 0.11425702757551726,
+  "v": "$p=0.114$",
+  "src": "summary.json ablation2.problem3.op_alpha1.paired.p_holm"
+ },
+ "AB_P3_lvl_alap": {
+  "raw": 2.8254,
+  "v": "2.825",
+  "src": "summary.json ablation2.problem3.lvl_alap.describe.amean"
+ },
+ "ABR_P3_lvl_alap": {
+  "raw": 0.0242,
+  "v": "+2.4%",
+  "src": "summary.json ablation2.problem3.lvl_alap.paired.rel"
+ },
+ "ABP_P3_lvl_alap": {
+  "raw": 1.1723683248051525e-13,
+  "v": "$p=1.2\\times10^{-13}$",
+  "src": "summary.json ablation2.problem3.lvl_alap.paired.p_holm"
+ },
+ "AB_P3_lvl_compress": {
+  "raw": 2.8254,
+  "v": "2.825",
+  "src": "summary.json ablation2.problem3.lvl_compress.describe.amean"
+ },
+ "ABR_P3_lvl_compress": {
+  "raw": 0.0242,
+  "v": "+2.4%",
+  "src": "summary.json ablation2.problem3.lvl_compress.paired.rel"
+ },
+ "ABP_P3_lvl_compress": {
+  "raw": 1.1723683248051525e-13,
+  "v": "$p=1.2\\times10^{-13}$",
+  "src": "summary.json ablation2.problem3.lvl_compress.paired.p_holm"
+ },
+ "GRAN_N": {
+  "raw": 29,
+  "v": "29",
+  "src": "results/granularity.csv 用例数"
+ },
+ "GRAN_P1_0.03": {
+  "raw": 2.460313120479631,
+  "v": "2.46",
+  "src": "granularity.csv P1 β=0.03 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P1_0.06": {
+  "raw": 2.5610823265158507,
+  "v": "2.56",
+  "src": "granularity.csv P1 β=0.06 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P1_0.12": {
+  "raw": 2.648463901218871,
+  "v": "2.65",
+  "src": "granularity.csv P1 β=0.12 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P1_0.25": {
+  "raw": 2.75382947075416,
+  "v": "2.75",
+  "src": "granularity.csv P1 β=0.25 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P1_0.5": {
+  "raw": 2.8312358392112382,
+  "v": "2.83",
+  "src": "granularity.csv P1 β=0.5 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P1_1.0": {
+  "raw": 2.848187152952705,
+  "v": "2.85",
+  "src": "granularity.csv P1 β=1.0 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P1_2.0": {
+  "raw": 2.8684504892184477,
+  "v": "2.87",
+  "src": "granularity.csv P1 β=2.0 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_BEST_P1": {
+  "raw": "2.0",
+  "v": "2",
+  "src": "granularity.csv P1 算术平均最大的 β"
+ },
+ "GRAN_LOSS_P1_0.03": {
+  "raw": 0.14228496195868445,
+  "v": "14.2%",
+  "src": "1 − GRAN_P1_0.03/GRAN_P1_best"
+ },
+ "GRAN_LOSS_P1_2.0": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "1 − GRAN_P1_2.0/GRAN_P1_best"
+ },
+ "GRAN_LOSS_P1_0.25": {
+  "raw": 0.03995921104272493,
+  "v": "4.0%",
+  "src": "1 − GRAN_P1_0.25/GRAN_P1_best"
+ },
+ "GRAN_LOSS_P1_0.5": {
+  "raw": 0.012973781540621676,
+  "v": "1.3%",
+  "src": "1 − GRAN_P1_0.5/GRAN_P1_best"
+ },
+ "GRAN_PLAT_P1": {
+  "raw": 0.06901054528560957,
+  "v": "6.9%",
+  "src": "granularity.csv P1 β∈[0.12,0.5] 内最大/最小 − 1"
+ },
+ "GRAN_P2_0.03": {
+  "raw": 2.8017490047243556,
+  "v": "2.80",
+  "src": "granularity.csv P2 β=0.03 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P2_0.06": {
+  "raw": 2.8497385448998234,
+  "v": "2.85",
+  "src": "granularity.csv P2 β=0.06 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P2_0.12": {
+  "raw": 2.873974428446883,
+  "v": "2.87",
+  "src": "granularity.csv P2 β=0.12 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P2_0.25": {
+  "raw": 2.9088308410640313,
+  "v": "2.91",
+  "src": "granularity.csv P2 β=0.25 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P2_0.5": {
+  "raw": 2.970007902573665,
+  "v": "2.97",
+  "src": "granularity.csv P2 β=0.5 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P2_1.0": {
+  "raw": 2.9219327253368785,
+  "v": "2.92",
+  "src": "granularity.csv P2 β=1.0 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P2_2.0": {
+  "raw": 2.8958369619582784,
+  "v": "2.90",
+  "src": "granularity.csv P2 β=2.0 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_BEST_P2": {
+  "raw": "0.5",
+  "v": "0.5",
+  "src": "granularity.csv P2 算术平均最大的 β"
+ },
+ "GRAN_LOSS_P2_0.03": {
+  "raw": 0.056652676817292136,
+  "v": "5.7%",
+  "src": "1 − GRAN_P2_0.03/GRAN_P2_best"
+ },
+ "GRAN_LOSS_P2_2.0": {
+  "raw": 0.02497331422960647,
+  "v": "2.5%",
+  "src": "1 − GRAN_P2_2.0/GRAN_P2_best"
+ },
+ "GRAN_LOSS_P2_0.25": {
+  "raw": 0.020598282400737244,
+  "v": "2.1%",
+  "src": "1 − GRAN_P2_0.25/GRAN_P2_best"
+ },
+ "GRAN_LOSS_P2_0.5": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "1 − GRAN_P2_0.5/GRAN_P2_best"
+ },
+ "GRAN_PLAT_P2": {
+  "raw": 0.0334148672918706,
+  "v": "3.3%",
+  "src": "granularity.csv P2 β∈[0.12,0.5] 内最大/最小 − 1"
+ },
+ "GRAN_P3_0.03": {
+  "raw": 2.85490702982672,
+  "v": "2.85",
+  "src": "granularity.csv P3 β=0.03 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P3_0.06": {
+  "raw": 2.936154830420812,
+  "v": "2.94",
+  "src": "granularity.csv P3 β=0.06 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P3_0.12": {
+  "raw": 2.968933263401509,
+  "v": "2.97",
+  "src": "granularity.csv P3 β=0.12 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P3_0.25": {
+  "raw": 2.966431634064002,
+  "v": "2.97",
+  "src": "granularity.csv P3 β=0.25 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P3_0.5": {
+  "raw": 2.97744823588157,
+  "v": "2.98",
+  "src": "granularity.csv P3 β=0.5 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P3_1.0": {
+  "raw": 2.9462406836048856,
+  "v": "2.95",
+  "src": "granularity.csv P3 β=1.0 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_P3_2.0": {
+  "raw": 2.9288431098112477,
+  "v": "2.93",
+  "src": "granularity.csv P3 β=2.0 speedup 算术平均（29 个用例，N=4）"
+ },
+ "GRAN_BEST_P3": {
+  "raw": "0.5",
+  "v": "0.5",
+  "src": "granularity.csv P3 算术平均最大的 β"
+ },
+ "GRAN_LOSS_P3_0.03": {
+  "raw": 0.04115645221908204,
+  "v": "4.1%",
+  "src": "1 − GRAN_P3_0.03/GRAN_P3_best"
+ },
+ "GRAN_LOSS_P3_2.0": {
+  "raw": 0.016324423539787025,
+  "v": "1.6%",
+  "src": "1 − GRAN_P3_2.0/GRAN_P3_best"
+ },
+ "GRAN_LOSS_P3_0.25": {
+  "raw": 0.0037000145577028576,
+  "v": "0.4%",
+  "src": "1 − GRAN_P3_0.25/GRAN_P3_best"
+ },
+ "GRAN_LOSS_P3_0.5": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "1 − GRAN_P3_0.5/GRAN_P3_best"
+ },
+ "GRAN_PLAT_P3": {
+  "raw": 0.003713755507142924,
+  "v": "0.4%",
+  "src": "granularity.csv P3 β∈[0.12,0.5] 内最大/最小 − 1"
+ },
+ "SENS_N": {
+  "raw": 18,
+  "v": "18",
+  "src": "sensitivity.csv 用例数"
+ },
+ "SENS_bandwidth_15": {
+  "raw": 0.7306670745196603,
+  "v": "0.731",
+  "src": "sensitivity.csv knob=bandwidth value=15：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_bandwidth_30": {
+  "raw": 0.9012732457104546,
+  "v": "0.901",
+  "src": "sensitivity.csv knob=bandwidth value=30：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_bandwidth_60": {
+  "raw": 1.0,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=bandwidth value=60：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_bandwidth_120": {
+  "raw": 1.053621015288282,
+  "v": "1.054",
+  "src": "sensitivity.csv knob=bandwidth value=120：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_bandwidth_240": {
+  "raw": 1.0639712003459159,
+  "v": "1.064",
+  "src": "sensitivity.csv knob=bandwidth value=240：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_L1_131072": {
+  "raw": 0.9920465400718719,
+  "v": "0.992",
+  "src": "sensitivity.csv knob=L1 value=131072：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_L1_262144": {
+  "raw": 0.9957286131026288,
+  "v": "0.996",
+  "src": "sensitivity.csv knob=L1 value=262144：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_L1_524288": {
+  "raw": 1.0,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=L1 value=524288：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_L1_1048576": {
+  "raw": 1.0010492068276908,
+  "v": "1.001",
+  "src": "sensitivity.csv knob=L1 value=1048576：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_L1_2097152": {
+  "raw": 1.0010492068276908,
+  "v": "1.001",
+  "src": "sensitivity.csv knob=L1 value=2097152：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_UB_32768": {
+  "raw": 0.9923995929502656,
+  "v": "0.992",
+  "src": "sensitivity.csv knob=UB value=32768：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_UB_65536": {
+  "raw": 0.9997800543069961,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=UB value=65536：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_UB_131072": {
+  "raw": 1.0,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=UB value=131072：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_UB_262144": {
+  "raw": 1.000150080603431,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=UB value=262144：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_UB_524288": {
+  "raw": 1.000150080603431,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=UB value=524288：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cache_capacity_bytes_65536": {
+  "raw": 0.9983292223885585,
+  "v": "0.998",
+  "src": "sensitivity.csv knob=cache_capacity_bytes value=65536：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cache_capacity_bytes_262144": {
+  "raw": 0.9990703908337341,
+  "v": "0.999",
+  "src": "sensitivity.csv knob=cache_capacity_bytes value=262144：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cache_capacity_bytes_1048576": {
+  "raw": 1.0,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=cache_capacity_bytes value=1048576：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cache_capacity_bytes_4194304": {
+  "raw": 1.0001541877853999,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=cache_capacity_bytes value=4194304：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cache_capacity_bytes_16777216": {
+  "raw": 1.0001541877853999,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=cache_capacity_bytes value=16777216：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cache_bandwidth_bytes_per_cycle_60": {
+  "raw": 0.9991163973712041,
+  "v": "0.999",
+  "src": "sensitivity.csv knob=cache_bandwidth_bytes_per_cycle value=60：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cache_bandwidth_bytes_per_cycle_125": {
+  "raw": 0.9999285044171047,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=cache_bandwidth_bytes_per_cycle value=125：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cache_bandwidth_bytes_per_cycle_250": {
+  "raw": 1.0,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=cache_bandwidth_bytes_per_cycle value=250：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cache_bandwidth_bytes_per_cycle_500": {
+  "raw": 0.9999781089535449,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=cache_bandwidth_bytes_per_cycle value=500：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cache_bandwidth_bytes_per_cycle_1000": {
+  "raw": 0.9999718925474521,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=cache_bandwidth_bytes_per_cycle value=1000：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cross_core_copy_delay_cycles_0": {
+  "raw": 1.035415654002443,
+  "v": "1.035",
+  "src": "sensitivity.csv knob=cross_core_copy_delay_cycles value=0：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cross_core_copy_delay_cycles_125": {
+  "raw": 1.0278968292524056,
+  "v": "1.028",
+  "src": "sensitivity.csv knob=cross_core_copy_delay_cycles value=125：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cross_core_copy_delay_cycles_500": {
+  "raw": 1.0,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=cross_core_copy_delay_cycles value=500：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cross_core_copy_delay_cycles_2000": {
+  "raw": 0.9228746180855174,
+  "v": "0.923",
+  "src": "sensitivity.csv knob=cross_core_copy_delay_cycles value=2000：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_cross_core_copy_delay_cycles_8000": {
+  "raw": 0.7840227989129096,
+  "v": "0.784",
+  "src": "sensitivity.csv knob=cross_core_copy_delay_cycles value=8000：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_task_cross_core_wait_cycles_0": {
+  "raw": 1.0768575005851433,
+  "v": "1.077",
+  "src": "sensitivity.csv knob=task_cross_core_wait_cycles value=0：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_task_cross_core_wait_cycles_250": {
+  "raw": 1.0505872513196175,
+  "v": "1.051",
+  "src": "sensitivity.csv knob=task_cross_core_wait_cycles value=250：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_task_cross_core_wait_cycles_1000": {
+  "raw": 1.0,
+  "v": "1.000",
+  "src": "sensitivity.csv knob=task_cross_core_wait_cycles value=1000：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_task_cross_core_wait_cycles_4000": {
+  "raw": 0.9008033228412096,
+  "v": "0.901",
+  "src": "sensitivity.csv knob=task_cross_core_wait_cycles value=4000：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "SENS_task_cross_core_wait_cycles_16000": {
+  "raw": 0.7368556379060779,
+  "v": "0.737",
+  "src": "sensitivity.csv knob=task_cross_core_wait_cycles value=16000：几何平均（默认 makespan / 该取值 makespan）"
+ },
+ "L2G_N1": {
+  "raw": 1.0086,
+  "v": "1.009",
+  "src": "summary.json l2_gain[\"1\"]（同一方案 P2/P3 makespan 比的算术平均，p3_compare.csv）"
+ },
+ "L2H_N1": {
+  "raw": 0.092,
+  "v": "9.2%",
+  "src": "summary.json l2_hit_rate[\"1\"]（按字节命中率均值）"
+ },
+ "L2GT_N1": {
+  "raw": 6,
+  "v": "6",
+  "src": "summary.json l2_gain_gt1pct[\"1\"]"
+ },
+ "L2MAX_N1": {
+  "raw": 1.4322,
+  "v": "1.43",
+  "src": "summary.json l2_gain_max[\"1\"]"
+ },
+ "L2MAXC_N1": {
+  "raw": "case_044",
+  "v": "case_044",
+  "src": "summary.json l2_gain_maxcase[\"1\"]"
+ },
+ "L2NZ_N1": {
+  "raw": 31,
+  "v": "31",
+  "src": "summary.json l2_hit_nonzero[\"1\"]"
+ },
+ "L2HMAX_N1": {
+  "raw": 0.82,
+  "v": "82%",
+  "src": "summary.json l2_hit_max[\"1\"]"
+ },
+ "L2G_N2": {
+  "raw": 1.0008,
+  "v": "1.001",
+  "src": "summary.json l2_gain[\"2\"]（同一方案 P2/P3 makespan 比的算术平均，p3_compare.csv）"
+ },
+ "L2H_N2": {
+  "raw": 0.1529,
+  "v": "15.3%",
+  "src": "summary.json l2_hit_rate[\"2\"]（按字节命中率均值）"
+ },
+ "L2GT_N2": {
+  "raw": 1,
+  "v": "1",
+  "src": "summary.json l2_gain_gt1pct[\"2\"]"
+ },
+ "L2MAX_N2": {
+  "raw": 1.0198,
+  "v": "1.02",
+  "src": "summary.json l2_gain_max[\"2\"]"
+ },
+ "L2MAXC_N2": {
+  "raw": "case_071",
+  "v": "case_071",
+  "src": "summary.json l2_gain_maxcase[\"2\"]"
+ },
+ "L2NZ_N2": {
+  "raw": 74,
+  "v": "74",
+  "src": "summary.json l2_hit_nonzero[\"2\"]"
+ },
+ "L2HMAX_N2": {
+  "raw": 0.5698,
+  "v": "57%",
+  "src": "summary.json l2_hit_max[\"2\"]"
+ },
+ "L2G_N3": {
+  "raw": 1.0051,
+  "v": "1.005",
+  "src": "summary.json l2_gain[\"3\"]（同一方案 P2/P3 makespan 比的算术平均，p3_compare.csv）"
+ },
+ "L2H_N3": {
+  "raw": 0.2621,
+  "v": "26.2%",
+  "src": "summary.json l2_hit_rate[\"3\"]（按字节命中率均值）"
+ },
+ "L2GT_N3": {
+  "raw": 11,
+  "v": "11",
+  "src": "summary.json l2_gain_gt1pct[\"3\"]"
+ },
+ "L2MAX_N3": {
+  "raw": 1.1132,
+  "v": "1.11",
+  "src": "summary.json l2_gain_max[\"3\"]"
+ },
+ "L2MAXC_N3": {
+  "raw": "case_044",
+  "v": "case_044",
+  "src": "summary.json l2_gain_maxcase[\"3\"]"
+ },
+ "L2NZ_N3": {
+  "raw": 83,
+  "v": "83",
+  "src": "summary.json l2_hit_nonzero[\"3\"]"
+ },
+ "L2HMAX_N3": {
+  "raw": 0.6307,
+  "v": "63%",
+  "src": "summary.json l2_hit_max[\"3\"]"
+ },
+ "L2G_N4": {
+  "raw": 1.0308,
+  "v": "1.031",
+  "src": "summary.json l2_gain[\"4\"]（同一方案 P2/P3 makespan 比的算术平均，p3_compare.csv）"
+ },
+ "L2H_N4": {
+  "raw": 0.2723,
+  "v": "27.2%",
+  "src": "summary.json l2_hit_rate[\"4\"]（按字节命中率均值）"
+ },
+ "L2GT_N4": {
+  "raw": 32,
+  "v": "32",
+  "src": "summary.json l2_gain_gt1pct[\"4\"]"
+ },
+ "L2MAX_N4": {
+  "raw": 2.139,
+  "v": "2.14",
+  "src": "summary.json l2_gain_max[\"4\"]"
+ },
+ "L2MAXC_N4": {
+  "raw": "case_044",
+  "v": "case_044",
+  "src": "summary.json l2_gain_maxcase[\"4\"]"
+ },
+ "L2NZ_N4": {
+  "raw": 79,
+  "v": "79",
+  "src": "summary.json l2_hit_nonzero[\"4\"]"
+ },
+ "L2HMAX_N4": {
+  "raw": 0.7418,
+  "v": "74%",
+  "src": "summary.json l2_hit_max[\"4\"]"
+ },
+ "L2G_N5": {
+  "raw": 1.0519,
+  "v": "1.052",
+  "src": "summary.json l2_gain[\"5\"]（同一方案 P2/P3 makespan 比的算术平均，p3_compare.csv）"
+ },
+ "L2H_N5": {
+  "raw": 0.3215,
+  "v": "32.1%",
+  "src": "summary.json l2_hit_rate[\"5\"]（按字节命中率均值）"
+ },
+ "L2GT_N5": {
+  "raw": 48,
+  "v": "48",
+  "src": "summary.json l2_gain_gt1pct[\"5\"]"
+ },
+ "L2MAX_N5": {
+  "raw": 2.1811,
+  "v": "2.18",
+  "src": "summary.json l2_gain_max[\"5\"]"
+ },
+ "L2MAXC_N5": {
+  "raw": "case_044",
+  "v": "case_044",
+  "src": "summary.json l2_gain_maxcase[\"5\"]"
+ },
+ "L2NZ_N5": {
+  "raw": 83,
+  "v": "83",
+  "src": "summary.json l2_hit_nonzero[\"5\"]"
+ },
+ "L2HMAX_N5": {
+  "raw": 0.7951,
+  "v": "80%",
+  "src": "summary.json l2_hit_max[\"5\"]"
+ },
+ "L2S_hit_input_reuse": {
+  "raw": 0.9602376112806204,
+  "v": "96.0%",
+  "src": "l2_sources.json by_n[\"4\"].hit_input_reuse/official_hit_bytes"
+ },
+ "L2S_hit_cross_core_mid": {
+  "raw": 0.03974736524437838,
+  "v": "4.0%",
+  "src": "l2_sources.json by_n[\"4\"].hit_cross_core_mid/official_hit_bytes"
+ },
+ "L2S_hit_spill_reload": {
+  "raw": 1.5023475001285799e-05,
+  "v": "0.0%",
+  "src": "l2_sources.json by_n[\"4\"].hit_spill_reload/official_hit_bytes"
+ },
+ "L2S_miss_first_miss": {
+  "raw": 0.4032276173249714,
+  "v": "40.3%",
+  "src": "l2_sources.json by_n[\"4\"].miss_first_miss/official_miss_bytes"
+ },
+ "L2S_miss_concurrent_first_read": {
+  "raw": 0.09228313612146925,
+  "v": "9.2%",
+  "src": "l2_sources.json by_n[\"4\"].miss_concurrent_first_read/official_miss_bytes"
+ },
+ "L2S_miss_fifo_evicted": {
+  "raw": 0.5044892465535593,
+  "v": "50.4%",
+  "src": "l2_sources.json by_n[\"4\"].miss_fifo_evicted/official_miss_bytes"
+ },
+ "L2S_miss_oversize": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "l2_sources.json by_n[\"4\"].miss_oversize/official_miss_bytes"
+ },
+ "CG_N1": {
+  "raw": 1.008621715666321,
+  "v": "1.009",
+  "src": "N=1：逐用例 MK(无 L2)/MK(只读 Cache) 的算术平均；N≥2 取 final.csv 问题 2/3 冠军，N=1 取 n1.csv"
+ },
+ "CGMAX_N1": {
+  "raw": 1.4321609438477378,
+  "v": "1.43",
+  "src": "同上最大值"
+ },
+ "CGMAXC_N1": {
+  "raw": "case_044",
+  "v": "case_044",
+  "src": "同上最大值所在用例"
+ },
+ "CGGT_N1": {
+  "raw": 6,
+  "v": "6",
+  "src": "同上 >1.01 的用例数"
+ },
+ "CGLT_N1": {
+  "raw": 0,
+  "v": "0",
+  "src": "同上 <1 的用例数"
+ },
+ "CH_N1": {
+  "raw": 0.09203711809342652,
+  "v": "9.2%",
+  "src": "N=1：只读 Cache 配置下 cache_hit_rate 的算术平均（final.csv P3 / n1.csv）"
+ },
+ "CSU_NOL2_N1": {
+  "raw": 1.0,
+  "v": "1.00",
+  "src": "N=1：无 L2 配置相对单核基准的平均加速比"
+ },
+ "CSU_L2_N1": {
+  "raw": 1.008621715666321,
+  "v": "1.01",
+  "src": "N=1：只读 Cache 配置相对单核基准（无 L2）的平均加速比"
+ },
+ "CG_N2": {
+  "raw": 1.0009020478048902,
+  "v": "1.001",
+  "src": "N=2：逐用例 MK(无 L2)/MK(只读 Cache) 的算术平均；N≥2 取 final.csv 问题 2/3 冠军，N=1 取 n1.csv"
+ },
+ "CGMAX_N2": {
+  "raw": 1.0198469206123175,
+  "v": "1.02",
+  "src": "同上最大值"
+ },
+ "CGMAXC_N2": {
+  "raw": "case_071",
+  "v": "case_071",
+  "src": "同上最大值所在用例"
+ },
+ "CGGT_N2": {
+  "raw": 2,
+  "v": "2",
+  "src": "同上 >1.01 的用例数"
+ },
+ "CGLT_N2": {
+  "raw": 0,
+  "v": "0",
+  "src": "同上 <1 的用例数"
+ },
+ "CH_N2": {
+  "raw": 0.15102980416621453,
+  "v": "15.1%",
+  "src": "N=2：只读 Cache 配置下 cache_hit_rate 的算术平均（final.csv P3 / n1.csv）"
+ },
+ "CSU_NOL2_N2": {
+  "raw": 2.0608068265110626,
+  "v": "2.06",
+  "src": "N=2：无 L2 配置相对单核基准的平均加速比"
+ },
+ "CSU_L2_N2": {
+  "raw": 2.0625743951589914,
+  "v": "2.06",
+  "src": "N=2：只读 Cache 配置相对单核基准（无 L2）的平均加速比"
+ },
+ "CG_N3": {
+  "raw": 1.0032019997041028,
+  "v": "1.003",
+  "src": "N=3：逐用例 MK(无 L2)/MK(只读 Cache) 的算术平均；N≥2 取 final.csv 问题 2/3 冠军，N=1 取 n1.csv"
+ },
+ "CGMAX_N3": {
+  "raw": 1.0387013852525349,
+  "v": "1.04",
+  "src": "同上最大值"
+ },
+ "CGMAXC_N3": {
+  "raw": "case_057",
+  "v": "case_057",
+  "src": "同上最大值所在用例"
+ },
+ "CGGT_N3": {
+  "raw": 9,
+  "v": "9",
+  "src": "同上 >1.01 的用例数"
+ },
+ "CGLT_N3": {
+  "raw": 2,
+  "v": "2",
+  "src": "同上 <1 的用例数"
+ },
+ "CH_N3": {
+  "raw": 0.24197375001124302,
+  "v": "24.2%",
+  "src": "N=3：只读 Cache 配置下 cache_hit_rate 的算术平均（final.csv P3 / n1.csv）"
+ },
+ "CSU_NOL2_N3": {
+  "raw": 2.880865969287876,
+  "v": "2.88",
+  "src": "N=3：无 L2 配置相对单核基准的平均加速比"
+ },
+ "CSU_L2_N3": {
+  "raw": 2.8897427519343584,
+  "v": "2.89",
+  "src": "N=3：只读 Cache 配置相对单核基准（无 L2）的平均加速比"
+ },
+ "CG_N4": {
+  "raw": 1.0130360610680484,
+  "v": "1.013",
+  "src": "N=4：逐用例 MK(无 L2)/MK(只读 Cache) 的算术平均；N≥2 取 final.csv 问题 2/3 冠军，N=1 取 n1.csv"
+ },
+ "CGMAX_N4": {
+  "raw": 1.2002791802016881,
+  "v": "1.20",
+  "src": "同上最大值"
+ },
+ "CGMAXC_N4": {
+  "raw": "case_046",
+  "v": "case_046",
+  "src": "同上最大值所在用例"
+ },
+ "CGGT_N4": {
+  "raw": 26,
+  "v": "26",
+  "src": "同上 >1.01 的用例数"
+ },
+ "CGLT_N4": {
+  "raw": 0,
+  "v": "0",
+  "src": "同上 <1 的用例数"
+ },
+ "CH_N4": {
+  "raw": 0.26065959394676397,
+  "v": "26.1%",
+  "src": "N=4：只读 Cache 配置下 cache_hit_rate 的算术平均（final.csv P3 / n1.csv）"
+ },
+ "CSU_NOL2_N4": {
+  "raw": 3.6309427641691956,
+  "v": "3.63",
+  "src": "N=4：无 L2 配置相对单核基准的平均加速比"
+ },
+ "CSU_L2_N4": {
+  "raw": 3.674079331363757,
+  "v": "3.67",
+  "src": "N=4：只读 Cache 配置相对单核基准（无 L2）的平均加速比"
+ },
+ "CG_N5": {
+  "raw": 1.0201862263610981,
+  "v": "1.020",
+  "src": "N=5：逐用例 MK(无 L2)/MK(只读 Cache) 的算术平均；N≥2 取 final.csv 问题 2/3 冠军，N=1 取 n1.csv"
+ },
+ "CGMAX_N5": {
+  "raw": 1.2002791802016881,
+  "v": "1.20",
+  "src": "同上最大值"
+ },
+ "CGMAXC_N5": {
+  "raw": "case_046",
+  "v": "case_046",
+  "src": "同上最大值所在用例"
+ },
+ "CGGT_N5": {
+  "raw": 39,
+  "v": "39",
+  "src": "同上 >1.01 的用例数"
+ },
+ "CGLT_N5": {
+  "raw": 0,
+  "v": "0",
+  "src": "同上 <1 的用例数"
+ },
+ "CH_N5": {
+  "raw": 0.2899619111986156,
+  "v": "29.0%",
+  "src": "N=5：只读 Cache 配置下 cache_hit_rate 的算术平均（final.csv P3 / n1.csv）"
+ },
+ "CSU_NOL2_N5": {
+  "raw": 4.240506188793426,
+  "v": "4.24",
+  "src": "N=5：无 L2 配置相对单核基准的平均加速比"
+ },
+ "CSU_L2_N5": {
+  "raw": 4.312183179353479,
+  "v": "4.31",
+  "src": "N=5：只读 Cache 配置相对单核基准（无 L2）的平均加速比"
+ },
+ "N1_EQ_P1": {
+  "raw": 100,
+  "v": "100",
+  "src": "n1.csv：问题 1 评估器下整图单核方案 makespan 与官方单核基准相等的用例数"
+ },
+ "L2S_CONFIGS": {
+  "raw": 400,
+  "v": "400",
+  "src": "l2_sources.csv 行数"
+ },
+ "RT_MED": {
+  "raw": 0.228,
+  "v": "0.23",
+  "src": "summary.json runtime.median（单候选 S1–S3 算法时间，秒）"
+ },
+ "RT_P95": {
+  "raw": 2.272,
+  "v": "2.3",
+  "src": "summary.json runtime.p95"
+ },
+ "RT_MAX": {
+  "raw": 9.235,
+  "v": "9.2",
+  "src": "summary.json runtime.max"
+ },
+ "RT_N": {
+  "raw": 22418,
+  "v": "22,418",
+  "src": "summary.json runtime.n"
+ },
+ "EVAL_MAX": {
+  "raw": 1746.854,
+  "v": "1,747",
+  "src": "summary.json eval_time.max（秒）"
+ },
+ "E2E_MED_P1": {
+  "raw": 45.786,
+  "v": "45.8",
+  "src": "main.csv P1：每个 (用例,N) 的 Σruntime_s+Σeval_s(+退火秒数) 中位数"
+ },
+ "E2E_P90_P1": {
+  "raw": 787.7200000000001,
+  "v": "788",
+  "src": "同上 90 分位"
+ },
+ "E2E_MAX_P1": {
+  "raw": 4960.616,
+  "v": "4,961",
+  "src": "同上最大值"
+ },
+ "E2E_LE300_P1": {
+  "raw": 339,
+  "v": "339",
+  "src": "同上 ≤300 s 的配置数（共 400）"
+ },
+ "E2E_LE600_P1": {
+  "raw": 351,
+  "v": "351",
+  "src": "同上 ≤600 s 的配置数（共 400）"
+ },
+ "ALG_MED_P1": {
+  "raw": 15.355,
+  "v": "15.4",
+  "src": "main.csv P1：每个 (用例,N) 的 Σruntime_s(+退火) 中位数（不含官方评估）"
+ },
+ "ALG_LE600_P1": {
+  "raw": 385,
+  "v": "385",
+  "src": "同上 ≤600 s 的配置数"
+ },
+ "ALG_MAX_P1": {
+  "raw": 2872.216,
+  "v": "2,872",
+  "src": "同上最大值"
+ },
+ "E2E_MED_P2": {
+  "raw": 30.9165,
+  "v": "30.9",
+  "src": "main.csv P2：每个 (用例,N) 的 Σruntime_s+Σeval_s(+退火秒数) 中位数"
+ },
+ "E2E_P90_P2": {
+  "raw": 237.89999999999998,
+  "v": "238",
+  "src": "同上 90 分位"
+ },
+ "E2E_MAX_P2": {
+  "raw": 509.896,
+  "v": "510",
+  "src": "同上最大值"
+ },
+ "E2E_LE300_P2": {
+  "raw": 378,
+  "v": "378",
+  "src": "同上 ≤300 s 的配置数（共 400）"
+ },
+ "E2E_LE600_P2": {
+  "raw": 400,
+  "v": "400",
+  "src": "同上 ≤600 s 的配置数（共 400）"
+ },
+ "ALG_MED_P2": {
+  "raw": 7.109,
+  "v": "7.1",
+  "src": "main.csv P2：每个 (用例,N) 的 Σruntime_s(+退火) 中位数（不含官方评估）"
+ },
+ "ALG_LE600_P2": {
+  "raw": 400,
+  "v": "400",
+  "src": "同上 ≤600 s 的配置数"
+ },
+ "ALG_MAX_P2": {
+  "raw": 97.28799999999998,
+  "v": "97",
+  "src": "同上最大值"
+ },
+ "E2E_MED_P3": {
+  "raw": 31.230000000000004,
+  "v": "31.2",
+  "src": "main.csv P3：每个 (用例,N) 的 Σruntime_s+Σeval_s(+退火秒数) 中位数"
+ },
+ "E2E_P90_P3": {
+  "raw": 245.28300000000004,
+  "v": "245",
+  "src": "同上 90 分位"
+ },
+ "E2E_MAX_P3": {
+  "raw": 528.222,
+  "v": "528",
+  "src": "同上最大值"
+ },
+ "E2E_LE300_P3": {
+  "raw": 376,
+  "v": "376",
+  "src": "同上 ≤300 s 的配置数（共 400）"
+ },
+ "E2E_LE600_P3": {
+  "raw": 400,
+  "v": "400",
+  "src": "同上 ≤600 s 的配置数（共 400）"
+ },
+ "ALG_MED_P3": {
+  "raw": 7.275,
+  "v": "7.3",
+  "src": "main.csv P3：每个 (用例,N) 的 Σruntime_s(+退火) 中位数（不含官方评估）"
+ },
+ "ALG_LE600_P3": {
+  "raw": 400,
+  "v": "400",
+  "src": "同上 ≤600 s 的配置数"
+ },
+ "ALG_MAX_P3": {
+  "raw": 97.218,
+  "v": "97",
+  "src": "同上最大值"
+ },
+ "E2E_P1_OVER_CASES": {
+  "raw": [
+   "case_014",
+   "case_025",
+   "case_028",
+   "case_030",
+   "case_041",
+   "case_058",
+   "case_062",
+   "case_072",
+   "case_076",
+   "case_079",
+   "case_085",
+   "case_087",
+   "case_091",
+   "case_092"
+  ],
+  "v": "014、025、028、030、041、058、062、072、076、079、085、087、091、092",
+  "src": "P1 任一 N 端到端 >600 s 的用例"
+ },
+ "E2E_P1_OVER_N": {
+  "raw": 14,
+  "v": "14",
+  "src": "上述用例数"
+ },
+ "E2E_P1_NOBIG_LE600": {
+  "raw": 351,
+  "v": "351",
+  "src": "P1 去掉 4 个大图后 ≤600 s 的配置数"
+ },
+ "E2E_P1_NOBIG_N": {
+  "raw": 384,
+  "v": "384",
+  "src": "P1 去掉 4 个大图后的配置数"
+ },
+ "E2E_BIG4_MAX": {
+  "raw": 4960.616,
+  "v": "4,961",
+  "src": "4 个大图 P1 端到端最大值（秒）"
+ },
+ "E2E_BIG4_MIN": {
+  "raw": 1874.24,
+  "v": "1,874",
+  "src": "4 个大图 P1 端到端（逐用例最大 N）中的最小值（秒）"
+ },
+ "SA_MED": {
+  "raw": 4.92,
+  "v": "4.9",
+  "src": "p1_anneal_report.json anneal_seconds.median"
+ },
+ "SA_MAX": {
+  "raw": 2015.12,
+  "v": "2,015",
+  "src": "p1_anneal_report.json anneal_seconds.max"
+ },
+ "SA_OVER60": {
+  "raw": 42,
+  "v": "42",
+  "src": "p1_anneal_report.json anneal_seconds.configs_over_limit（>60 s）"
+ },
+ "SA_ITERS": {
+  "raw": 1500,
+  "v": "1500",
+  "src": "p1_anneal_report.json anneal_iters"
+ },
+ "SA_CHAMP_MAIN": {
+  "raw": 137,
+  "v": "137",
+  "src": "p1_anneal_report.json sa_champion_configs_main"
+ },
+ "BIGEVAL_MAX": {
+  "raw": 1588.0,
+  "v": "1,588",
+  "src": "fasteval_slow_case_verification.json 最慢一次官方评估（秒）"
+ },
+ "BIGEVAL_CASE": {
+  "raw": "case_014（N=5）",
+  "v": "case_014（N=5）",
+  "src": "同上"
+ },
+ "PX_LEG_P1_SP": {
+  "raw": 0.9429,
+  "v": "0.94",
+  "src": "model_validation_summary_legacy.json problem1.spearman_median"
+ },
+ "PX_LEG_P1_KT": {
+  "raw": 0.8571,
+  "v": "0.86",
+  "src": "model_validation_summary_legacy.json problem1.kendall_median"
+ },
+ "PX_LEG_P1_POOL": {
+  "raw": 0.9934,
+  "v": "0.99",
+  "src": "model_validation_summary_legacy.json problem1.pooled_spearman"
+ },
+ "PX_LEG_P1_recall1": {
+  "raw": 0.6675,
+  "v": "67%",
+  "src": "model_validation_summary_legacy.json problem1.recall1"
+ },
+ "PX_LEG_P1_recall3": {
+  "raw": 0.9225,
+  "v": "92%",
+  "src": "model_validation_summary_legacy.json problem1.recall3"
+ },
+ "PX_LEG_P1_recall5": {
+  "raw": 0.9775,
+  "v": "98%",
+  "src": "model_validation_summary_legacy.json problem1.recall5"
+ },
+ "PX_LEG_P1_top1_slowdown_p90": {
+  "raw": 0.0613,
+  "v": "6.1%",
+  "src": "model_validation_summary_legacy.json problem1.top1_slowdown_p90"
+ },
+ "PX_LEG_P1_top3_slowdown_p90": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "model_validation_summary_legacy.json problem1.top3_slowdown_p90"
+ },
+ "PX_LEG_P1_top1_slowdown_max": {
+  "raw": 0.36,
+  "v": "36.0%",
+  "src": "model_validation_summary_legacy.json problem1.top1_slowdown_max"
+ },
+ "PX_LEG_P2_SP": {
+  "raw": 0.4555,
+  "v": "0.46",
+  "src": "model_validation_summary_legacy.json problem2.spearman_median"
+ },
+ "PX_LEG_P2_KT": {
+  "raw": 0.3333,
+  "v": "0.33",
+  "src": "model_validation_summary_legacy.json problem2.kendall_median"
+ },
+ "PX_LEG_P2_POOL": {
+  "raw": 0.9734,
+  "v": "0.97",
+  "src": "model_validation_summary_legacy.json problem2.pooled_spearman"
+ },
+ "PX_LEG_P2_recall1": {
+  "raw": 0.345,
+  "v": "34%",
+  "src": "model_validation_summary_legacy.json problem2.recall1"
+ },
+ "PX_LEG_P2_recall3": {
+  "raw": 0.58,
+  "v": "58%",
+  "src": "model_validation_summary_legacy.json problem2.recall3"
+ },
+ "PX_LEG_P2_recall5": {
+  "raw": 0.8075,
+  "v": "81%",
+  "src": "model_validation_summary_legacy.json problem2.recall5"
+ },
+ "PX_LEG_P2_top1_slowdown_p90": {
+  "raw": 0.6785,
+  "v": "67.8%",
+  "src": "model_validation_summary_legacy.json problem2.top1_slowdown_p90"
+ },
+ "PX_LEG_P2_top3_slowdown_p90": {
+  "raw": 0.1978,
+  "v": "19.8%",
+  "src": "model_validation_summary_legacy.json problem2.top3_slowdown_p90"
+ },
+ "PX_LEG_P2_top1_slowdown_max": {
+  "raw": 2.3575,
+  "v": "235.8%",
+  "src": "model_validation_summary_legacy.json problem2.top1_slowdown_max"
+ },
+ "PX_LEG_P3_SP": {
+  "raw": 0.4492,
+  "v": "0.45",
+  "src": "model_validation_summary_legacy.json problem3.spearman_median"
+ },
+ "PX_LEG_P3_KT": {
+  "raw": 0.3333,
+  "v": "0.33",
+  "src": "model_validation_summary_legacy.json problem3.kendall_median"
+ },
+ "PX_LEG_P3_POOL": {
+  "raw": 0.9741,
+  "v": "0.97",
+  "src": "model_validation_summary_legacy.json problem3.pooled_spearman"
+ },
+ "PX_LEG_P3_recall1": {
+  "raw": 0.3275,
+  "v": "33%",
+  "src": "model_validation_summary_legacy.json problem3.recall1"
+ },
+ "PX_LEG_P3_recall3": {
+  "raw": 0.58,
+  "v": "58%",
+  "src": "model_validation_summary_legacy.json problem3.recall3"
+ },
+ "PX_LEG_P3_recall5": {
+  "raw": 0.8,
+  "v": "80%",
+  "src": "model_validation_summary_legacy.json problem3.recall5"
+ },
+ "PX_LEG_P3_top1_slowdown_p90": {
+  "raw": 0.7744,
+  "v": "77.4%",
+  "src": "model_validation_summary_legacy.json problem3.top1_slowdown_p90"
+ },
+ "PX_LEG_P3_top3_slowdown_p90": {
+  "raw": 0.1981,
+  "v": "19.8%",
+  "src": "model_validation_summary_legacy.json problem3.top3_slowdown_p90"
+ },
+ "PX_LEG_P3_top1_slowdown_max": {
+  "raw": 2.3653,
+  "v": "236.5%",
+  "src": "model_validation_summary_legacy.json problem3.top1_slowdown_max"
+ },
+ "PX_SIM_P1_SP": {
+  "raw": 0.9429,
+  "v": "0.94",
+  "src": "model_validation_summary_sim.json problem1.spearman_median"
+ },
+ "PX_SIM_P1_KT": {
+  "raw": 0.8571,
+  "v": "0.86",
+  "src": "model_validation_summary_sim.json problem1.kendall_median"
+ },
+ "PX_SIM_P1_POOL": {
+  "raw": 0.9934,
+  "v": "0.99",
+  "src": "model_validation_summary_sim.json problem1.pooled_spearman"
+ },
+ "PX_SIM_P1_recall1": {
+  "raw": 0.6675,
+  "v": "67%",
+  "src": "model_validation_summary_sim.json problem1.recall1"
+ },
+ "PX_SIM_P1_recall3": {
+  "raw": 0.9225,
+  "v": "92%",
+  "src": "model_validation_summary_sim.json problem1.recall3"
+ },
+ "PX_SIM_P1_recall5": {
+  "raw": 0.9775,
+  "v": "98%",
+  "src": "model_validation_summary_sim.json problem1.recall5"
+ },
+ "PX_SIM_P1_top1_slowdown_p90": {
+  "raw": 0.0613,
+  "v": "6.1%",
+  "src": "model_validation_summary_sim.json problem1.top1_slowdown_p90"
+ },
+ "PX_SIM_P1_top3_slowdown_p90": {
+  "raw": 0.0,
+  "v": "0.0%",
+  "src": "model_validation_summary_sim.json problem1.top3_slowdown_p90"
+ },
+ "PX_SIM_P1_top1_slowdown_max": {
+  "raw": 0.36,
+  "v": "36.0%",
+  "src": "model_validation_summary_sim.json problem1.top1_slowdown_max"
+ },
+ "PX_SIM_P2_SP": {
+  "raw": 0.8,
+  "v": "0.80",
+  "src": "model_validation_summary_sim.json problem2.spearman_median"
+ },
+ "PX_SIM_P2_KT": {
+  "raw": 0.6444,
+  "v": "0.64",
+  "src": "model_validation_summary_sim.json problem2.kendall_median"
+ },
+ "PX_SIM_P2_POOL": {
+  "raw": 0.9949,
+  "v": "0.99",
+  "src": "model_validation_summary_sim.json problem2.pooled_spearman"
+ },
+ "PX_SIM_P2_recall1": {
+  "raw": 0.51,
+  "v": "51%",
+  "src": "model_validation_summary_sim.json problem2.recall1"
+ },
+ "PX_SIM_P2_recall3": {
+  "raw": 0.825,
+  "v": "82%",
+  "src": "model_validation_summary_sim.json problem2.recall3"
+ },
+ "PX_SIM_P2_recall5": {
+  "raw": 0.9325,
+  "v": "93%",
+  "src": "model_validation_summary_sim.json problem2.recall5"
+ },
+ "PX_SIM_P2_top1_slowdown_p90": {
+  "raw": 0.2204,
+  "v": "22.0%",
+  "src": "model_validation_summary_sim.json problem2.top1_slowdown_p90"
+ },
+ "PX_SIM_P2_top3_slowdown_p90": {
+  "raw": 0.0162,
+  "v": "1.6%",
+  "src": "model_validation_summary_sim.json problem2.top3_slowdown_p90"
+ },
+ "PX_SIM_P2_top1_slowdown_max": {
+  "raw": 2.7166,
+  "v": "271.7%",
+  "src": "model_validation_summary_sim.json problem2.top1_slowdown_max"
+ },
+ "PX_SIM_P3_SP": {
+  "raw": 0.797,
+  "v": "0.80",
+  "src": "model_validation_summary_sim.json problem3.spearman_median"
+ },
+ "PX_SIM_P3_KT": {
+  "raw": 0.6667,
+  "v": "0.67",
+  "src": "model_validation_summary_sim.json problem3.kendall_median"
+ },
+ "PX_SIM_P3_POOL": {
+  "raw": 0.9957,
+  "v": "1.00",
+  "src": "model_validation_summary_sim.json problem3.pooled_spearman"
+ },
+ "PX_SIM_P3_recall1": {
+  "raw": 0.51,
+  "v": "51%",
+  "src": "model_validation_summary_sim.json problem3.recall1"
+ },
+ "PX_SIM_P3_recall3": {
+  "raw": 0.8375,
+  "v": "84%",
+  "src": "model_validation_summary_sim.json problem3.recall3"
+ },
+ "PX_SIM_P3_recall5": {
+  "raw": 0.9475,
+  "v": "95%",
+  "src": "model_validation_summary_sim.json problem3.recall5"
+ },
+ "PX_SIM_P3_top1_slowdown_p90": {
+  "raw": 0.1833,
+  "v": "18.3%",
+  "src": "model_validation_summary_sim.json problem3.top1_slowdown_p90"
+ },
+ "PX_SIM_P3_top3_slowdown_p90": {
+  "raw": 0.0082,
+  "v": "0.8%",
+  "src": "model_validation_summary_sim.json problem3.top3_slowdown_p90"
+ },
+ "PX_SIM_P3_top1_slowdown_max": {
+  "raw": 3.5636,
+  "v": "356.4%",
+  "src": "model_validation_summary_sim.json problem3.top1_slowdown_max"
+ },
+ "PSEL_P1_PROXY": {
+  "raw": 3.0663,
+  "v": "3.07",
+  "src": "portfolio_analysis.json proxy_selection.P1.proxy_only_amean"
+ },
+ "PSEL_P1_OFF": {
+  "raw": 3.1409,
+  "v": "3.14",
+  "src": "… official_main_amean"
+ },
+ "PSEL_P1_CH": {
+  "raw": 3.1808,
+  "v": "3.18",
+  "src": "… champion_amean"
+ },
+ "GR_P1_K1": {
+  "raw": 3.0052,
+  "v": "3.005",
+  "src": "portfolio_analysis.json greedy.P1[k=1]（sa1）"
+ },
+ "GR_P1_K2": {
+  "raw": 3.1085,
+  "v": "3.108",
+  "src": "portfolio_analysis.json greedy.P1[k=2]（c1）"
+ },
+ "GR_P1_K3": {
+  "raw": 3.1216,
+  "v": "3.122",
+  "src": "portfolio_analysis.json greedy.P1[k=3]（c2）"
+ },
+ "GR_P1_K4": {
+  "raw": 3.1286,
+  "v": "3.129",
+  "src": "portfolio_analysis.json greedy.P1[k=4]（sa3）"
+ },
+ "GR_P1_KLAST": {
+  "raw": 3.1409,
+  "v": "3.141",
+  "src": "portfolio_analysis.json greedy.P1 最后一步"
+ },
+ "GR_P1_NLAST": {
+  "raw": 12,
+  "v": "12",
+  "src": "portfolio_analysis.json greedy.P1 步数"
+ },
+ "PSEL_P2_PROXY": {
+  "raw": 3.3434,
+  "v": "3.34",
+  "src": "portfolio_analysis.json proxy_selection.P2.proxy_only_amean"
+ },
+ "PSEL_P2_OFF": {
+  "raw": 3.5766,
+  "v": "3.58",
+  "src": "… official_main_amean"
+ },
+ "PSEL_P2_CH": {
+  "raw": 3.6309,
+  "v": "3.63",
+  "src": "… champion_amean"
+ },
+ "GR_P2_K1": {
+  "raw": 3.153,
+  "v": "3.153",
+  "src": "portfolio_analysis.json greedy.P2[k=1]（c12）"
+ },
+ "GR_P2_K2": {
+  "raw": 3.4441,
+  "v": "3.444",
+  "src": "portfolio_analysis.json greedy.P2[k=2]（c14）"
+ },
+ "GR_P2_K3": {
+  "raw": 3.484,
+  "v": "3.484",
+  "src": "portfolio_analysis.json greedy.P2[k=3]（c17）"
+ },
+ "GR_P2_K4": {
+  "raw": 3.51,
+  "v": "3.510",
+  "src": "portfolio_analysis.json greedy.P2[k=4]（c1）"
+ },
+ "GR_P2_KLAST": {
+  "raw": 3.5766,
+  "v": "3.577",
+  "src": "portfolio_analysis.json greedy.P2 最后一步"
+ },
+ "GR_P2_NLAST": {
+  "raw": 26,
+  "v": "26",
+  "src": "portfolio_analysis.json greedy.P2 步数"
+ },
+ "PSEL_P3_PROXY": {
+  "raw": 3.4218,
+  "v": "3.42",
+  "src": "portfolio_analysis.json proxy_selection.P3.proxy_only_amean"
+ },
+ "PSEL_P3_OFF": {
+  "raw": 3.6544,
+  "v": "3.65",
+  "src": "… official_main_amean"
+ },
+ "PSEL_P3_CH": {
+  "raw": 3.6741,
+  "v": "3.67",
+  "src": "… champion_amean"
+ },
+ "GR_P3_K1": {
+  "raw": 3.2471,
+  "v": "3.247",
+  "src": "portfolio_analysis.json greedy.P3[k=1]（c12）"
+ },
+ "GR_P3_K2": {
+  "raw": 3.531,
+  "v": "3.531",
+  "src": "portfolio_analysis.json greedy.P3[k=2]（c17）"
+ },
+ "GR_P3_K3": {
+  "raw": 3.5872,
+  "v": "3.587",
+  "src": "portfolio_analysis.json greedy.P3[k=3]（c15）"
+ },
+ "GR_P3_K4": {
+  "raw": 3.6116,
+  "v": "3.612",
+  "src": "portfolio_analysis.json greedy.P3[k=4]（c1）"
+ },
+ "GR_P3_KLAST": {
+  "raw": 3.6544,
+  "v": "3.654",
+  "src": "portfolio_analysis.json greedy.P3 最后一步"
+ },
+ "GR_P3_NLAST": {
+  "raw": 21,
+  "v": "21",
+  "src": "portfolio_analysis.json greedy.P3 步数"
+ },
+ "CV_LOSS_MAX": {
+  "raw": 0.0397,
+  "v": "4.0%",
+  "src": "summary.json cv_select 各问题各折 out_of_fold_loss 最大值"
+ },
+ "OP_FEAS": {
+  "raw": "3200/3200",
+  "v": "3200/3200",
+  "src": "op_mode_report.json op_candidates_feasible/total"
+ },
+ "OP_SPILL_BEFORE": {
+  "raw": 962520976,
+  "v": "$9.63\\times10^{8}$",
+  "src": "op_mode_report.json p2_n4_spill_champions_before_T11"
+ },
+ "OP_SPILL_AFTER": {
+  "raw": 342606104,
+  "v": "$3.43\\times10^{8}$",
+  "src": "op_mode_report.json p2_n4_spill_champions_after_T11"
+ },
+ "OP_SPILL_DROP": {
+  "raw": 0.6441,
+  "v": "64%",
+  "src": "op_mode_report.json spill_drop_frac"
+ },
+ "OP_MU_REL": {
+  "raw": 0.0321,
+  "v": "+3.2%",
+  "src": "op_mode_report.json mu1_vs_mu0_paired.rel"
+ },
+ "OP_MU_WTL": {
+  "raw": "526/169/105",
+  "v": "526/169/105",
+  "src": "op_mode_report.json mu1_vs_mu0_paired"
+ },
+ "OP_MU_P": {
+  "raw": 6.012625695765546e-69,
+  "v": "$p=6.0\\times10^{-69}$",
+  "src": "op_mode_report.json mu1_vs_mu0_paired.p"
+ },
+ "SMP_EVALS": {
+  "raw": 2400,
+  "v": "2,400",
+  "src": "sampling_report.json new_official_evals"
+ },
+ "SMP_CHAMP": {
+  "raw": 165,
+  "v": "165",
+  "src": "sampling_report.json champion_s_configs"
+ },
+ "LB_P1_N2": {
+  "raw": 1.4865,
+  "v": "1.49",
+  "src": "bounds.json ratio.p1_n2.amean（MK/LB）"
+ },
+ "LBMED_P1_N2": {
+  "raw": 1.2814,
+  "v": "1.28",
+  "src": "bounds.json ratio.p1_n2.median"
+ },
+ "LBEFF_P1_N2": {
+  "raw": 0.8909,
+  "v": "0.89",
+  "src": "bounds.json efficiency.p1_n2.amean（单核归一化效率）"
+ },
+ "LBUP_P1_N2": {
+  "raw": 0.7491,
+  "v": "75%",
+  "src": "bounds.json upper_bound.p1_n2.fraction_of_upper.amean"
+ },
+ "LB_P1_N3": {
+  "raw": 1.6376,
+  "v": "1.64",
+  "src": "bounds.json ratio.p1_n3.amean（MK/LB）"
+ },
+ "LBMED_P1_N3": {
+  "raw": 1.4288,
+  "v": "1.43",
+  "src": "bounds.json ratio.p1_n3.median"
+ },
+ "LBEFF_P1_N3": {
+  "raw": 0.8342,
+  "v": "0.83",
+  "src": "bounds.json efficiency.p1_n3.amean（单核归一化效率）"
+ },
+ "LBUP_P1_N3": {
+  "raw": 0.7041,
+  "v": "70%",
+  "src": "bounds.json upper_bound.p1_n3.fraction_of_upper.amean"
+ },
+ "LB_P1_N4": {
+  "raw": 1.7983,
+  "v": "1.80",
+  "src": "bounds.json ratio.p1_n4.amean（MK/LB）"
+ },
+ "LBMED_P1_N4": {
+  "raw": 1.5651,
+  "v": "1.57",
+  "src": "bounds.json ratio.p1_n4.median"
+ },
+ "LBEFF_P1_N4": {
+  "raw": 0.7925,
+  "v": "0.79",
+  "src": "bounds.json efficiency.p1_n4.amean（单核归一化效率）"
+ },
+ "LBUP_P1_N4": {
+  "raw": 0.6718,
+  "v": "67%",
+  "src": "bounds.json upper_bound.p1_n4.fraction_of_upper.amean"
+ },
+ "LB_P1_N5": {
+  "raw": 1.9682,
+  "v": "1.97",
+  "src": "bounds.json ratio.p1_n5.amean（MK/LB）"
+ },
+ "LBMED_P1_N5": {
+  "raw": 1.6694,
+  "v": "1.67",
+  "src": "bounds.json ratio.p1_n5.median"
+ },
+ "LBEFF_P1_N5": {
+  "raw": 0.7509,
+  "v": "0.75",
+  "src": "bounds.json efficiency.p1_n5.amean（单核归一化效率）"
+ },
+ "LBUP_P1_N5": {
+  "raw": 0.6379,
+  "v": "64%",
+  "src": "bounds.json upper_bound.p1_n5.fraction_of_upper.amean"
+ },
+ "LB_P2_N2": {
+  "raw": 1.2308,
+  "v": "1.23",
+  "src": "bounds.json ratio.p2_n2.amean（MK/LB）"
+ },
+ "LBMED_P2_N2": {
+  "raw": 1.0912,
+  "v": "1.09",
+  "src": "bounds.json ratio.p2_n2.median"
+ },
+ "LBEFF_P2_N2": {
+  "raw": 1.0288,
+  "v": "1.03",
+  "src": "bounds.json efficiency.p2_n2.amean（单核归一化效率）"
+ },
+ "LBUP_P2_N2": {
+  "raw": 0.8475,
+  "v": "85%",
+  "src": "bounds.json upper_bound.p2_n2.fraction_of_upper.amean"
+ },
+ "LB_P2_N3": {
+  "raw": 1.3502,
+  "v": "1.35",
+  "src": "bounds.json ratio.p2_n3.amean（MK/LB）"
+ },
+ "LBMED_P2_N3": {
+  "raw": 1.1772,
+  "v": "1.18",
+  "src": "bounds.json ratio.p2_n3.median"
+ },
+ "LBEFF_P2_N3": {
+  "raw": 0.9597,
+  "v": "0.96",
+  "src": "bounds.json efficiency.p2_n3.amean（单核归一化效率）"
+ },
+ "LBUP_P2_N3": {
+  "raw": 0.7962,
+  "v": "80%",
+  "src": "bounds.json upper_bound.p2_n3.fraction_of_upper.amean"
+ },
+ "LB_P2_N4": {
+  "raw": 1.4644,
+  "v": "1.46",
+  "src": "bounds.json ratio.p2_n4.amean（MK/LB）"
+ },
+ "LBMED_P2_N4": {
+  "raw": 1.2667,
+  "v": "1.27",
+  "src": "bounds.json ratio.p2_n4.median"
+ },
+ "LBEFF_P2_N4": {
+  "raw": 0.9072,
+  "v": "0.91",
+  "src": "bounds.json efficiency.p2_n4.amean（单核归一化效率）"
+ },
+ "LBUP_P2_N4": {
+  "raw": 0.7581,
+  "v": "76%",
+  "src": "bounds.json upper_bound.p2_n4.fraction_of_upper.amean"
+ },
+ "LB_P2_N5": {
+  "raw": 1.6073,
+  "v": "1.61",
+  "src": "bounds.json ratio.p2_n5.amean（MK/LB）"
+ },
+ "LBMED_P2_N5": {
+  "raw": 1.3528,
+  "v": "1.35",
+  "src": "bounds.json ratio.p2_n5.median"
+ },
+ "LBEFF_P2_N5": {
+  "raw": 0.8536,
+  "v": "0.85",
+  "src": "bounds.json efficiency.p2_n5.amean（单核归一化效率）"
+ },
+ "LBUP_P2_N5": {
+  "raw": 0.7157,
+  "v": "72%",
+  "src": "bounds.json upper_bound.p2_n5.fraction_of_upper.amean"
+ },
+ "LB_P3_N2": {
+  "raw": 1.2296,
+  "v": "1.23",
+  "src": "bounds.json ratio.p3_n2.amean（MK/LB）"
+ },
+ "LBMED_P3_N2": {
+  "raw": 1.0908,
+  "v": "1.09",
+  "src": "bounds.json ratio.p3_n2.median"
+ },
+ "LBEFF_P3_N2": {
+  "raw": 1.0297,
+  "v": "1.03",
+  "src": "bounds.json efficiency.p3_n2.amean（单核归一化效率）"
+ },
+ "LBUP_P3_N2": {
+  "raw": 0.8482,
+  "v": "85%",
+  "src": "bounds.json upper_bound.p3_n2.fraction_of_upper.amean"
+ },
+ "LB_P3_N3": {
+  "raw": 1.3464,
+  "v": "1.35",
+  "src": "bounds.json ratio.p3_n3.amean（MK/LB）"
+ },
+ "LBMED_P3_N3": {
+  "raw": 1.1702,
+  "v": "1.17",
+  "src": "bounds.json ratio.p3_n3.median"
+ },
+ "LBEFF_P3_N3": {
+  "raw": 0.9621,
+  "v": "0.96",
+  "src": "bounds.json efficiency.p3_n3.amean（单核归一化效率）"
+ },
+ "LBUP_P3_N3": {
+  "raw": 0.7981,
+  "v": "80%",
+  "src": "bounds.json upper_bound.p3_n3.fraction_of_upper.amean"
+ },
+ "LB_P3_N4": {
+  "raw": 1.4414,
+  "v": "1.44",
+  "src": "bounds.json ratio.p3_n4.amean（MK/LB）"
+ },
+ "LBMED_P3_N4": {
+  "raw": 1.2509,
+  "v": "1.25",
+  "src": "bounds.json ratio.p3_n4.median"
+ },
+ "LBEFF_P3_N4": {
+  "raw": 0.9181,
+  "v": "0.92",
+  "src": "bounds.json efficiency.p3_n4.amean（单核归一化效率）"
+ },
+ "LBUP_P3_N4": {
+  "raw": 0.7663,
+  "v": "77%",
+  "src": "bounds.json upper_bound.p3_n4.fraction_of_upper.amean"
+ },
+ "LB_P3_N5": {
+  "raw": 1.5685,
+  "v": "1.57",
+  "src": "bounds.json ratio.p3_n5.amean（MK/LB）"
+ },
+ "LBMED_P3_N5": {
+  "raw": 1.3405,
+  "v": "1.34",
+  "src": "bounds.json ratio.p3_n5.median"
+ },
+ "LBEFF_P3_N5": {
+  "raw": 0.8668,
+  "v": "0.87",
+  "src": "bounds.json efficiency.p3_n5.amean（单核归一化效率）"
+ },
+ "LBUP_P3_N5": {
+  "raw": 0.726,
+  "v": "73%",
+  "src": "bounds.json upper_bound.p3_n5.fraction_of_upper.amean"
+ },
+ "SUUP_P1_N2": {
+  "raw": 2.4834,
+  "v": "2.48",
+  "src": "bounds.json upper_bound.p1_n2.speedup_upper.amean（MK_1/LB_N）"
+ },
+ "SUUP_P1_N3": {
+  "raw": 3.7104,
+  "v": "3.71",
+  "src": "bounds.json upper_bound.p1_n3.speedup_upper.amean（MK_1/LB_N）"
+ },
+ "SUUP_P1_N4": {
+  "raw": 4.9343,
+  "v": "4.93",
+  "src": "bounds.json upper_bound.p1_n4.speedup_upper.amean（MK_1/LB_N）"
+ },
+ "SUUP_P1_N5": {
+  "raw": 6.1127,
+  "v": "6.11",
+  "src": "bounds.json upper_bound.p1_n5.speedup_upper.amean（MK_1/LB_N）"
+ },
+ "SUUP_P2_N2": {
+  "raw": 2.4834,
+  "v": "2.48",
+  "src": "bounds.json upper_bound.p2_n2.speedup_upper.amean（MK_1/LB_N）"
+ },
+ "SUUP_P2_N3": {
+  "raw": 3.7104,
+  "v": "3.71",
+  "src": "bounds.json upper_bound.p2_n3.speedup_upper.amean（MK_1/LB_N）"
+ },
+ "SUUP_P2_N4": {
+  "raw": 4.9343,
+  "v": "4.93",
+  "src": "bounds.json upper_bound.p2_n4.speedup_upper.amean（MK_1/LB_N）"
+ },
+ "SUUP_P2_N5": {
+  "raw": 6.1127,
+  "v": "6.11",
+  "src": "bounds.json upper_bound.p2_n5.speedup_upper.amean（MK_1/LB_N）"
+ },
+ "SUUP_P3_N2": {
+  "raw": 2.4834,
+  "v": "2.48",
+  "src": "bounds.json upper_bound.p3_n2.speedup_upper.amean（MK_1/LB_N）"
+ },
+ "SUUP_P3_N3": {
+  "raw": 3.7104,
+  "v": "3.71",
+  "src": "bounds.json upper_bound.p3_n3.speedup_upper.amean（MK_1/LB_N）"
+ },
+ "SUUP_P3_N4": {
+  "raw": 4.9343,
+  "v": "4.93",
+  "src": "bounds.json upper_bound.p3_n4.speedup_upper.amean（MK_1/LB_N）"
+ },
+ "SUUP_P3_N5": {
+  "raw": 6.1127,
+  "v": "6.11",
+  "src": "bounds.json upper_bound.p3_n5.speedup_upper.amean（MK_1/LB_N）"
+ },
+ "SC_OVER_LB1": {
+  "raw": 1.1519,
+  "v": "1.15",
+  "src": "bounds.json single_over_lb1_median（单核基准 / 单核下界 的中位数）"
+ },
+ "N_BIG12K": {
+  "raw": 17,
+  "v": "17",
+  "src": "features.json n_ops>12000 的用例数（问题一只评估前 4 个候选）"
+ },
+ "N_MID6K": {
+  "raw": 12,
+  "v": "12",
+  "src": "features.json 6000<n_ops≤12000 的用例数（问题一只评估前 8 个候选）"
+ },
+ "N_SMALL6K": {
+  "raw": 71,
+  "v": "71",
+  "src": "features.json n_ops≤6000 的用例数"
+ },
+ "TRAFFIC_CASES": {
+  "raw": 30,
+  "v": "30",
+  "src": "traffic_model_check.csv 不同用例数（N=4，三个问题）"
+ },
+ "TRAFFIC_MAXERR": {
+  "raw": 0.0,
+  "v": "0.0000%",
+  "src": "traffic_model_check.csv rel_err 最大值"
+ },
+ "BIG4_SUMIN_N2": {
+  "raw": 2.000481460294551,
+  "v": "2.00",
+  "src": "final.csv P1 N=2 四个大图（014/072/076/091）speedup 最小值"
+ },
+ "BIG4_SUMAX_N2": {
+  "raw": 2.047355612757264,
+  "v": "2.05",
+  "src": "final.csv P1 N=2 四个大图 speedup 最大值"
+ },
+ "BIG4_SUMIN_N3": {
+  "raw": 2.9596374446947977,
+  "v": "2.96",
+  "src": "final.csv P1 N=3 四个大图（014/072/076/091）speedup 最小值"
+ },
+ "BIG4_SUMAX_N3": {
+  "raw": 3.026001118401322,
+  "v": "3.03",
+  "src": "final.csv P1 N=3 四个大图 speedup 最大值"
+ },
+ "BIG4_SUMIN_N4": {
+  "raw": 3.895509053799836,
+  "v": "3.90",
+  "src": "final.csv P1 N=4 四个大图（014/072/076/091）speedup 最小值"
+ },
+ "BIG4_SUMAX_N4": {
+  "raw": 4.033775486180088,
+  "v": "4.03",
+  "src": "final.csv P1 N=4 四个大图 speedup 最大值"
+ },
+ "BIG4_SUMIN_N5": {
+  "raw": 4.7542534396470515,
+  "v": "4.75",
+  "src": "final.csv P1 N=5 四个大图（014/072/076/091）speedup 最小值"
+ },
+ "BIG4_SUMAX_N5": {
+  "raw": 5.014221970727531,
+  "v": "5.01",
+  "src": "final.csv P1 N=5 四个大图 speedup 最大值"
+ },
+ "PSEL_P1_LOSSN": {
+  "raw": 48,
+  "v": "48",
+  "src": "portfolio_analysis.json proxy_selection.P1.proxy_vs_official_main.loss（N=4，代理选择劣于官方择优的用例数）"
+ },
+ "PSEL_P1_REL": {
+  "raw": -0.0237,
+  "v": "−2.4%",
+  "src": "portfolio_analysis.json proxy_selection.P1.proxy_vs_official_main.rel"
+ },
+ "PSEL_P2_LOSSN": {
+  "raw": 62,
+  "v": "62",
+  "src": "portfolio_analysis.json proxy_selection.P2.proxy_vs_official_main.loss（N=4，代理选择劣于官方择优的用例数）"
+ },
+ "PSEL_P2_REL": {
+  "raw": -0.0652,
+  "v": "−6.5%",
+  "src": "portfolio_analysis.json proxy_selection.P2.proxy_vs_official_main.rel"
+ },
+ "PSEL_P3_LOSSN": {
+  "raw": 57,
+  "v": "57",
+  "src": "portfolio_analysis.json proxy_selection.P3.proxy_vs_official_main.loss（N=4，代理选择劣于官方择优的用例数）"
+ },
+ "PSEL_P3_REL": {
+  "raw": -0.0637,
+  "v": "−6.4%",
+  "src": "portfolio_analysis.json proxy_selection.P3.proxy_vs_official_main.rel"
+ },
+ "SA_OVER60_N23": {
+  "raw": 30,
+  "v": "30",
+  "src": "main.csv P1 params.anneal_seconds>60 且 N∈{2,3} 的配置数"
+ },
+ "SA_OVER60_CASES": {
+  "raw": 20,
+  "v": "20",
+  "src": "main.csv P1 退火超过 60 s 的不同用例数"
+ },
+ "SMP_K0_P2_N4": {
+  "raw": 3.5359,
+  "v": "3.54",
+  "src": "sampling_report.json by_K[0].P2_N4"
+ },
+ "SMP_K16_P2_N4": {
+  "raw": 3.5766,
+  "v": "3.58",
+  "src": "sampling_report.json by_K[16].P2_N4"
+ },
+ "SMP_K0_P3_N4": {
+  "raw": 3.6324,
+  "v": "3.63",
+  "src": "sampling_report.json by_K[0].P3_N4"
+ },
+ "SMP_K16_P3_N4": {
+  "raw": 3.6544,
+  "v": "3.65",
+  "src": "sampling_report.json by_K[16].P3_N4"
+ },
+ "OP_CHAMP": {
+  "raw": 229,
+  "v": "229",
+  "src": "op_mode_report.json op_champion_configs（主实验中单算子子图候选成为冠军的配置数，问题二、三共 800 个）"
+ },
+ "ADD_OVER_SC_P2N4": {
+  "raw": 0.5961837730778532,
+  "v": "60%",
+  "src": "ADD_P2_N4 / SC_SPILL_TOTAL"
+ },
+ "SENS_SAMPLE_CG4": {
+  "raw": 1.011496633983892,
+  "v": "1.011",
+  "src": "sensitivity.csv 的 18 个用例在 final.csv 上 N=4 的 MK(P2)/MK(P3) 算术平均"
+ },
+ "SENS_SAMPLE_HIT4": {
+  "raw": 0.19883500624868533,
+  "v": "19.9%",
+  "src": "sensitivity.csv 的 18 个用例在 final.csv P3 N=4 的 cache_hit_rate 算术平均"
+ },
+ "SENS_TOP10_IN": {
+  "raw": 2,
+  "v": "2",
+  "src": "final.csv N=4 Cache 加速比最高的 10 个用例中落在敏感性样本内的个数"
+ },
+ "OPV_P3_op_nu0": {
+  "raw": -0.02590913209239709,
+  "v": "−2.6%",
+  "src": "ablation2.csv P3：op_nu0 相对 op_full 的算术平均加速比变化（N=2..5 配对，n=400）"
+ },
+ "OPVP_P3_op_nu0": {
+  "raw": 1.7777256356132635e-25,
+  "v": "$p=1.8\\times10^{-25}$",
+  "src": "同上 Wilcoxon 符号秩检验（对数差），6 个比较 Holm 校正"
+ },
+ "OPV_P2_op_nu0": {
+  "raw": -0.024949153525966716,
+  "v": "−2.5%",
+  "src": "ablation2.csv P2：op_nu0 相对 op_full 的算术平均加速比变化（N=2..5 配对，n=400）"
+ },
+ "OPVP_P2_op_nu0": {
+  "raw": 8.399947829781727e-25,
+  "v": "$p=8.4\\times10^{-25}$",
+  "src": "同上 Wilcoxon 符号秩检验（对数差），6 个比较 Holm 校正"
+ },
+ "OPV_P2_op_mu0": {
+  "raw": -0.011298762051664024,
+  "v": "−1.1%",
+  "src": "ablation2.csv P2：op_mu0 相对 op_full 的算术平均加速比变化（N=2..5 配对，n=400）"
+ },
+ "OPVP_P2_op_mu0": {
+  "raw": 9.040325773173809e-23,
+  "v": "$p=9.0\\times10^{-23}$",
+  "src": "同上 Wilcoxon 符号秩检验（对数差），6 个比较 Holm 校正"
+ },
+ "OPV_P3_op_mu0": {
+  "raw": -0.01138363782376961,
+  "v": "−1.1%",
+  "src": "ablation2.csv P3：op_mu0 相对 op_full 的算术平均加速比变化（N=2..5 配对，n=400）"
+ },
+ "OPVP_P3_op_mu0": {
+  "raw": 2.2798878726120367e-22,
+  "v": "$p=2.3\\times10^{-22}$",
+  "src": "同上 Wilcoxon 符号秩检验（对数差），6 个比较 Holm 校正"
+ },
+ "OPV_P2_op_alpha1": {
+  "raw": -0.0066719489659679,
+  "v": "−0.7%",
+  "src": "ablation2.csv P2：op_alpha1 相对 op_full 的算术平均加速比变化（N=2..5 配对，n=400）"
+ },
+ "OPVP_P2_op_alpha1": {
+  "raw": 0.06237929515132582,
+  "v": "$p=0.062$",
+  "src": "同上 Wilcoxon 符号秩检验（对数差），6 个比较 Holm 校正"
+ },
+ "OPV_P3_op_alpha1": {
+  "raw": -0.0063718152378156034,
+  "v": "−0.6%",
+  "src": "ablation2.csv P3：op_alpha1 相对 op_full 的算术平均加速比变化（N=2..5 配对，n=400）"
+ },
+ "OPVP_P3_op_alpha1": {
+  "raw": 0.06237929515132582,
+  "v": "$p=0.062$",
+  "src": "同上 Wilcoxon 符号秩检验（对数差），6 个比较 Holm 校正"
+ },
+ "OVER_NOBIG_N": {
+  "raw": 33,
+  "v": "33",
+  "src": "main.csv P1 NOBIG 超时配置数（NOBIG：>600 s 且不含四个大图；BIG4：四个大图全部配置）"
+ },
+ "OVER_NOBIG_EVAL": {
+  "raw": 0.7446846152544643,
+  "v": "74%",
+  "src": "NOBIG 配置耗时中官方评估的占比"
+ },
+ "OVER_NOBIG_SA": {
+  "raw": 0.06637381476479741,
+  "v": "7%",
+  "src": "NOBIG 配置耗时中退火的占比"
+ },
+ "OVER_NOBIG_BUILD": {
+  "raw": 0.18894156998073783,
+  "v": "19%",
+  "src": "NOBIG 配置耗时中候选构造的占比"
+ },
+ "OVER_BIG4_N": {
+  "raw": 16,
+  "v": "16",
+  "src": "main.csv P1 BIG4 超时配置数（NOBIG：>600 s 且不含四个大图；BIG4：四个大图全部配置）"
+ },
+ "OVER_BIG4_EVAL": {
+  "raw": 0.5698338604259078,
+  "v": "57%",
+  "src": "BIG4 配置耗时中官方评估的占比"
+ },
+ "OVER_BIG4_SA": {
+  "raw": 0.25108688713688615,
+  "v": "25%",
+  "src": "BIG4 配置耗时中退火的占比"
+ },
+ "OVER_BIG4_BUILD": {
+  "raw": 0.17907925243720602,
+  "v": "18%",
+  "src": "BIG4 配置耗时中候选构造的占比"
+ },
+ "ALG_OVER_N": {
+  "raw": 15,
+  "v": "15",
+  "src": "main.csv P1 不含评估耗时 >600 s 的配置数"
+ },
+ "ALG_OVER_CASES": {
+  "raw": [
+   "case_014",
+   "case_041",
+   "case_076",
+   "case_079",
+   "case_087",
+   "case_091"
+  ],
+  "v": "014、041、076、079、087、091",
+  "src": "main.csv P1 不含评估耗时 >600 s 的用例"
+ }
+}

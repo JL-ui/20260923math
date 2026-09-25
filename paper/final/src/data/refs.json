@@ -1,0 +1,163 @@
+{
+ "liao": {
+  "text": "Liao H, Tu J, Xia J, et al.，Ascend: a scalable and unified architecture for ubiquitous deep neural network computing，Proceedings of the 2021 IEEE International Symposium on High-Performance Computer Architecture (HPCA)：789-801，2021。",
+  "type": "会议论文",
+  "url": "https://www.computer.org/csdl/proceedings-article/hpca/2021/223500a789/1t0HV8LlRBK",
+  "checked": "WebSearch 按题名检索，命中 IEEE Computer Society 数字图书馆条目（HPCA 2021 Industry Track，URL 中起始页 789）",
+  "pages": "起始页由条目 URL 确认；止页按常见著录"
+ },
+ "ullman": {
+  "text": "Ullman J D，NP-complete scheduling problems，Journal of Computer and System Sciences，10(3)：384-393，1975。",
+  "type": "期刊",
+  "url": "https://dl.acm.org/doi/abs/10.1016/S0022-0000(75)80008-0",
+  "checked": "WebSearch 命中 ACM Digital Library 条目（Journal of Computer and System Sciences）与 Mendeley 条目",
+  "pages": "按常见著录，检索页面未显示页码"
+ },
+ "kwok": {
+  "text": "Kwok Y K, Ahmad I，Static scheduling algorithms for allocating directed task graphs to multiprocessors，ACM Computing Surveys，31(4)：406-471，1999。",
+  "type": "期刊",
+  "url": "https://dl.acm.org/doi/10.1145/344588.344618",
+  "checked": "WebSearch 命中 ACM Digital Library 条目",
+  "pages": "按常见著录，检索页面未显示页码"
+ },
+ "karp": {
+  "text": "Karp R M，Reducibility among combinatorial problems，见：Miller R E, Thatcher J W 编，Complexity of Computer Computations，New York：Plenum Press，85-103，1972。",
+  "type": "图书章节",
+  "url": "https://philpapers.org/rec/KARRAC-2",
+  "checked": "WebSearch 命中 Cambridge Core 书评条目（显示 Plenum Press, New York and London, 1972, pp. 85-103）与 PhilPapers 条目",
+  "pages": "已核对（85-103）"
+ },
+ "karypis": {
+  "text": "Karypis G, Kumar V，A fast and high quality multilevel scheme for partitioning irregular graphs，SIAM Journal on Scientific Computing，20(1)：359-392，1998。",
+  "type": "期刊",
+  "url": "https://dblp.org/rec/journals/siamsc/KarypisK98.html",
+  "checked": "WebSearch 命中 dblp 条目与 ResearchGate 条目（显示 20(1) 359-392）",
+  "pages": "已核对（359-392）"
+ },
+ "catalyurek": {
+  "text": "Çatalyürek Ü V, Aykanat C，Hypergraph-partitioning-based decomposition for parallel sparse-matrix vector multiplication，IEEE Transactions on Parallel and Distributed Systems，10(7)：673-693，1999。",
+  "type": "期刊",
+  "url": "https://ieeexplore.ieee.org/document/780863/",
+  "checked": "WebSearch 命中 IEEE Xplore 条目（document 780863）",
+  "pages": "按常见著录，检索页面未显示页码"
+ },
+ "herrmann": {
+  "text": "Herrmann J, Özkaya M Y, Uçar B, et al.，Multilevel algorithms for acyclic partitioning of directed acyclic graphs，SIAM Journal on Scientific Computing，41(4)：A2117-A2145，2019。",
+  "type": "期刊",
+  "url": "https://hal.science/hal-02306566/",
+  "checked": "WebSearch 命中 SIAM（DOI 10.1137/18M1176865）与 HAL 条目",
+  "pages": "按常见著录，检索页面未显示页码"
+ },
+ "mirhoseini": {
+  "text": "Mirhoseini A, Pham H, Le Q V, et al.，Device placement optimization with reinforcement learning，Proceedings of the 34th International Conference on Machine Learning (PMLR 70)：2430-2439，2017。",
+  "type": "会议论文",
+  "url": "https://proceedings.mlr.press/v70/mirhoseini17a.html",
+  "checked": "WebSearch 命中 PMLR 论文页",
+  "pages": "按常见著录"
+ },
+ "jia": {
+  "text": "Jia Z, Zaharia M, Aiken A，Beyond data and model parallelism for deep neural networks，https://proceedings.mlsys.org/paper_files/paper/2019/hash/b422680f3db0986ddd7f8f126baaf0fa-Abstract.html，2026年9月25日。",
+  "type": "网络资源（MLSys 2019 论文集）",
+  "url": "https://proceedings.mlsys.org/paper_files/paper/2019/hash/b422680f3db0986ddd7f8f126baaf0fa-Abstract.html",
+  "checked": "WebSearch 命中 MLSys 论文集页面",
+  "pages": "论文集无统一页码，按网络资源著录"
+ },
+ "alpa": {
+  "text": "Zheng L, Li Z, Zhang H, et al.，Alpa: automating inter- and intra-operator parallelism for distributed deep learning，Proceedings of the 16th USENIX Symposium on Operating Systems Design and Implementation (OSDI)：559-578，2022。",
+  "type": "会议论文",
+  "url": "https://www.usenix.org/conference/osdi22/presentation/zheng-lianmin",
+  "checked": "WebSearch 命中 USENIX 页面与 dblp 条目",
+  "pages": "按常见著录"
+ },
+ "tangram": {
+  "text": "Gao M, Yang X, Pu J, et al.，TANGRAM: optimized coarse-grained dataflow for scalable NN accelerators，Proceedings of the 24th International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS)：807-820，2019。",
+  "type": "会议论文",
+  "url": "https://dl.acm.org/doi/10.1145/3297858.3304014",
+  "checked": "WebSearch 命中 ACM Digital Library 条目（DOI 10.1145/3297858.3304014）",
+  "pages": "按常见著录"
+ },
+ "belady": {
+  "text": "Belady L A，A study of replacement algorithms for a virtual-storage computer，IBM Systems Journal，5(2)：78-101，1966。",
+  "type": "期刊",
+  "url": "https://dl.acm.org/doi/10.1147/sj.52.0078",
+  "checked": "WebSearch 命中 ACM Digital Library 条目（IBM Systems Journal）",
+  "pages": "按常见著录"
+ },
+ "valiant": {
+  "text": "Valiant L G，A bridging model for parallel computation，Communications of the ACM，33(8)：103-111，1990。",
+  "type": "期刊",
+  "url": "https://dl.acm.org/doi/10.1145/79173.79181",
+  "checked": "WebSearch 命中 ACM Digital Library 与 dblp 条目（Communications of the ACM）",
+  "pages": "按常见著录"
+ },
+ "pappbsp": {
+  "text": "Papp P A, Anegg G, Yzelman A N，DAG scheduling in the BSP model（SOFSEM 2025），https://link.springer.com/chapter/10.1007/978-3-031-82697-9_18，2026年9月25日。",
+  "type": "网络资源（会议论文）",
+  "url": "https://link.springer.com/chapter/10.1007/978-3-031-82697-9_18",
+  "checked": "WebSearch 命中 Springer 与 ACM 条目、arXiv 2303.05989",
+  "pages": "未查到页码，按网络资源著录"
+ },
+ "papp24": {
+  "text": "Papp P A, Anegg G, Karanasiou A, et al.，Efficient multi-processor scheduling in increasingly realistic models，Proceedings of the 36th ACM Symposium on Parallelism in Algorithms and Architectures (SPAA)：463-474，2024。",
+  "type": "会议论文",
+  "url": "https://doi.org/10.1145/3626183.3659972",
+  "checked": "Crossref 元数据（DOI 10.1145/3626183.3659972）核对题名、作者与页码",
+  "pages": "已核对"
+ },
+ "pappmbsp": {
+  "text": "Papp P A, Böhnlein T, Yzelman A N，Multiprocessor scheduling with memory constraints: fundamental properties and finding optimal solutions，https://arxiv.org/abs/2507.17411，2026年9月25日。",
+  "type": "网络资源（arXiv，注明发表于 ICPP 2025）",
+  "url": "https://arxiv.org/abs/2507.17411",
+  "checked": "arXiv 页面核对题名、作者与发表信息",
+  "pages": "按网络资源著录"
+ },
+ "tarjan": {
+  "text": "Tarjan R，Depth-first search and linear graph algorithms，SIAM Journal on Computing，1(2)：146-160，1972。",
+  "type": "期刊",
+  "url": "https://www.semanticscholar.org/paper/Depth-First-Search-and-Linear-Graph-Algorithms-Tarjan/385742fffcf113656f0d3cf6c06ef95cb8439dc6",
+  "checked": "WebSearch 命中 Semantic Scholar、BibSonomy 条目",
+  "pages": "按常见著录"
+ },
+ "graham": {
+  "text": "Graham R L，Bounds on multiprocessing timing anomalies，SIAM Journal on Applied Mathematics，17(2)：416-429，1969。",
+  "type": "期刊",
+  "url": "https://epubs.siam.org/doi/10.1137/0117039",
+  "checked": "WebSearch 命中 SIAM 条目，引用条目显示 17, 416-429",
+  "pages": "已核对"
+ },
+ "kirkpatrick": {
+  "text": "Kirkpatrick S, Gelatt C D, Vecchi M P，Optimization by simulated annealing，Science，220(4598)：671-680，1983。",
+  "type": "期刊",
+  "url": "https://www.science.org/doi/10.1126/science.220.4598.671",
+  "checked": "WebSearch 命中 Science 条目与 MIT Press 条目（显示 220: 671-680）",
+  "pages": "已核对"
+ },
+ "heft": {
+  "text": "Topcuoglu H, Hariri S, Wu M Y，Performance-effective and low-complexity task scheduling for heterogeneous computing，IEEE Transactions on Parallel and Distributed Systems，13(3)：260-274，2002。",
+  "type": "期刊",
+  "url": "https://doi.org/10.1109/71.993206",
+  "checked": "Crossref 元数据（DOI 10.1109/71.993206）核对题名、作者、卷期与页码",
+  "pages": "已核对"
+ },
+ "efron": {
+  "text": "Efron B，Bootstrap methods: another look at the jackknife，The Annals of Statistics，7(1)：1-26，1979。",
+  "type": "期刊",
+  "url": "https://sites.stat.washington.edu/courses/stat527/s14/readings/ann_stat1979.pdf",
+  "checked": "WebSearch 命中原文 PDF",
+  "pages": "按常见著录"
+ },
+ "wilcoxon": {
+  "text": "Wilcoxon F，Individual comparisons by ranking methods，Biometrics Bulletin，1(6)：80-83，1945。",
+  "type": "期刊",
+  "url": "https://sci2s.ugr.es/keel/pdf/algorithm/articulo/wilcoxon1945.pdf",
+  "checked": "WebSearch 命中原文 PDF",
+  "pages": "按常见著录"
+ },
+ "holm": {
+  "text": "Holm S，A simple sequentially rejective multiple test procedure，Scandinavian Journal of Statistics，6(2)：65-70，1979。",
+  "type": "期刊",
+  "url": "https://www.semanticscholar.org/paper/A-Simple-Sequentially-Rejective-Multiple-Test-Holm/b0ebbcf713b3ddf3f94325bc58dc39ff76fdc412",
+  "checked": "WebSearch 命中 Semantic Scholar 条目与原文 PDF",
+  "pages": "按常见著录"
+ }
+}
