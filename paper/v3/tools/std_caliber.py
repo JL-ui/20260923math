@@ -131,6 +131,36 @@ for k, r in fallback.iterrows():
     rows.append(row)
 std = pd.DataFrame(rows)
 std["speedup"] = std.baseline_makespan / std.makespan
+std["mono_fix"] = False
+
+# 单调性修复：对每个 (用例, 问题, N)，与"整图单核"及标准流程自身在更少核数下的
+# 方案比较，取 Makespan 更优者（源方案末尾追加空核，不引入新依赖或新搬运，
+# 由 build_mono_plans.py 逐个用官方评估脚本复核过，见 results/verify_final_mono.csv）。
+# 这保证了标准流程口径下加速比恒 >= 1、随核数单调不降，不再是可选的后续工作。
+mono_path = R / "final_plans_mono" / "manifest.csv"
+if mono_path.is_file():
+    mono = pd.read_csv(mono_path)
+    std_idx = std.set_index(KEY)
+    for r in mono[mono.source != "self"].itertuples():
+        k = (r.case, r.problem, r.num_cores)
+        source_n = r.source_n
+        if source_n == 1:
+            src = pd.read_csv(R / "n1.csv")
+            src_row = src[(src.case == r.case) & (src.problem == r.problem)].iloc[0]
+        else:
+            src_row = std_idx.loc[(r.case, r.problem, source_n)]
+        i = std_idx.index.get_loc(k)
+        for col in ("makespan", "added_copy_bytes", "partition_added_copy_bytes",
+                    "spill_added_copy_bytes", "scheduled_copy_bytes", "cache_hit_rate",
+                    "cache_hit_bytes", "n_subgraphs"):
+            std.loc[std_idx.index.get_indexer([k])[0], col] = src_row[col]
+        std.loc[std_idx.index.get_indexer([k])[0], "variant"] = f"mono_embed_n{source_n}"
+        std.loc[std_idx.index.get_indexer([k])[0], "plan_path"] = r.plan
+        std.loc[std_idx.index.get_indexer([k])[0], "mono_fix"] = True
+    std["speedup"] = std.baseline_makespan / std.makespan
+    J["mono_fix_rows"] = int(std.mono_fix.sum())
+    F["MONO_FIX_N"] = str(int(std.mono_fix.sum()))
+
 std.to_csv(OUT / "final_standard.csv", index=False)
 fin = pd.read_csv(R / "final.csv")
 n1 = pd.read_csv(R / "n1.csv")
@@ -222,7 +252,9 @@ for p in (1, 2, 3):
 src = Counter()
 for r in std.itertuples():
     v = str(r.variant)
-    if v.startswith("sa"):
+    if v.startswith("mono_embed"):
+        cat = "mono"
+    elif v.startswith("sa"):
         cat = "sa"
     elif v.startswith("s") and v[1:].isdigit():
         cat = "samp"
@@ -231,9 +263,9 @@ for r in std.itertuples():
         cat = "grid_a" if k <= 11 else ("grid_b" if k <= 13 else "grid_op")
     src[(r.problem, cat)] += 1
 for p in (1, 2, 3):
-    for cat in ("grid_a", "grid_b", "grid_op", "samp", "sa"):
+    for cat in ("grid_a", "grid_b", "grid_op", "samp", "sa", "mono"):
         val = src.get((p, cat), 0)
-        F[f"STDSRC_P{p}_{cat.upper()}"] = str(val) if (val or cat not in ("grid_op", "samp", "sa")) else "—"
+        F[f"STDSRC_P{p}_{cat.upper()}"] = str(val) if (val or cat not in ("grid_op", "samp", "sa", "mono")) else "—"
     F[f"STDSRC_P{p}_FALLBACK"] = str(int(std[(std.problem == p)].proxy_fallback.sum()))
 J["std_sources"] = {f"{k[0]}_{k[1]}": v for k, v in src.items()}
 
@@ -431,9 +463,9 @@ F["LEX_TIE_N"], F["LEX_TIE_TOT"] = str(_lex_n), str(_lex_tot)
 J["lex_tie"] = f"{_lex_n}/{_lex_tot}"
 # case_016 略低于 1 的加速比（保留四位小数）
 _lt1 = [STD[(c, p, n)].speedup for c in CASES for p in (1, 2, 3) for n in NS if STD[(c, p, n)].speedup < 1]
-F["LT1_MIN4"] = f"{min(_lt1):.4f}"
+F["LT1_MIN4"] = f"{min(_lt1):.4f}" if _lt1 else "1.0000"
 F["LT1_N"] = str(len(_lt1))
-F["LT1_MAXLOSS"] = f"{100 * (1 - min(_lt1)):.2f}%"
+F["LT1_MAXLOSS"] = f"{100 * (1 - min(_lt1)):.2f}%" if _lt1 else "0.00%"
 
 json.dump(J, open(OUT / "std_caliber.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1, default=str)
 json.dump(F, open(OUT / "facts_v3.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
