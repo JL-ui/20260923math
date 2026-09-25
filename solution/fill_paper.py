@@ -511,15 +511,26 @@ def _extra_values(s, v):
             for b in betas) + ' |')
     v['TABLE_GRAN'] = chr(10).join(lines)
     big, small, plateau = [], [], 0.0
+    bestb, l025, l05, flat23 = [], [], [], []
     for p in (1, 2, 3):
         best = max(means[p].values())
         big.append('{:.0%}'.format(1 - means[p][2.0] / best))
         small.append('{:.0%}'.format(1 - means[p][0.03] / best))
         flat = [means[p][b] for b in (0.12, 0.25, 0.5)]
         plateau = max(plateau, (best - min(flat)) / best)
+        bestb.append('{:g}'.format(max(means[p], key=means[p].get)))
+        l025.append('{:.1%}'.format(1 - means[p][0.25] / best))
+        l05.append('{:.1%}'.format(1 - means[p][0.5] / best))
+        if p in (2, 3):
+            flat23.append((best - min(flat)) / best)
     v['GRAN_LOSS_BIG'] = ' / '.join(big)
     v['GRAN_LOSS_SMALL'] = ' / '.join(small)
     v['GRAN_PLATEAU'] = '{:.1%}'.format(plateau)
+    v['GRAN_BEST_BETA'] = ' / '.join(bestb)
+    v['GRAN_LOSS_025'] = ' / '.join(l025)
+    v['GRAN_LOSS_05'] = ' / '.join(l05)
+    v['GRAN_PLATEAU_P23'] = '{:.1%}'.format(max(flat23))
+    v['GRAN_N'] = str(len({r['case'] for r in gran}))
     _sens_table(v)
 
 
