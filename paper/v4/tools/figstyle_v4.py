@@ -77,9 +77,9 @@ def _rc():
         "savefig.pad_inches": 0.03,
         "axes.unicode_minus": False,
         "svg.fonttype": "none",
-        # $...$ 中的正体（含中文）走宋体，变量斜体走 Times New Roman
+        # $...$ 中的正体（数字、\mathrm）与斜体变量都走 Times New Roman；含中文的字符串不进 mathtext（见文末）
         "mathtext.fontset": "custom",
-        "mathtext.rm": CJK,
+        "mathtext.rm": LATIN,
         "mathtext.it": f"{LATIN}:italic",
         "mathtext.bf": f"{LATIN}:bold",
         "mathtext.cal": f"{LATIN}:italic",
@@ -99,9 +99,31 @@ def use_sans():
     plt.rcParams.update({"axes.grid": False})
 
 
+# 本机缺 Times New Roman / 宋体时 matplotlib 用 Liberation / Noto 代替，SVG 里会写下替代字体名；
+# 在 Word 中这些字体不存在，公式与数字会落到随机的后备字体。保存后统一改回论文所用字体名。
+_FONT_MAP = {"Liberation Serif": "Times New Roman", "Noto Serif CJK SC": "SimSun",
+             "Liberation Sans": "Arial", "Noto Sans CJK SC": "SimHei"}
+
+
+def _fix_svg_fonts(path):
+    import re
+    s = path.read_text(encoding="utf-8")
+
+    def fam(m):
+        names = []
+        for n in m.group(1).split(","):
+            n = _FONT_MAP.get(n.strip().strip("'\""), n.strip().strip("'\""))
+            if n not in names:
+                names.append(n)
+        return "font-family: " + ", ".join(f"'{n}'" for n in names)
+
+    path.write_text(re.sub(r"font-family: ([^;\"]+)", fam, s), encoding="utf-8")
+
+
 def save(fig, name):
     svg = OUT / f"{name}.svg"
     fig.savefig(svg, facecolor="white")
+    _fix_svg_fonts(svg)
     fig.savefig(OUT / f"{name}.png", facecolor="white")
     plt.close(fig)
     print("  ", svg.relative_to(ROOT))

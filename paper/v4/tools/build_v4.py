@@ -12,6 +12,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import re
 import sys
@@ -22,6 +23,7 @@ sys.path.insert(0, str(ROOT / "paper" / "v3" / "tools"))
 import build_v3 as b3  # noqa: E402  （导入即完成数据源、文献编号与公式转换的替换）
 
 bd = b3.bd
+b3.omml._LIMIT_FUNCS.add("lexmin")  # 目标函数的字典序最小化：下标放到正下方
 from docx.opc.constants import RELATIONSHIP_TYPE as RT  # noqa: E402
 from docx.opc.packuri import PackURI  # noqa: E402
 from docx.opc.part import Part  # noqa: E402
@@ -74,16 +76,163 @@ def figure(self, b):
 
 bd.Renderer.figure = figure
 
-# ---------------------------------------------------------------- 4. 逐用例表用五号字
-_orig_casetable = bd.Renderer.casetable
+# ---------------------------------------------------------------- 5. 页边距：与竞赛官方模板一致，四边 2.5 cm
+MARGIN = 1417
+PAGE_W, PAGE_H = 11906, 16838
+bd.TEXT_WIDTH = PAGE_W - 2 * MARGIN          # 版心宽度 16.0 cm（表格、算法框与公式编号的右制表位都用它）
+
+
+def set_margins(doc):
+    for sp in doc.element.body.iter(qn("w:sectPr")):
+        pm = sp.find(qn("w:pgMar"))
+        for k, v in (("top", MARGIN), ("bottom", MARGIN), ("left", MARGIN), ("right", MARGIN),
+                     ("header", 850), ("footer", 850), ("gutter", 0)):
+            pm.set(qn("w:" + k), str(v))
+
+
+# ---------------------------------------------------------------- 4. 逐用例表：按页切块，每块都是完整的三线表
+# Word 表格跨页时不会在断开处补画底线，续页也没有顶线；长表因此按页切成若干张完整的三线表，
+# 第二块起题注写“续表”，并从新页开始。行高固定（exact），每页能放的行数可以直接算出。
+ROW_H, HEAD_H = 255, 300          # 数据行、表头行高（twip）
+CAP_H = 120 + 300 + 60            # 题注：段前 + 固定行高 + 段后
+SPACER_H = 60 + 120               # 表后空行
+BODY_H = PAGE_H - 2 * MARGIN
+SAFETY = 420                      # 每页留出的余量
+FIRST_USED = 3800                 # 附录首页在第一张表之前已占用的高度（一级、二级标题与说明段落的估计值，偏保守）
+_ct_state = {"used": None, "end": None}
+
+
+def _fix_line(p, line, rule="exact", before=None, after=None):
+    pp = p.find(qn("w:pPr"))
+    sp = pp.find(qn("w:spacing"))
+    if sp is None:
+        sp = etree.SubElement(pp, qn("w:spacing"))
+    sp.set(qn("w:line"), str(line))
+    sp.set(qn("w:lineRule"), rule)
+    if before is not None:
+        sp.set(qn("w:before"), str(before))
+        sp.set(qn("w:beforeLines"), "0")
+    if after is not None:
+        sp.set(qn("w:after"), str(after))
+        sp.set(qn("w:afterLines"), "0")
 
 
 def casetable(self, b):
-    b.attrs.setdefault("font", "10.5")
-    return _orig_casetable(self, b)
+    spec = b.attrs
+    rows = bd.casetable_rows(spec)
+    head, data = rows[0], rows[1:]
+    widths = [int(bd.TEXT_WIDTH * w) for w in [0.2, 0.16, 0.16, 0.16, 0.16, 0.16]]
+    font = float(spec.get("font", 10.5))
+    # 紧接上一张逐用例表时沿用其页面占用，否则按附录首页估计
+    last = self.sect.getprevious()
+    used = _ct_state["used"] if (last is not None and last is _ct_state["end"]) else FIRST_USED
+    i, first = 0, True
+    while i < len(data):
+        new_page = (not first) or used + CAP_H + HEAD_H + 5 * ROW_H > BODY_H - SAFETY
+        if new_page:
+            used = 0
+        k = min(len(data) - i, (BODY_H - SAFETY - used - CAP_H - HEAD_H) // ROW_H)
+        label = f"表{b.number}" if first else f"续表{b.number}"
+        cap = self.caption(label, b.text, before=120, after=60, keep_next=True)
+        _fix_line(cap, 300)
+        if new_page:
+            etree.SubElement(cap.find(qn("w:pPr")), qn("w:pageBreakBefore"))
+            bd.normalize_order(cap)
+        tbl = self._table_xml([head] + data[i:i + k], widths, ["center"] * 6, font, header=True,
+                              repeat_header=False)
+        for ri, tr in enumerate(tbl.findall(qn("w:tr"))):
+            trp = tr.find(qn("w:trPr"))
+            etree.SubElement(trp, qn("w:trHeight"), {qn("w:val"): str(HEAD_H if ri == 0 else ROW_H),
+                                                    qn("w:hRule"): "exact"})
+            for p in tr.iter(qn("w:p")):
+                _fix_line(p, 240, "auto", before=0, after=0)
+        self.add(tbl)
+        used += CAP_H + HEAD_H + k * ROW_H
+        i += k
+        first = False
+    self.spacer()
+    _ct_state["used"] = used + SPACER_H
+    _ct_state["end"] = self.sect.getprevious()
 
 
 bd.Renderer.casetable = casetable
+
+
+# ---------------------------------------------------------------- 7. 表格整体不跨页
+def keep_tables(doc, max_rows=60):
+    """表格（含算法框与逐用例表的每一块）除末行外逐行“与下段同页”：放不下时整张表移到下一页，
+    不会被页面切成没有底线、顶线的两半。逐用例表的每块按页高切分，本身不超过一页。"""
+    for tbl in doc.element.body.iterchildren(qn("w:tbl")):
+        rows = tbl.findall(qn("w:tr"))
+        if len(rows) > max_rows:
+            continue
+        for tr in rows[:-1]:
+            for p in tr.iter(qn("w:p")):
+                pp = p.find(qn("w:pPr"))
+                if pp is None:
+                    pp = etree.Element(qn("w:pPr"))
+                    p.insert(0, pp)
+                if pp.find(qn("w:keepNext")) is None:
+                    etree.SubElement(pp, qn("w:keepNext"))
+                bd.normalize_order(p)
+
+
+# ---------------------------------------------------------------- 6. 中文引号、破折号、省略号用中文字体
+CJK_PUNCT = "“”‘’—…·"
+
+
+def _east_font(run, styles):
+    rf = run.find(qn("w:rPr") + "/" + qn("w:rFonts"))
+    if rf is not None and rf.get(qn("w:eastAsia")):
+        return rf.get(qn("w:eastAsia"))
+    return "宋体"
+
+
+def fix_cjk_punct(doc):
+    """含中文标点的文字段单独成段，西文字体也设为该段的中文字体（Word 与 LibreOffice 都按宋体显示）。"""
+    for r in list(doc.element.body.iter(qn("w:r"))):
+        t = r.find(qn("w:t"))
+        if t is None or not t.text or not any(ch in CJK_PUNCT for ch in t.text):
+            continue
+        east = _east_font(r, None)
+        content = [c for c in r if c.tag != qn("w:rPr")]
+        if len(content) != 1:
+            # 段内还有制表符、换行等：只加提示，由 Word 按中文字体显示
+            rpr = r.find(qn("w:rPr"))
+            if rpr is None:
+                rpr = etree.Element(qn("w:rPr"))
+                r.insert(0, rpr)
+            rf = rpr.find(qn("w:rFonts"))
+            if rf is None:
+                rf = etree.SubElement(rpr, qn("w:rFonts"))
+            rf.set(qn("w:hint"), "eastAsia")
+            bd.normalize_order(r)
+            continue
+        pieces = re.findall(r"[%s]+|[^%s]+" % (CJK_PUNCT, CJK_PUNCT), t.text)
+        parent = r.getparent()
+        idx = parent.index(r)
+        for j, piece in enumerate(pieces):
+            nr = copy.deepcopy(r)
+            for extra in nr.findall(qn("w:t")):
+                nr.remove(extra)
+            nt = etree.SubElement(nr, qn("w:t"))
+            nt.text = piece
+            nt.set("{http://www.w3.org/XML/1998/namespace}space", "preserve")
+            if piece[0] in CJK_PUNCT:
+                rpr = nr.find(qn("w:rPr"))
+                if rpr is None:
+                    rpr = etree.Element(qn("w:rPr"))
+                    nr.insert(0, rpr)
+                rf = rpr.find(qn("w:rFonts"))
+                if rf is None:
+                    rf = etree.Element(qn("w:rFonts"))
+                    rpr.insert(0, rf)
+                for a in ("w:ascii", "w:hAnsi", "w:eastAsia"):
+                    rf.set(qn(a), east)
+                rf.set(qn("w:hint"), "eastAsia")
+                bd.normalize_order(nr)
+            parent.insert(idx + j, nr)
+        parent.remove(r)
 
 
 # ---------------------------------------------------------------- 3. 西文字体
@@ -166,6 +315,10 @@ def main():
     facts = json.loads(bd.FACTS.read_text(encoding="utf-8"))
     facts = {k: re.sub(r"(?<=\d),(?=\d{3}(?!\d))", "", v) if isinstance(v, str) else v
              for k, v in facts.items()}
+    # 带正负号的相对变化另给一个不带符号的版本，供“高 X”“下降 X”这类句式使用
+    for k, v in list(facts.items()):
+        if isinstance(v, str) and re.match(r"^[+\-−]\d", v):
+            facts[k + "_ABS"] = v[1:]
     text = "\n\n".join(p.read_text(encoding="utf-8") for p in sorted(Path(args.src).glob("*.md")))
     text = b3.number_refs(text)
     text = bd.fill_facts(text, facts)
@@ -188,6 +341,9 @@ def main():
     bd.Renderer(doc, labels, facts).render([b for b in blocks if b.kind != "abstract"])
     drop_toc(doc)
     force_times(doc)
+    fix_cjk_punct(doc)
+    keep_tables(doc)
+    set_margins(doc)
     out = Path(args.out)
     doc.save(str(out))
     print("已生成", out)
