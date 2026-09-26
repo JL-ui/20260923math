@@ -1,3 +1,7 @@
+# 本程序及代码是在人工智能工具辅助下完成的。
+# 人工智能工具：Claude Sonnet 5（型号 claude-sonnet-5）、Claude Opus 5.5（型号 claude-opus-5-5）
+# 开发机构：Anthropic 公司
+# 版本发布日期：Claude Sonnet 5 为 2026-06-30，Claude Opus 5.5 为 2026-09-22
 """按"标签"确定性重建方案：主候选、基线、消融、粒度扫描、单核。
 
 保底池（build_pool.py）与后续全部分析都通过同一个入口 ``build`` 重建方案，

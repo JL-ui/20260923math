@@ -1,3 +1,7 @@
+# 本程序及代码是在人工智能工具辅助下完成的。
+# 人工智能工具：Claude Sonnet 5（型号 claude-sonnet-5）、Claude Opus 5.5（型号 claude-opus-5-5）
+# 开发机构：Anthropic 公司
+# 版本发布日期：Claude Sonnet 5 为 2026-06-30，Claude Opus 5.5 为 2026-09-22
 """把 paper/v2/论文_完善版.md 排成 Word（以根目录《草稿.docx》为版式模板）。
 
     python solution/paper_v2/build_docx.py            # 生成 docx，并用 Word 更新目录、导出 PDF
