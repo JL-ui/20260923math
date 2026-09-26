@@ -16,6 +16,7 @@ import figstyle_v4  # noqa: E402,F401
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "solution" / "paper_v2"))
 import figstyle  # noqa: E402
 from figstyle import (C1, C2, C3, DARK, GREY, RED, LIGHT, PIPE_COL, arrow, box, canvas, save, use_sans)  # noqa: E402
+from richtext_v4 import rtext_at  # noqa: E402  中西文与公式混排（变量斜体）
 
 figstyle.OUT = figstyle.ROOT / "figures" / "v4"
 figstyle.OUT.mkdir(parents=True, exist_ok=True)
@@ -179,10 +180,10 @@ def stall_mechanism():
         ax.set_title(title, fontsize=8.2, loc="left", pad=3)
         ax.tick_params(axis="y", length=0)
     # 申请序说明放在坐标轴下方左侧，时间方向放在右侧
-    axes[0].text(0.0, -0.95, "核内申请序：a1 → a2 → CI* → c → b1 → b2（只有队首可发射）", ha="left",
-                 va="top", fontsize=7, color="#555555", clip_on=False)
-    axes[1].text(0.0, -0.95, "核内申请序：a1 → a2 → b1 → b2 ｜ CI* → c（第 r 层 ｜ 第 r+1 层）", ha="left",
-                 va="top", fontsize=7, color="#555555", clip_on=False)
+    rtext_at(axes[0], 0.0, -0.95, "核内申请序：a1 → a2 → CI* → c → b1 → b2（只有队首可发射）", fs=7,
+             align="left", va="top", color="#555555")
+    rtext_at(axes[1], 0.0, -0.95, "核内申请序：a1 → a2 → b1 → b2 ｜ CI* → c（第 $r$ 层 ｜ 第 $r+1$ 层）", fs=7,
+             align="left", va="top", color="#555555")
     for ax in axes:
         ax.text(13.2, -0.95, "时间 →", ha="right", va="top", fontsize=7.4, color="#333333", clip_on=False)
     save(fig, "fig_stall_mechanism")
@@ -216,10 +217,10 @@ def levels_sketch():
         for i, v in enumerate(vs):
             off = (i - (len(vs) - 1) / 2) * 0.95
             pos_c[v] = (r * 1.45, (1.05 if c == 0 else -1.05) + off)
-    titles = ["(a) 算子级 DAG", "(b) 亲和原子化 + $\\sigma$ 连续区间分块", "(c) 子图 = (核心, 层次) 等价类"]
+    titles = ["(a) 算子级 DAG", "(b) 亲和原子化 + $\\sigma$ 连续区间分块", "(c) 子图 =（核心，层次）等价类"]
     for k, ax in enumerate(axes):
         ax.axis("off")
-        ax.set_title(titles[k], fontsize=8.6, pad=2)
+        rtext_at(ax, 0.5, 1.0, titles[k], transform=ax.transAxes, fs=8.6, align="center", va="bottom")
         P = pos if k < 2 else pos_c
         if k < 2:
             ax.set_xlim(-0.5, 3.5)
@@ -234,8 +235,8 @@ def levels_sketch():
                 y0 = 0.1 if c == 0 else -2.0
                 ax.add_patch(FancyBboxPatch((x0, y0), 1.0, 1.9, boxstyle="round,pad=0,rounding_size=0.14",
                                             fc=core_col[c], alpha=0.10, ec=core_col[c], lw=0.9, ls=(0, (3, 2))))
-                ax.text(x0 + 0.08, y0 + 1.78, f"S{sid}", fontsize=7.2, color=core_col[c],
-                        fontweight="bold", ha="left", va="center")
+                ax.text(x0 + 0.08, y0 + 1.76, f"$s_{{{sid}}}$", fontsize=8.2, color=core_col[c],
+                        ha="left", va="center")
                 sid += 1
             for r in range(3):
                 ax.text(r * 1.45, -2.18, f"层 {r}", ha="center", va="center", fontsize=7.4, color="#444444")
@@ -252,8 +253,8 @@ def levels_sketch():
             ax.add_patch(Circle((x, y), 0.25, fc=fc, ec="white", lw=1.0, zorder=3))
             ax.text(x, y, f"{v}", ha="center", va="center", fontsize=7.5, color="white", zorder=4,
                     fontweight="bold")
-    axes[0].text(1.5, -2.2, "节点 = 算子，边 = 张量依赖", ha="center", fontsize=7.2, color="#555555")
-    axes[1].text(1.5, -2.2, "同色 = 同一块（$\\sigma$ 的连续区间）", ha="center", fontsize=7.2, color="#555555")
+    rtext_at(axes[0], 1.5, -2.12, "节点 = 算子，边 = 张量依赖", fs=7.2, align="center", color="#555555")
+    rtext_at(axes[1], 1.5, -2.12, "同色 = 同一块（$\\sigma$ 的连续区间）", fs=7.2, align="center", color="#555555")
     save(fig, "fig_levels_sketch")
 
 

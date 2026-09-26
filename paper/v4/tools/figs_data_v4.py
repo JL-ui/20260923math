@@ -87,7 +87,7 @@ def fig_speedup(p):
         maxs.append(v.max())
     col = PCOL[p]
     ax.plot([1, 5.3], [1, 5.3], color=GREY, lw=0.9, ls=(0, (4, 3)), label="理想线性加速 y = N", zorder=1)
-    ax.fill_between(xs, mins, maxs, color=col, alpha=0.07, lw=0, label="逐用例最小～最大", zorder=1)
+    ax.fill_between(xs, mins, maxs, color=col, alpha=0.07, lw=0, label="逐用例范围", zorder=1)
     ax.fill_between(xs, lo, hi, color=col, alpha=0.25, lw=0, label="均值的 95% 置信区间", zorder=2)
     ax.plot(xs, meds, color=col, lw=1.1, ls=(0, (1.5, 1.5)), marker="s", ms=3.6, mfc="white",
             label="中位数", zorder=3)
@@ -124,14 +124,16 @@ def fig_dist():
             sup = d > n
             ax.scatter(n + jit[~sup], d[~sup], s=5, color=PCOL[p], alpha=0.55, lw=0, zorder=3)
             ax.scatter(n + jit[sup], d[sup], s=7, color=RED, alpha=0.8, lw=0, zorder=3)
-            ax.plot([n - 0.3, n + 0.3], [n, n], color=GREY, lw=0.9, ls=(0, (3, 2)), zorder=2)
+        # 线性加速参考线 y = N：画成贯通的斜虚线，置于箱体之上
+        ax.plot([1.55, 5.45], [1.55, 5.45], color="#444444", lw=0.9, ls=(0, (4, 2.5)), zorder=5)
+        ax.set_xlim(1.45, 5.55)
         ax.set_title(PNAME[p], fontsize=9)
         ax.set_xticks(NS)
         ax.set_xlabel("核心数 N")
     axes[0].set_ylabel("逐用例加速比")
-    axes[2].scatter([], [], s=9, color=RED, label="超线性（加速比 > N）")
-    axes[2].plot([], [], color=GREY, ls=(0, (3, 2)), label="加速比 = N")
-    axes[2].legend(loc="upper left", fontsize=7.4)
+    axes[0].scatter([], [], s=9, color=RED, label="超线性（加速比 > N）")
+    axes[0].plot([], [], color="#444444", lw=0.9, ls=(0, (4, 2.5)), label="线性加速（加速比 = N）")
+    axes[0].legend(loc="upper left", fontsize=7.4, handlelength=2.4)
     fig.tight_layout(w_pad=0.6)
     save(fig, "fig_dist")
 
@@ -144,7 +146,7 @@ def fig_features():
     bins = np.logspace(np.log10(f.n_ops.min() * 0.9), np.log10(f.n_ops.max() * 1.1), 18)
     ax.hist(f.n_ops, bins=bins, color=C1, alpha=0.8, edgecolor="white", lw=0.6)
     ax.set_xscale("log")
-    ax.set_xlabel("可切分算子数")
+    ax.set_xlabel("算子数")
     ax.set_ylabel("用例数")
     ax.yaxis.set_major_locator(plt.MaxNLocator(integer=True))
     panel_label(ax, "(a)")
@@ -195,14 +197,15 @@ def fig_runtime():
     ax = axes[0]
     for p in (1, 2, 3):
         v = np.sort(g.xs(p, level=1).values)
-        ax.step(v, np.arange(1, len(v) + 1) / len(v), where="post", color=PCOL[p], lw=1.5, label=PNAME[p])
+        ax.step(v, np.arange(1, len(v) + 1) / len(v), where="post", color=PCOL[p], lw=1.5,
+                label=["问题一", "问题二", "问题三"][p - 1])
     for t, lab, off, ha in ((300, "5 min", 0.94, "right"), (600, "10 min", 1.06, "left")):
         ax.axvline(t, color=GREY, lw=0.8, ls=(0, (3, 2)))
         ax.text(t * off, 0.06, lab, fontsize=7.4, color="#555555", ha=ha)
     ax.set_xscale("log")
-    ax.set_xlabel("单个 (用例, N) 的端到端求解时间 / s")
+    ax.set_xlabel("单个（用例，N）的端到端求解时间 / s")
     ax.set_ylabel("累计比例")
-    ax.legend(loc="upper left", fontsize=7.6)
+    ax.legend(loc="upper left", fontsize=7.6, handlelength=1.6)
     panel_label(ax, "(a)")
     ax = axes[1]
     cand = main[(~main.variant.str.startswith(("sa", "s"))) | main.variant.str.match(r"^c\d+$")]
@@ -217,8 +220,8 @@ def fig_runtime():
     ax.plot([m[0] for m in med], [m[1] for m in med], color=RED, lw=1.6, marker="o", ms=3.5, label="分箱中位数")
     ax.set_xscale("log")
     ax.set_yscale("log")
-    ax.set_xlabel("可切分算子数")
-    ax.set_ylabel("单候选 S1–S3 算法时间 / s")
+    ax.set_xlabel("算子数")
+    ax.set_ylabel("单候选 S1～S3 算法时间 / s")
     ax.legend(loc="upper left", fontsize=7.6)
     panel_label(ax, "(b)")
     fig.tight_layout(w_pad=1.0)
@@ -227,22 +230,42 @@ def fig_runtime():
 
 # ------------------------------------------------------------------ 超线性来源
 def fig_superlinear():
+    """单核基准自身换入换出为 0 的用例单独放在左侧窄栏（横轴断开），其余用例按对数横轴排列。"""
     sc = rj("singlecore_baseline.json")
     spill = pd.Series({c: sc[c]["spill_added_copy_bytes"] for c in CASES})
     s = sp(2, 4)
     rho = feats.loc[CASES, "largest_component_frac"]
-    fig, ax = plt.subplots(figsize=(11.5 * CM, 7.0 * CM))
-    x = spill.clip(lower=1e4)
-    cols = np.where(rho < 0.2, C1, np.where(rho < 0.5, C3, C2))
-    ax.scatter(x, s, c=cols, s=18, edgecolor="white", lw=0.4, zorder=3)
-    ax.axhline(4, color=GREY, lw=0.9, ls=(0, (4, 3)), label="加速比 = 核心数 4")
-    ax.axvline(2e4, color="#BBBBBB", lw=0.7, label="竖线左侧：单核基准无换入换出")
-    ax.set_xscale("log")
-    ax.set_xlabel("单核基准自身的换入换出字节数")
-    ax.set_ylabel("问题二 N=4 加速比")
+    cols = pd.Series(np.where(rho < 0.2, C1, np.where(rho < 0.5, C3, C2)), index=CASES)
+    fig, (a0, a1) = plt.subplots(1, 2, figsize=(11.5 * CM, 7.0 * CM), sharey=True,
+                                 gridspec_kw={"width_ratios": [1, 6.5], "wspace": 0.06})
+    zero = spill <= 0
+    rng = np.random.default_rng(3)
+    jit = rng.uniform(-0.28, 0.28, zero.sum())
+    a0.scatter(jit, s[zero], c=cols[zero], s=16, edgecolor="white", lw=0.4, zorder=3)
+    a0.set_xlim(-0.6, 0.6)
+    a0.set_xticks([0])
+    a0.set_xticklabels(["0"])
+    a1.scatter(spill[~zero], s[~zero], c=cols[~zero], s=16, edgecolor="white", lw=0.4, zorder=3)
+    a1.set_xscale("log")
+    a1.spines["left"].set_visible(False)
+    a1.tick_params(axis="y", length=0)
+    for ax in (a0, a1):
+        ax.axhline(4, color=GREY, lw=0.9, ls=(0, (4, 3)), zorder=1)
+    # 断轴记号
+    d = 0.018
+    kw = dict(color="#333333", lw=0.7, clip_on=False)
+    a0.plot([1 - 0.1, 1 + 0.1], [-d * 3, d * 3], transform=a0.transAxes, **kw)
+    a1.plot([-0.015, 0.015], [-d * 3, d * 3], transform=a1.transAxes, **kw)
+    a0.set_ylabel("问题二 N=4 加速比")
+    bb = a1.get_position()
+    a1.set_xlabel("单核基准自身的换入换出字节数")
+    a1.xaxis.set_label_coords((0.5 - bb.x0) / bb.width, -0.1)
+    a0.set_title("无换入换出", fontsize=7.6, color="#555555")
     for c, lab in ((C1, r"$\rho_{\max}<0.2$"), (C3, r"$0.2\leq\rho_{\max}<0.5$"), (C2, r"$\rho_{\max}\geq0.5$")):
-        ax.scatter([], [], c=c, s=18, label=lab)
-    ax.legend(loc="lower right", fontsize=7.4)
+        a1.scatter([], [], c=c, s=16, label=lab)
+    a1.plot([], [], color=GREY, lw=0.9, ls=(0, (4, 3)), label="加速比 = 核心数 4")
+    a1.legend(loc="lower right", fontsize=7.2, ncol=2, handletextpad=0.3, columnspacing=1.0,
+              borderaxespad=0.3, handlelength=1.8)
     save(fig, "fig_superlinear")
 
 
@@ -307,7 +330,7 @@ def fig_p3_compare():
         hit.append(100 * h.mean())
     fig, axes = plt.subplots(1, 3, figsize=(16 * CM, 5.9 * CM))
     ax = axes[0]
-    ax.plot([1, 5.2], [1, 5.2], color=GREY, lw=0.8, ls=(0, (4, 3)), label="y = N")
+    ax.plot([1, 5.2], [1, 5.2], color=GREY, lw=0.8, ls=(0, (4, 3)), label="加速比 = N")
     ax.plot(xs, no_l2, color=C2, marker="s", ms=4.2, lw=1.6, label="无 L2")
     ax.plot(xs, ro, color=C3, marker="o", ms=4.6, lw=1.6, label="只读 Cache")
     ax.annotate(f"{ro[-1]:.2f}", (5, ro[-1]), textcoords="offset points", xytext=(5, 3), fontsize=7.6,
@@ -318,16 +341,17 @@ def fig_p3_compare():
     ax.set_xticks(xs)
     ax.set_xlabel("核心数 N")
     ax.set_ylabel("相对单核基准的平均加速比")
-    ax.legend(loc="upper left", fontsize=7.6)
+    ax.legend(loc="lower right", fontsize=7.6, bbox_to_anchor=(1.0, 0.02))
     panel_label(ax, "(a)")
     ax = axes[1]
-    ax.plot(xs, gain_final, color=C1, marker="o", ms=4.6, lw=1.6, label="配置最优比较")
-    ax.plot(xs, gain_same, color=C3, marker="^", ms=4.2, lw=1.1, ls=(0, (3, 2)), label="纯 L2 收益（同一方案）")
+    ax.plot(xs, gain_final, color=C1, marker="o", ms=4.6, lw=1.6, label="各自择优比较")
+    ax.plot(xs, gain_same, color=C3, marker="^", ms=4.2, lw=1.1, ls=(0, (3, 2)), label="纯 L2 收益\n（同一方案）")
     ax.axhline(1, color=GREY, lw=0.8)
     ax.set_xticks(xs)
     ax.set_xlabel("核心数 N")
     ax.set_ylabel("Makespan 比（无 L2 / 只读 Cache）")
-    ax.legend(loc="center left", bbox_to_anchor=(0, 0.66), fontsize=7.6)
+    ax.legend(loc="upper left", bbox_to_anchor=(0.0, 1.0), fontsize=7.6, handlelength=1.8)
+    ax.set_ylim(0.995, max(max(gain_same), max(gain_final)) + 0.012)
     panel_label(ax, "(b)")
     ax = axes[2]
     ax.bar(xs, hit, color=C3, alpha=0.85, width=0.6, edgecolor="white")
@@ -336,7 +360,7 @@ def fig_p3_compare():
     ax.set_xticks(xs)
     ax.set_xlabel("核心数 N")
     ax.set_ylabel("按字节命中率 / %")
-    ax.set_ylim(0, max(hit) * 1.2)
+    ax.set_ylim(0, max(hit) * 1.28)
     ax.grid(axis="x", visible=False)
     panel_label(ax, "(c)")
     fig.tight_layout(w_pad=0.9)
@@ -611,7 +635,7 @@ def fig_proxy():
         ax.text(i + w / 2, sv[i] + 0.02, f"{100 * sv[i]:.0f}%", ha="center", fontsize=7.2)
     ax.set_xticks(x)
     ax.set_xticklabels([f"前 {k} 名" for k in ks])
-    ax.set_ylabel("评估器最优候选落入代理前 K 名的比例")
+    ax.set_ylabel("评估第一名落入代理前 K 名的比例")
     ax.set_ylim(0, 1.12)
     ax.legend(loc="upper left", fontsize=7.4)
     ax.set_title("问题二", fontsize=9)
@@ -643,7 +667,7 @@ def fig_struct():
     s = sp(2, 4)
     items = [(f.largest_component_frac, "最大连通分量占比", False),
              (f.critical_path_cycles / f.total_cycles, "关键路径 / 总计算量", True),
-             (f.avg_width, "DAG 平均宽度", True), (f.n_ops, "可切分算子数", True)]
+             (f.avg_width, "DAG 平均宽度", True), (f.n_ops, "算子数", True)]
     fig, axes = plt.subplots(1, 4, figsize=(16 * CM, 4.9 * CM), sharey=True)
     for ax, (x, lab, log) in zip(axes, items):
         ax.scatter(x, s, s=9, color=C2, alpha=0.75, lw=0)

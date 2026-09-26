@@ -235,6 +235,23 @@ def fix_cjk_punct(doc):
         parent.remove(r)
 
 
+# ---------------------------------------------------------------- 公式字形
+# pandoc（texmath）把 \varnothing 译成直径符号 ⌀（U+2300），把 \setminus 译成反斜杠；
+# 改为标准的空集符号 ∅（U+2205）与集合差符号 ∖（U+2216）。
+_MATH_GLYPH = {"\u2300": "\u2205"}
+
+
+def fix_math_glyphs(doc):
+    mt = "{http://schemas.openxmlformats.org/officeDocument/2006/math}t"
+    for t in doc.element.body.iter(mt):
+        if not t.text:
+            continue
+        if t.text == "\\":
+            t.text = "\u2216"
+        else:
+            t.text = "".join(_MATH_GLYPH.get(ch, ch) for ch in t.text)
+
+
 # ---------------------------------------------------------------- 3. 西文字体
 def _set_latin(rfonts):
     rfonts.set(qn("w:ascii"), TNR)
@@ -340,6 +357,7 @@ def main():
     bd.prepare_template(doc, meta, abs_paras, labels)
     bd.Renderer(doc, labels, facts).render([b for b in blocks if b.kind != "abstract"])
     drop_toc(doc)
+    fix_math_glyphs(doc)
     force_times(doc)
     fix_cjk_punct(doc)
     keep_tables(doc)

@@ -41,7 +41,9 @@ BARS = ["#D9D9D9", "#BDBDBD", "#969696", "#8491B4", "#3C5488"]
 _have = {f.name for f in fm.fontManager.ttflist}
 LATIN = "Times New Roman" if "Times New Roman" in _have else "Liberation Serif"
 CJK = "SimSun" if "SimSun" in _have else "Noto Serif CJK SC"
-FAMILY = ["Times New Roman", "SimSun", "Liberation Serif", "Noto Serif CJK SC"]
+# 西文字体排在中文字体之前：逐字回退时西文、数字取 Times New Roman（本机无则取度量相同的 Liberation Serif），
+# 汉字取宋体。这样本机量出的文字宽度与 Word 中的实际宽度一致。
+FAMILY = ["Times New Roman", "Liberation Serif", "SimSun", "Noto Serif CJK SC"]
 
 
 def _rc():
