@@ -146,6 +146,7 @@ def fig_features():
     ax.set_xscale("log")
     ax.set_xlabel("可切分算子数")
     ax.set_ylabel("用例数")
+    ax.yaxis.set_major_locator(plt.MaxNLocator(integer=True))
     panel_label(ax, "(a)")
     ax = axes[1]
     cp = f.critical_path_cycles / f.total_cycles
@@ -153,7 +154,7 @@ def fig_features():
     scat = ax.scatter(f.largest_component_frac, cp, c=s2.values, cmap="viridis", s=14, edgecolor="white",
                       lw=0.3)
     ax.set_yscale("log")
-    ax.set_xlabel("最大连通分量占比 ρmax")
+    ax.set_xlabel("最大连通分量占比")
     ax.set_ylabel("关键路径 / 总计算量")
     cb = fig.colorbar(scat, ax=ax, fraction=0.05, pad=0.02)
     cb.set_label("问题二 N=4 加速比", fontsize=7.8)
@@ -166,7 +167,7 @@ def fig_features():
             edgecolor="white", lw=0.6)
     ax.set_xscale("log")
     ax.axvline(1, color=RED, lw=0.9, ls=(0, (3, 2)))
-    ax.text(1.15, ax.get_ylim()[1] * 0.92, "容量上限", color=RED, fontsize=7.6, va="top")
+    ax.text(1.5, ax.get_ylim()[1] * 0.97, "容量上限", color=RED, fontsize=7.6, va="top")
     ax.set_xlabel("UB 张量总量 / UB 容量")
     ax.set_ylabel("用例数")
     panel_label(ax, "(c)")
@@ -640,7 +641,7 @@ def fig_greedy():
 def fig_struct():
     f = feats.loc[CASES]
     s = sp(2, 4)
-    items = [(f.largest_component_frac, "最大连通分量占比 ρmax", False),
+    items = [(f.largest_component_frac, "最大连通分量占比", False),
              (f.critical_path_cycles / f.total_cycles, "关键路径 / 总计算量", True),
              (f.avg_width, "DAG 平均宽度", True), (f.n_ops, "可切分算子数", True)]
     fig, axes = plt.subplots(1, 4, figsize=(16 * CM, 4.9 * CM), sharey=True)
