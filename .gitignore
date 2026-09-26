@@ -21,3 +21,14 @@ Thumbs.db
 /竞赛论文_完善版.pdf
 /F24104080002本校参赛论文.pdf
 /实验综合改进清单.md
+
+# 官方评估脚本在未指定 --trace-output/--log-output 时，
+# 会把调试文件写在 data/ 用例旁边；data/ 只读，这些文件不应入库。
+data/case_*_problem_*_log.txt
+data/case_*_problem_*_trace.json
+
+# 复核脚本用的临时目录（tempfile.TemporaryDirectory 未清理时残留）
+results/tmp*/
+
+# 图表样张（只用于挑选风格，不进论文）
+/figures/v4/_samples/
