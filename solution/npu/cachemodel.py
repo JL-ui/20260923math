@@ -1,3 +1,7 @@
+# 本程序及代码是在人工智能工具辅助下完成的。
+# 人工智能工具：Claude Sonnet 5（型号 claude-sonnet-5）、Claude Opus 5.5（型号 claude-opus-5-5）
+# 开发机构：Anthropic 公司
+# 版本发布日期：Claude Sonnet 5 为 2026-06-30，Claude Opus 5.5 为 2026-09-22
 """问题 3 的只读 L2 收益模型。
 
 与官方评估器的语义严格对齐（见《评估器机制说明》O 节）：

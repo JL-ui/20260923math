@@ -1,3 +1,7 @@
+# 本程序及代码是在人工智能工具辅助下完成的。
+# 人工智能工具：Claude Sonnet 5（型号 claude-sonnet-5）、Claude Opus 5.5（型号 claude-opus-5-5）
+# 开发机构：Anthropic 公司
+# 版本发布日期：Claude Sonnet 5 为 2026-06-30，Claude Opus 5.5 为 2026-09-22
 """单算子子图下的容量感知表调度：给定算子→核分配，决定每个核的算子全序。
 
 问题 2/3 中核内执行顺序 = Step1 顺序按子图优先级稳定重排；当每个算子单独

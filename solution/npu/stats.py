@@ -1,3 +1,7 @@
+# 本程序及代码是在人工智能工具辅助下完成的。
+# 人工智能工具：Claude Sonnet 5（型号 claude-sonnet-5）、Claude Opus 5.5（型号 claude-opus-5-5）
+# 开发机构：Anthropic 公司
+# 版本发布日期：Claude Sonnet 5 为 2026-06-30，Claude Opus 5.5 为 2026-09-22
 """跨用例聚合的统计工具：算术/几何平均、bootstrap 区间、配对检验、Holm 校正。
 
 口径约定（全文遵守）：赛题定义的平均加速比为**算术平均**；几何平均与中位数

@@ -1,3 +1,7 @@
+# 本程序及代码是在人工智能工具辅助下完成的。
+# 人工智能工具：Claude Sonnet 5（型号 claude-sonnet-5）、Claude Opus 5.5（型号 claude-opus-5-5）
+# 开发机构：Anthropic 公司
+# 版本发布日期：Claude Sonnet 5 为 2026-06-30，Claude Opus 5.5 为 2026-09-22
 """保底池：对每个 (用例, 问题, 核数) 汇集全部可重建方案，取官方评估最优者为冠军。
 
     python solution/build_pool.py --jobs 16 [--cases case_001 ...]

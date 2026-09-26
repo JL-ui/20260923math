@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# 本程序及代码是在人工智能工具辅助下完成的。
+# 人工智能工具：Claude Sonnet 5（型号 claude-sonnet-5）、Claude Opus 5.5（型号 claude-opus-5-5）
+# 开发机构：Anthropic 公司
+# 版本发布日期：Claude Sonnet 5 为 2026-06-30，Claude Opus 5.5 为 2026-09-22
 # 实验跑完后的一键收尾：图表 → 表格 → 正文数字 → 拼装 → Word → 方案导出
 set -u
 cd "$(dirname "$0")/.."

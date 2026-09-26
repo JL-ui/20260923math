@@ -1,3 +1,7 @@
+# 本程序及代码是在人工智能工具辅助下完成的。
+# 人工智能工具：Claude Sonnet 5（型号 claude-sonnet-5）、Claude Opus 5.5（型号 claude-opus-5-5）
+# 开发机构：Anthropic 公司
+# 版本发布日期：Claude Sonnet 5 为 2026-06-30，Claude Opus 5.5 为 2026-09-22
 """算子级事件模拟代理：在不调用官方评估器的前提下估计方案的 Makespan。
 
 模型规则（全部写死，不加开关）：

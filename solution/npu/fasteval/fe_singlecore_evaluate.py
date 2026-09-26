@@ -1,3 +1,7 @@
+# 本文件复制自赛题材料包提供的评估程序 code/singlecore_evaluate.py，
+# 仅修改了导入路径，并加入了不改变计算结果的提速修改。
+# 修改部分是在人工智能工具辅助下完成的：Claude Sonnet 5（claude-sonnet-5）、
+# Claude Opus 5.5（claude-opus-5-5），Anthropic 公司，发布日期 2026-06-30、2026-09-22。
 """单核执行评估入口；无需多核切图与调度方案。"""
 
 import argparse
