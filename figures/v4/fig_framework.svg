@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="446.524724pt" height="231.091654pt" viewBox="0 0 446.524724 231.091654" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-26T07:19:01.581732</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 231.091654 
+L 446.524724 231.091654 
+L 446.524724 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 9.246614 118.380472 
+L 437.27811 118.380472 
+L 437.27811 9.246614 
+L 9.246614 9.246614 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #f2f2f2; stroke-dasharray: 2.4,1.2; stroke-dashoffset: 0; stroke: #8c8c8c; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #555555" x="13.498583" y="19.847955" transform="rotate(-0 13.498583 19.847955)">对候选网格中的每组参数构造一个方案</text>
+   </g>
+   <g id="patch_3">
+    <path d="M 14.915906 111.293858 
+L 112.711181 111.293858 
+L 112.711181 26.254488 
+L 14.915906 26.254488 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #ffffff; stroke: #222222; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 122.632441 111.293858 
+L 220.427717 111.293858 
+L 220.427717 26.254488 
+L 122.632441 26.254488 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #ffffff; stroke: #222222; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 230.348976 111.293858 
+L 328.144252 111.293858 
+L 328.144252 26.254488 
+L 230.348976 26.254488 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #ffffff; stroke: #222222; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 338.065512 111.293858 
+L 435.860787 111.293858 
+L 435.860787 26.254488 
+L 338.065512 26.254488 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #ffffff; stroke: #222222; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 14.915906 163.734803 
+L 139.640315 163.734803 
+L 139.640315 135.388346 
+L 14.915906 135.388346 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #ffffff; stroke: #222222; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 306.884409 163.734803 
+L 431.608819 163.734803 
+L 431.608819 135.388346 
+L 306.884409 135.388346 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #ffffff; stroke: #222222; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 14.915906 223.262362 
+L 149.089134 223.262362 
+L 149.089134 175.073386 
+L 14.915906 175.073386 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #ffffff; stroke: #222222; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 156.175748 223.262362 
+L 290.348976 223.262362 
+L 290.348976 175.073386 
+L 156.175748 175.073386 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #ffffff; stroke: #222222; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 297.435591 223.262362 
+L 431.608819 223.262362 
+L 431.608819 175.073386 
+L 297.435591 175.073386 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #ffffff; stroke: #222222; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: middle; fill: #222222" x="63.813543" y="38.030493" transform="rotate(-0 63.813543 38.030493)">S1 无环切块</text>
+   </g>
+   <g id="line2d_1">
+    <path d="M 14.915906 43.829291 
+L 112.711181 43.829291 
+" clip-path="url(#p21c9c3c100)" style="fill: none; stroke: #222222; stroke-width: 0.5; stroke-linecap: square"/>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="39.591043" y="62.686575" transform="rotate(-0 39.591043 62.686575)">按扇出阈值 </text>
+   </g>
+   <g id="text_4">
+    <!-- $\theta$ -->
+    <g style="fill: #222222" transform="translate(83.716043 62.686575)">
+     <text>
+      <tspan x="0" y="-0.0625" style="font-style: italic; font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">θ</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="38.613543" y="74.756575" transform="rotate(-0 38.613543 74.756575)">亲和原子化，</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="21.813543" y="86.826575" transform="rotate(-0 21.813543 86.826575)">合并强连通分量，沿线</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="25.928543" y="98.896575" transform="rotate(-0 25.928543 98.896575)">性扩展 </text>
+   </g>
+   <g id="text_8">
+    <!-- $\sigma$ -->
+    <g style="fill: #222222" transform="translate(53.253543 98.896575)">
+     <text>
+      <tspan x="0" y="-0.609375" style="font-style: italic; font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">σ</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="57.573543" y="98.896575" transform="rotate(-0 57.573543 98.896575)"> 切成连续块</text>
+   </g>
+   <g id="patch_12">
+    <path d="M 112.711181 68.774173 
+Q 117.671811 68.774173 121.738014 68.774173 
+" clip-path="url(#p21c9c3c100)" style="fill: none; stroke: #222222; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 118.538014 67.174173 
+L 121.738014 68.774173 
+L 118.538014 70.374173 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #222222; stroke: #222222; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: middle; fill: #222222" x="171.530079" y="38.087642" transform="rotate(-0 171.530079 38.087642)">S2 核心分配</text>
+   </g>
+   <g id="line2d_2">
+    <path d="M 122.632441 43.829291 
+L 220.427717 43.829291 
+" clip-path="url(#p21c9c3c100)" style="fill: none; stroke: #222222; stroke-width: 0.5; stroke-linecap: square"/>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="134.810079" y="68.721575" transform="rotate(-0 134.810079 68.721575)">LPT、轮转或连续段</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="134.227579" y="80.791575" transform="rotate(-0 134.227579 80.791575)">初始分配，按代理 </text>
+   </g>
+   <g id="text_13">
+    <!-- $F$ -->
+    <g style="fill: #222222" transform="translate(203.552579 80.791575)">
+     <text>
+      <tspan x="0" y="-0.4375" style="font-style: italic; font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">F</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="133.730079" y="92.861575" transform="rotate(-0 133.730079 92.861575)">做块级换核局部搜索</text>
+   </g>
+   <g id="patch_13">
+    <path d="M 220.427717 68.774173 
+Q 225.388346 68.774173 229.454549 68.774173 
+" clip-path="url(#p21c9c3c100)" style="fill: none; stroke: #222222; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 226.254549 67.174173 
+L 229.454549 68.774173 
+L 226.254549 70.374173 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #222222; stroke: #222222; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: middle; fill: #222222" x="279.246614" y="38.087642" transform="rotate(-0 279.246614 38.087642)">S3 分层成子图</text>
+   </g>
+   <g id="line2d_3">
+    <path d="M 230.348976 43.829291 
+L 328.144252 43.829291 
+" clip-path="url(#p21c9c3c100)" style="fill: none; stroke: #222222; stroke-width: 0.5; stroke-linecap: square"/>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="242.304114" y="62.686575" transform="rotate(-0 242.304114 62.686575)">计算同步层次 </text>
+   </g>
+   <g id="text_17">
+    <!-- $r(v)$ -->
+    <g style="fill: #222222" transform="translate(294.829114 62.686575)">
+     <text>
+      <tspan x="0" y="-0.109375" style="font-style: italic; font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">r</tspan>
+      <tspan x="6.138428" y="-0.109375" style="font-style: italic; font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">v</tspan>
+      <tspan x="3.307861" y="-0.109375" style="font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">(</tspan>
+      <tspan x="9.911133" y="-0.109375" style="font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">)</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="307.789114" y="62.686575" transform="rotate(-0 307.789114 62.686575)">，</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="245.646614" y="74.756575" transform="rotate(-0 245.646614 74.756575)">取（核心，层次）</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="249.846614" y="86.826575" transform="rotate(-0 249.846614 86.826575)">等价类为子图并</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="245.646614" y="98.896575" transform="rotate(-0 245.646614 98.896575)">按层次、核心编号</text>
+   </g>
+   <g id="patch_14">
+    <path d="M 328.144252 68.774173 
+Q 333.104882 68.774173 337.171085 68.774173 
+" clip-path="url(#p21c9c3c100)" style="fill: none; stroke: #222222; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 333.971085 67.174173 
+L 337.171085 68.774173 
+L 333.971085 70.374173 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #222222; stroke: #222222; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_22">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: middle; fill: #222222" x="386.96315" y="38.054243" transform="rotate(-0 386.96315 38.054243)">S4 评估择优</text>
+   </g>
+   <g id="line2d_4">
+    <path d="M 338.065512 43.829291 
+L 435.860787 43.829291 
+" clip-path="url(#p21c9c3c100)" style="fill: none; stroke: #222222; stroke-width: 0.5; stroke-linecap: square"/>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="361.76315" y="62.686575" transform="rotate(-0 361.76315 62.686575)">评估程序计算</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="365.12315" y="74.756575" transform="rotate(-0 365.12315 74.756575)">Makespan，</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="344.96315" y="86.826575" transform="rotate(-0 344.96315 86.826575)">结果按方案哈希缓存，</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="349.16315" y="98.896575" transform="rotate(-0 349.16315 98.896575)">补充搜索后取最小者</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="43.69561" y="146.756575" transform="rotate(-0 43.69561 146.756575)">输入：计算图 </text>
+   </g>
+   <g id="text_28">
+    <!-- $G$ -->
+    <g style="fill: #222222" transform="translate(96.22061 146.756575)">
+     <text>
+      <tspan x="0" y="-0.375" style="font-style: italic; font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">G</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_29">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="102.46061" y="146.756575" transform="rotate(-0 102.46061 146.756575)">、</text>
+   </g>
+   <g id="text_30">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="39.73561" y="158.826575" transform="rotate(-0 39.73561 158.826575)">核心数 </text>
+   </g>
+   <g id="text_31">
+    <!-- $N$ -->
+    <g style="fill: #222222" transform="translate(67.06061 158.826575)">
+     <text>
+      <tspan x="0" y="-0.4375" style="font-style: italic; font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">N</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_32">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="72.82061" y="158.826575" transform="rotate(-0 72.82061 158.826575)">、问题编号</text>
+   </g>
+   <g id="patch_15">
+    <path d="M 77.27811 135.388346 
+Q 77.27811 123.341102 77.27811 112.188285 
+" clip-path="url(#p21c9c3c100)" style="fill: none; stroke: #222222; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 75.67811 115.388285 
+L 77.27811 112.188285 
+L 78.87811 115.388285 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #222222; stroke: #222222; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_33">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="324.726614" y="146.756575" transform="rotate(-0 324.726614 146.756575)">输出：node_to_subgraph</text>
+   </g>
+   <g id="text_34">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="337.584114" y="158.826575" transform="rotate(-0 337.584114 158.826575)">与 core_schedules</text>
+   </g>
+   <g id="patch_16">
+    <path d="M 386.96315 111.293858 
+Q 386.96315 123.341102 386.96315 134.493919 
+" clip-path="url(#p21c9c3c100)" style="fill: none; stroke: #222222; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 388.56315 131.293919 
+L 386.96315 134.493919 
+L 385.36315 131.293919 
+z
+" clip-path="url(#p21c9c3c100)" style="fill: #222222; stroke: #222222; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_35">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: middle; fill: #222222" x="82.00252" y="186.939938" transform="rotate(-0 82.00252 186.939938)">问题一</text>
+   </g>
+   <g id="line2d_5">
+    <path d="M 14.915906 192.648189 
+L 149.089134 192.648189 
+" clip-path="url(#p21c9c3c100)" style="fill: none; stroke: #222222; stroke-width: 0.5; stroke-linecap: square"/>
+   </g>
+   <g id="text_36">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="37.45377" y="205.150276" transform="rotate(-0 37.45377 205.150276)">Task = 子图；</text>
+   </g>
+   <g id="text_37">
+    <!-- $\omega=1000$ -->
+    <g style="fill: #222222" transform="translate(87.67127 205.150276)">
+     <text>
+      <tspan x="0" y="-0.34375" style="font-style: italic; font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">ω</tspan>
+      <tspan x="7.22915" y="-0.34375" style="font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">=</tspan>
+      <tspan x="13.250537" y="-0.34375" style="font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">1</tspan>
+      <tspan x="17.500537" y="-0.34375" style="font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">0</tspan>
+      <tspan x="21.750537" y="-0.34375" style="font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">0</tspan>
+      <tspan x="26.000537" y="-0.34375" style="font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">0</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_38">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="118.15127" y="205.150276" transform="rotate(-0 118.15127 205.150276)">；</text>
+   </g>
+   <g id="text_39">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="46.15752" y="217.220276" transform="rotate(-0 46.15752 217.220276)">c0～c13 + 模拟退火</text>
+   </g>
+   <g id="text_40">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: middle; fill: #222222" x="223.262362" y="186.939938" transform="rotate(-0 223.262362 186.939938)">问题二</text>
+   </g>
+   <g id="line2d_6">
+    <path d="M 156.175748 192.648189 
+L 290.348976 192.648189 
+" clip-path="url(#p21c9c3c100)" style="fill: none; stroke: #222222; stroke-width: 0.5; stroke-linecap: square"/>
+   </g>
+   <g id="text_41">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="168.273612" y="205.150276" transform="rotate(-0 168.273612 205.150276)">Task = 核心；</text>
+   </g>
+   <g id="text_42">
+    <!-- $\omega=500$ -->
+    <g style="fill: #222222" transform="translate(218.491112 205.150276)">
+     <text>
+      <tspan x="0" y="-0.34375" style="font-style: italic; font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">ω</tspan>
+      <tspan x="7.22915" y="-0.34375" style="font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">=</tspan>
+      <tspan x="13.250537" y="-0.34375" style="font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">5</tspan>
+      <tspan x="17.500537" y="-0.34375" style="font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">0</tspan>
+      <tspan x="21.750537" y="-0.34375" style="font-size: 8.5px; font-family: 'Times New Roman'; fill: #222222">0</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_43">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="244.651112" y="205.150276" transform="rotate(-0 244.651112 205.150276)">；另加单</text>
+   </g>
+   <g id="text_44">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="164.462362" y="217.220276" transform="rotate(-0 164.462362 217.220276)">算子子图与表调度、优先级采样</text>
+   </g>
+   <g id="text_45">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: middle; fill: #222222" x="364.522205" y="186.939938" transform="rotate(-0 364.522205 186.939938)">问题三</text>
+   </g>
+   <g id="line2d_7">
+    <path d="M 297.435591 192.648189 
+L 431.608819 192.648189 
+" clip-path="url(#p21c9c3c100)" style="fill: none; stroke: #222222; stroke-width: 0.5; stroke-linecap: square"/>
+   </g>
+   <g id="text_46">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="326.722205" y="205.150276" transform="rotate(-0 326.722205 205.150276)">同问题二；分配代价</text>
+   </g>
+   <g id="text_47">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', 'SimSun'; text-anchor: start; fill: #222222" x="326.722205" y="217.220276" transform="rotate(-0 326.722205 217.220276)">按预测命中字节折算</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p21c9c3c100">
+   <rect x="2.16" y="2.16" width="442.204724" height="226.771654"/>
+  </clipPath>
+ </defs>
+</svg>
