@@ -365,6 +365,12 @@ for tag, fn in (("RHO", lambda f: f["largest_component_frac"]),
     xl = [math.log10(v) if tag in ("WIDTH", "NOPS") else v for v in x]   # 与 v2 facts.py 相同
     F[f"CORR_{tag}_P"] = f"{pearsonr(xl, y)[0]:+.2f}".replace("-", "−")
     F[f"CORR_{tag}_S"] = f"{spearmanr(x, y)[0]:+.2f}".replace("-", "−")
+# 三维散点图（问题二 N=4）：各 ρ_max 分层中加速比超过 4 的用例数，以及分层内关键路径占比与加速比的 Spearman 相关
+for tag, lo, hi in (("A", 0, 0.2), ("B", 0.2, 0.5), ("C", 0.5, 1.01)):
+    cs = [c for c in CASES if lo <= feats[c]["largest_component_frac"] < hi]
+    F[f"P2_STR{tag}_SUP4"] = str(sum(STD[(c, 2, 4)].speedup > 4 + 1e-9 for c in cs))   # 与 P2_SUPER_4 同口径
+    cpr = [feats[c]["critical_path_cycles"] / feats[c]["total_cycles"] for c in cs]
+    F[f"P2_STR{tag}_CPR_S"] = f"{spearmanr(cpr, [STD[(c, 2, 4)].speedup for c in cs])[0]:+.2f}".replace("-", "−")
 
 # ---------------------------------------------------------------------------
 # 5. 问题三：两类 Cache 指标（标准流程）

@@ -108,32 +108,40 @@ def fig_speedup(p):
     save(fig, f"fig_speedup_p{p}")
 
 
-# ------------------------------------------------------------------ 逐用例分布（箱线 + 散点）
+# ------------------------------------------------------------------ 逐用例分布（云雨图：半边核密度 + 箱体 + 散点）
 def fig_dist():
-    fig, axes = plt.subplots(1, 3, figsize=(16 * CM, 6.4 * CM), sharey=True)
+    from matplotlib.patches import Rectangle
+    from scipy.stats import gaussian_kde
+    fig, axes = plt.subplots(1, 3, figsize=(16 * CM, 6.6 * CM), sharey=True)
     rng = np.random.default_rng(1)
     for ax, p in zip(axes, (1, 2, 3)):
-        data = [sp(p, n).values for n in NS]
-        bp = ax.boxplot(data, positions=NS, widths=0.5, patch_artist=True, showfliers=False,
-                        medianprops=dict(color="black", lw=1.2), whiskerprops=dict(color="#555555", lw=0.8),
-                        capprops=dict(color="#555555", lw=0.8))
-        for b in bp["boxes"]:
-            b.set(facecolor=PCOL[p], alpha=0.25, edgecolor=PCOL[p], lw=0.9)
-        for n, d in zip(NS, data):
-            jit = rng.uniform(-0.17, 0.17, len(d))
+        col = PCOL[p]
+        for n in NS:
+            d = sp(p, n).values
+            ys = np.linspace(d.min(), d.max(), 200)
+            w = gaussian_kde(d, bw_method=0.35)(ys)
+            w = w / w.max() * 0.36
+            ax.fill_betweenx(ys, n - 0.06 - w, n - 0.06, color=col, alpha=0.30, lw=0)
+            ax.plot(n - 0.06 - w, ys, color=col, lw=0.7)
+            q1, med, q3 = np.percentile(d, [25, 50, 75])
+            ax.add_patch(Rectangle((n - 0.045, q1), 0.09, q3 - q1, facecolor="white", edgecolor=DARK, lw=0.7,
+                                   zorder=4))
+            ax.plot([n - 0.045, n + 0.045], [med, med], color=DARK, lw=1.2, zorder=5)
+            jit = 0.10 + rng.uniform(0, 0.22, len(d))
             sup = d > n
-            ax.scatter(n + jit[~sup], d[~sup], s=5, color=PCOL[p], alpha=0.55, lw=0, zorder=3)
-            ax.scatter(n + jit[sup], d[sup], s=7, color=RED, alpha=0.8, lw=0, zorder=3)
-        # 线性加速参考线 y = N：画成贯通的斜虚线，置于箱体之上
-        ax.plot([1.55, 5.45], [1.55, 5.45], color="#444444", lw=0.9, ls=(0, (4, 2.5)), zorder=5)
+            ax.scatter(n + jit[~sup], d[~sup], s=4, color=col, alpha=0.6, lw=0, zorder=3)
+            ax.scatter(n + jit[sup], d[sup], s=5.5, color=RED, alpha=0.85, lw=0, zorder=3)
+        # 线性加速参考线 y = N：贯通的斜虚线，置于其余元素之上
+        ax.plot([1.45, 5.55], [1.45, 5.55], color="#444444", lw=0.9, ls=(0, (4, 2.5)), zorder=6)
         ax.set_xlim(1.45, 5.55)
         ax.set_title(PNAME[p], fontsize=9)
         ax.set_xticks(NS)
         ax.set_xlabel("核心数 N")
+        ax.grid(axis="x", visible=False)
     axes[0].set_ylabel("逐用例加速比")
     axes[0].scatter([], [], s=9, color=RED, label="超线性（加速比 > N）")
     axes[0].plot([], [], color="#444444", lw=0.9, ls=(0, (4, 2.5)), label="线性加速（加速比 = N）")
-    axes[0].legend(loc="upper left", fontsize=7.4, handlelength=2.4)
+    axes[0].legend(loc="upper left", fontsize=7.2, handlelength=2.4)
     fig.tight_layout(w_pad=0.6)
     save(fig, "fig_dist")
 
@@ -683,12 +691,20 @@ def fig_struct():
     save(fig, "fig_struct")
 
 
+# 蓝色单色系分级色阶：效率集中在 0.8～1.1，连续色阶在这一段区分不开，按整数边界分 8 级；最深两级为超线性
+HEAT_EDGES = [0.0, 0.5, 0.7, 0.8, 0.9, 0.95, 1.0, 1.1, 2.0]
+HEAT_COLORS = ["#F7FBFF", "#DEEBF7", "#C6DBEF", "#9ECAE1", "#6BAED6", "#4292C6", "#2171B5", "#08306B"]
+
+
 def fig_heatmap():
+    from matplotlib.colors import BoundaryNorm, ListedColormap
+    cmap = ListedColormap(HEAT_COLORS)
+    norm = BoundaryNorm(HEAT_EDGES, cmap.N)
     order = feats.loc[CASES].sort_values("largest_component_frac").index
     fig, axes = plt.subplots(3, 1, figsize=(16 * CM, 8.2 * CM), sharex=True)
     for ax, p in zip(axes, (1, 2, 3)):
         M = np.array([[sp(p, n)[c] / n for c in order] for n in NS])
-        im = ax.imshow(M, aspect="auto", cmap="RdBu", vmin=0.2, vmax=1.4, interpolation="nearest")
+        im = ax.imshow(M, aspect="auto", cmap=cmap, norm=norm, interpolation="nearest")
         ax.set_yticks(range(4))
         ax.set_yticklabels([f"N={n}" for n in NS], fontsize=7)
         ax.set_ylabel(["问题一", "问题二", "问题三"][p - 1], fontsize=8, rotation=0, ha="right", va="center")
@@ -696,18 +712,88 @@ def fig_heatmap():
         for sp_ in ax.spines.values():
             sp_.set_visible(False)
     rho = feats.loc[order, "largest_component_frac"].values
-    for thr in (0.2, 0.5):
-        k = np.searchsorted(rho, thr)
+    k2, k5 = np.searchsorted(rho, 0.2), np.searchsorted(rho, 0.5)
+    for k in (k2, k5):
         for ax in axes:
-            ax.axvline(k - 0.5, color="black", lw=0.8)
-    axes[-1].set_xticks([np.searchsorted(rho, 0.2) / 2, (np.searchsorted(rho, 0.2) + np.searchsorted(rho, 0.5)) / 2,
-                         (np.searchsorted(rho, 0.5) + len(rho)) / 2])
-    axes[-1].set_xticklabels([r"$\rho_{\max}<0.2$", r"$0.2\leq\rho_{\max}<0.5$", r"$\rho_{\max}\geq0.5$"], fontsize=7.8)
+            ax.axvline(k - 0.5, color="#C0504D", lw=0.9, ls=(0, (3, 1.5)))
+    axes[-1].set_xticks([k2 / 2, (k2 + k5) / 2, (k5 + len(rho)) / 2])
+    axes[-1].set_xticklabels([r"$\rho_{\max}<0.2$", r"$0.2\leq\rho_{\max}<0.5$", r"$\rho_{\max}\geq0.5$"],
+                             fontsize=7.8)
     axes[-1].set_xlabel("100 个用例（按最大连通分量占比升序排列）")
-    cb = fig.colorbar(im, ax=axes, fraction=0.025, pad=0.01)
+    cb = fig.colorbar(im, ax=axes, fraction=0.025, pad=0.01, spacing="uniform", ticks=HEAT_EDGES[1:-1])
     cb.set_label("并行效率 = 加速比 / N", fontsize=7.8)
+    cb.ax.set_yticklabels([f"{e:g}" for e in HEAT_EDGES[1:-1]])
     cb.ax.tick_params(labelsize=7)
+    cb.ax.axhline(1.0, color="#C0504D", lw=1.2)
     save(fig, "fig_heatmap")
+
+
+# ------------------------------------------------------------------ 三维散点：加速比与两个结构特征（问题二，N=4）
+def fig_struct3d():
+    from matplotlib.colors import LinearSegmentedColormap
+    from matplotlib.patches import Patch
+    blues = LinearSegmentedColormap.from_list("blues_mono", ["#F4F8FC", "#D6E4F2", "#A9C8E4", "#6FA3D0", "#3C78B4",
+                                                             "#1F4E8C", "#0B2A5B"])
+    f = feats.loc[CASES]
+    x = f.largest_component_frac.values
+    y = np.log10(f.cp_over_total.values)
+    z = sp(2, 4).values
+    # 三维坐标轴默认四周留白很大：让坐标轴铺满画布再放大，裁切后的实际尺寸约等于插入 Word 的宽度，字号不被放大
+    fig = plt.figure(figsize=(12.5 * CM, 9.6 * CM))
+    ax = fig.add_axes([0, 0, 1, 1], projection="3d")
+    zmin = 0.0
+    y0, y1 = np.floor(y.min() * 2) / 2, np.ceil(y.max() * 2) / 2
+    for xi, yi, zi in zip(x, y, z):
+        ax.plot([xi, xi], [yi, yi], [zmin, zi], color="#B8C4D6", lw=0.5, zorder=1)
+    ax.scatter(x, y, np.full_like(z, zmin), s=6, color="#C9C9C9", depthshade=False, zorder=1)
+    ax.scatter(x, y, z, c=z, cmap=blues, vmin=0.2, vmax=6.5, s=18, edgecolor="#1F3552", lw=0.3,
+               depthshade=False, zorder=3)
+    xx, yy = np.meshgrid([0, 1], [y0, y1])
+    ax.plot_surface(xx, yy, np.full_like(xx, 4.0), color="#C0504D", alpha=0.10, lw=0, shade=False)
+    ax.plot([0, 1, 1], [y0, y0, y1], [4, 4, 4], color="#C0504D", lw=0.8, ls=(0, (3, 2)))
+    ax.legend(handles=[Patch(facecolor="#C0504D", alpha=0.18, edgecolor="#C0504D", ls=(0, (3, 2)), lw=0.8,
+                             label="加速比 = 4 的平面（线性加速）")],
+              loc="upper left", bbox_to_anchor=(0.02, 0.98), fontsize=7.6, frameon=False, handlelength=1.6)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(y0, y1)
+    ax.set_zlim(zmin, 7)
+    yt = [t for t in (-3, -2, -1) if y0 <= t <= y1]
+    ax.set_yticks(yt)
+    ax.set_yticklabels([f"$10^{{{t}}}$" for t in yt])
+    ax.set_xlabel("最大连通分量占比", labelpad=3)
+    ax.set_ylabel("关键路径 / 总计算量", labelpad=5)
+    ax.set_zlabel("问题二加速比（N=4）", labelpad=3)
+    ax.tick_params(labelsize=7.4, pad=0)
+    for a_ in (ax.xaxis, ax.yaxis, ax.zaxis):
+        a_.pane.set_facecolor("#FAFBFD")
+        a_.pane.set_edgecolor("#BBBBBB")
+        a_._axinfo["grid"].update(color="#E6E6E6", linewidth=0.5)
+    ax.view_init(elev=20, azim=-60)
+    ax.set_box_aspect((1.25, 1.0, 0.85), zoom=1.02)
+    _save_trimmed(fig, "fig_struct3d")
+
+
+def _save_trimmed(fig, name, pad=0.03):
+    """三维坐标轴的 tight 边界含大片空白：先按 tight 边界渲染一次，找出有墨迹的范围，再按它裁切保存。"""
+    import io
+    from PIL import Image
+    from matplotlib.transforms import Bbox
+    fig.canvas.draw()
+    tb = fig.get_tightbbox(fig.canvas.get_renderer())
+    buf = io.BytesIO()
+    fig.savefig(buf, format="png", dpi=150, bbox_inches=tb, pad_inches=0, facecolor="white")
+    im = np.asarray(Image.open(buf).convert("L"))
+    rows, cols = np.where(im.min(axis=1) < 245)[0], np.where(im.min(axis=0) < 245)[0]
+    h, w = im.shape
+    crop = Bbox([[tb.x0 + cols[0] / w * tb.width - pad, tb.y1 - (rows[-1] + 1) / h * tb.height - pad],
+                 [tb.x0 + (cols[-1] + 1) / w * tb.width + pad, tb.y1 - rows[0] / h * tb.height + pad]])
+    out = figstyle_v4.OUT
+    svg = out / f"{name}.svg"
+    fig.savefig(svg, facecolor="white", bbox_inches=crop)
+    figstyle_v4._fix_svg_fonts(svg)
+    fig.savefig(out / f"{name}.png", facecolor="white", bbox_inches=crop)
+    plt.close(fig)
+    print("  ", svg.relative_to(ROOT))
 
 
 def fig_summary():
@@ -731,10 +817,10 @@ ALL = {"speedup": lambda: [fig_speedup(p) for p in (1, 2, 3)], "dist": fig_dist,
        "p3_compare": fig_p3_compare, "l2_case": fig_l2_case, "l2_sources": fig_l2_sources, "p2p3": fig_p2p3,
        "baselines": fig_baselines, "ablation": fig_ablation, "granularity": fig_granularity,
        "sensitivity": fig_sensitivity, "bounds": fig_bounds, "proxy": fig_proxy, "greedy": fig_greedy,
-       "struct": fig_struct, "heatmap": fig_heatmap, "summary": fig_summary}
+       "struct": fig_struct, "struct3d": fig_struct3d, "heatmap": fig_heatmap, "summary": fig_summary}
 
 NEEDED = ("speedup", "dist", "superlinear", "traffic", "p3_compare", "l2_case", "p2p3", "baselines",
-          "bounds", "struct", "heatmap", "summary")
+          "bounds", "struct", "heatmap", "summary")  # "struct" 同时匹配 struct 与 struct3d
 
 if __name__ == "__main__":
     want = sys.argv[1:] or list(NEEDED)
